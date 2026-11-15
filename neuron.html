@@ -227,25 +227,54 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
   .brand{font-size:1rem}
   .brand svg{width:24px;height:24px}
   .modes a{padding:6px 9px;font-size:.8rem;min-height:44px}
-  #stage{right:0;bottom:auto;height:calc(55dvh - var(--head-h))}
-  #panel{top:auto;left:0;width:100%;height:45dvh;border-left:none;border-top:1px solid var(--border);border-radius:14px 14px 0 0;background:rgba(11,17,32,.97)}
-  #panel-top{padding:8px 10px 6px}
+  #stage{right:0;bottom:auto;height:calc(100dvh - var(--head-h) - var(--sheet-h));transition:height .25s ease}
+  #panel{top:auto;left:0;width:100%;height:var(--sheet-h);border-left:none;border-top:1px solid var(--border);border-radius:14px 14px 0 0;background:rgba(11,17,32,.97);
+    overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;transition:height .25s ease}
+  #panel-top{padding:10px 10px 4px}
   [role="tab"]{min-height:44px}
   .hud-btn{min-height:44px;padding:8px 12px}
-  #hud{top:8px;left:8px}
-  .sides{top:58px;right:8px}
+  #hud{top:8px;left:8px;flex-direction:column;align-items:stretch}
+  .sides{top:auto;bottom:8px;right:8px}
   .sides a{padding:0 14px}
   .seg button{min-height:44px}
   #search{font-size:16px;min-height:44px}
   .dot{min-width:44px;height:44px}
   .cite-sup{padding:4px 3px;font-size:11px}
   #syn-panel{top:auto;bottom:8px;right:8px;left:8px;width:auto;max-height:calc(100% - 16px);overflow-y:auto}
-  #stage-note{bottom:6px;font-size:10.5px}
+  #stage-note{bottom:8px;left:8px;font-size:10.5px}
   .p-label{font-size:11px;padding:2px 6px}
-  #scale-note{bottom:8px}
-  #arrive-chip{bottom:30px;right:8px}
+  #scale-note{bottom:60px}
+  #arrive-chip{bottom:60px;right:8px}
   .trace-wrap canvas{height:140px}
   .race-row{grid-template-columns:96px 1fr}
+}
+
+/* ── phones: the panel has three sizes, Read / Split / Model (Tier 9) ──
+   The size row and the tabs stay pinned at the top of the panel; everything below them,
+   level switch and search included, scrolls as one column, footer last. */
+.sheet-bar{display:none}
+@media (max-width:760px){
+  body{--sheet-h:min(calc(56dvh + 92px + env(safe-area-inset-bottom)), calc(100dvh - var(--head-h) - 140px))}
+  body[data-sheet="read"]{--sheet-h:calc(100dvh - var(--head-h))}
+  body[data-sheet="model"]{--sheet-h:calc(91px + env(safe-area-inset-bottom))}
+  body[data-sheet="read"] #stage{visibility:hidden}
+  body[data-sheet="model"] #panel{overflow-y:hidden}
+  body.sheet-dragging #panel,body.sheet-dragging #stage{transition:none}
+  #panel > *{flex-shrink:0}
+  .sheet-bar{display:flex;order:0;position:sticky;top:0;z-index:3;height:44px;align-items:center;gap:6px;padding:0 4px 0 12px;
+    background:rgba(11,17,32,.99);touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;border-radius:14px 14px 0 0}
+  .sheet-grip{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+  .sheet-grip i{display:block;width:16px;height:2px;border-radius:2px;background:#5b6683}
+  .sheet-title{flex:1;min-width:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sheet-sizes{display:flex;flex-shrink:0}
+  .sheet-sizes button{background:none;border:none;min-height:44px;padding:0 2px;font-size:12.5px;color:var(--muted)}
+  .sheet-sizes button span{display:block;padding:5px 11px;border-radius:999px;border:1px solid var(--border)}
+  .sheet-sizes button[aria-pressed="true"]{color:var(--text)}
+  .sheet-sizes button[aria-pressed="true"] span{background:rgba(139,108,255,.3);border-color:var(--violet)}
+  [role="tablist"]{order:1;position:sticky;top:44px;z-index:3;background:#0f1729}
+  #panel-top{order:2}
+  .tabpanel{order:3;flex:none;overflow:visible;padding-bottom:14px}
+  #panel-foot{order:4;margin-top:auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
 }
 @media (max-width:380px){
   .modes{gap:0}
@@ -260,6 +289,10 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
 </style>
 </head>
 <body>
+<script>
+/* phones: apply the remembered panel size before the first paint (Tier 9) */
+(function () { try { var s = sessionStorage.getItem('gyrafold.panel.size'); if (s === 'read' || s === 'model' || s === 'split') document.body.dataset.sheet = s; } catch (e) { /* storage blocked */ } })();
+</script>
 
 <header id="topbar">
   <a href="./index.html" class="brand" aria-label="Gyrafold home">
@@ -317,6 +350,15 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
 </main>
 
 <aside id="panel" aria-label="Neuron learning panel">
+  <div class="sheet-bar" id="sheet-bar">
+    <span class="sheet-grip" aria-hidden="true"><i></i><i></i></span>
+    <span class="sheet-title" id="sheet-title">Neuron</span>
+    <div class="sheet-sizes" role="group" aria-label="Panel size">
+      <button type="button" data-size="read" aria-pressed="false"><span>Read</span></button>
+      <button type="button" data-size="split" aria-pressed="true"><span>Split</span></button>
+      <button type="button" data-size="model" aria-pressed="false"><span>Model</span></button>
+    </div>
+  </div>
   <div id="panel-top">
     <div class="row">
       <div class="seg" role="group" aria-label="Level">
@@ -882,19 +924,24 @@ function fitDistance(size) {
 function defaultView() {
   const size = MODEL_BOX.getSize(new THREE.Vector3());
   size.z = Math.min(size.z, 3);
-  return { target: DEFAULT_TARGET.clone(), pos: DEFAULT_TARGET.clone().add(DEFAULT_DIR.clone().multiplyScalar(fitDistance(size))) };
+  // phones: a little more room, because the near corners of the box project wider in a small stage
+  const d = fitDistance(size) * (MOBILE_QUERY.matches ? 1.1 : 1);
+  return { target: DEFAULT_TARGET.clone(), pos: DEFAULT_TARGET.clone().add(DEFAULT_DIR.clone().multiplyScalar(d)) };
 }
 let camAnim = null;
 function flyTo(target, pos, dur = 0.9) {
   if (reducedMotion()) { controls.target.copy(target); camera.position.copy(pos); controls.update(); return; }
   camAnim = { t0: performance.now(), dur: dur * 1000, ft: controls.target.clone(), fp: camera.position.clone(), tt: target.clone(), tp: pos.clone() };
 }
+let lastFrame = null;   // what the camera was last framed on, so a panel resize can re-frame it
 function resetView(animate = true) {
+  lastFrame = { kind: 'default' };
   const v = defaultView();
   neuron.rotation.set(0, 0, 0);
   if (animate) flyTo(v.target, v.pos); else { controls.target.copy(v.target); camera.position.copy(v.pos); controls.update(); }
 }
 function framePart(id, extra, margin = 1.25) {
+  lastFrame = { kind: 'part', id, extra, margin };
   stopIdle();
   neuron.rotation.set(0, 0, 0);
   neuron.updateMatrixWorld(true);
@@ -990,6 +1037,7 @@ canvas.addEventListener('pointerup', e => {
   downPos = null;
   if (moved > slop) return;
   const id = pickAt(e.clientX, e.clientY);
+  if (id && MOBILE_QUERY.matches && sheetSize() === 'model') setSheet('split');   // phones: bring the explanation back into view
   if (quizState.findTarget) { quizFindPick(id); return; }
   if (id) { switchTab('explore'); selectPart(id); }
 });
@@ -1140,10 +1188,35 @@ $('btn-arrive').addEventListener('click', () => { $('arrive-chip').style.display
 // ══════════════════════════════════════════════════════════════════════════
 // Render loop
 // ══════════════════════════════════════════════════════════════════════════
+// On phones the stage buttons sit in a column at the top left (Reset view / Labels / Look
+// inside) and along the bottom (scale note, Biological / Artificial). The camera frames the
+// model inside the free area that fits it best: right of the column, or the full width below
+// it. The offset lives in the projection matrix, so picking and labels stay correct.
+const MODEL_ASPECT = (() => { const s = MODEL_BOX.getSize(new THREE.Vector3()); return s.x / Math.max(s.y, 1e-6); })();
+function freeRect(w, h) {
+  if (!MOBILE_QUERY.matches) return null;
+  const st = stage.getBoundingClientRect();
+  const rel = e => { const r = e.getBoundingClientRect(); return r.height > 0 ? { l: r.left - st.left, r: r.right - st.left, t: r.top - st.top, b: r.bottom - st.top } : null; };
+  const hud = rel($('hud')), sides = rel(document.querySelector('#stage .sides')), note = rel($('stage-note'));
+  const lowTop = Math.min(sides ? sides.t : h, note ? note.t : h) - 6;
+  const cands = [];
+  if (hud) {
+    cands.push({ x: 0, y: hud.b + 6, w, h: lowTop - hud.b - 6 });                         // full width, below the column
+    cands.push({ x: hud.r + 6, y: 0, w: w - hud.r - 6, h: (sides ? sides.t : h) - 6 });    // right of the column
+  } else cands.push({ x: 0, y: 0, w, h: lowTop });
+  const fit = c => Math.min(c.w / MODEL_ASPECT, c.h);   // model height that fits in the rect
+  const best = cands.filter(c => c.w >= 80 && c.h >= 50).sort((a, b) => fit(b) - fit(a))[0];
+  return best || null;
+}
+let stageHidden = false;
 function resize() {
   const w = stage.clientWidth, h = stage.clientHeight;
+  stageHidden = w < 2 || h < 2 || getComputedStyle(stage).visibility === 'hidden';
+  if (w < 2 || h < 2) return;
   renderer.setSize(w, h, false);
-  camera.aspect = w / Math.max(h, 1);
+  const r = freeRect(w, h);
+  if (r) camera.setViewOffset(r.w, r.h, -r.x, -r.y, w, h);   // sets camera.aspect to r.w / r.h
+  else { camera.clearViewOffset(); camera.aspect = w / Math.max(h, 1); }
   camera.updateProjectionMatrix();
   $('lbl-svg').setAttribute('viewBox', `0 0 ${w} ${h}`);
 }
@@ -1166,6 +1239,7 @@ function frame(now) {
   updateRun(now);
   tickers.forEach(f => f(now));
   controls.update();
+  if (stageHidden) return;   // phone "Read" size: the 3D view is hidden, skip drawing it
   doHover();
   renderer.render(scene, camera);
   neuron.updateMatrixWorld();
@@ -1197,6 +1271,7 @@ function switchTab(name, focus = false) {
     pane.hidden = !on;
   });
   if (focus) $('tab-' + name).focus();
+  paneToTop('pane-' + name);
   if (name !== 'how') { closeProcessScene(); }
   if (name !== 'quiz') { quizState.findTarget = null; }
   if (name === 'quiz' && !quizState.started) startQuiz();
@@ -1204,7 +1279,7 @@ function switchTab(name, focus = false) {
 }
 TABS.forEach((t, i) => {
   const tab = $('tab-' + t);
-  tab.addEventListener('click', () => switchTab(t));
+  tab.addEventListener('click', () => { switchTab(t); if (MOBILE_QUERY.matches && sheetSize() === 'model') setSheet('split'); });
   tab.addEventListener('keydown', e => {
     let j = null;
     if (e.key === 'ArrowRight') j = (i + 1) % TABS.length;
@@ -1336,7 +1411,8 @@ function selectPart(id, opts = {}) {
   applyHighlight();
   if (!opts.noCamera) framePart(id);
   renderExplore();
-  $('pane-explore').scrollTop = 0;
+  paneToTop('pane-explore');
+  setSheetTitle(PART[id].name);
   if (id === 'synapse') { openSynPanel(); setSynStep(0); }
   const h = $('focus-name'); if (h && opts.focus !== false && document.activeElement && $('panel').contains(document.activeElement)) h.focus();
   try { profile.seen = profile.seen || {}; } catch (e) { /* ignore */ }
@@ -1347,6 +1423,7 @@ function deselect() {
   applyHighlight();
   closeSynPanel();
   renderExplore();
+  setSheetTitle();
   resetView(true);
 }
 
@@ -1504,12 +1581,14 @@ function openProcess(id, step = 0) {
   if (id === 'action-potential' || id === 'conduction' || id === 'resting') resetView(true);
   if (id === 'summation') { stopIdle(); framePart('soma', ['axon_hillock'], 2.0); }
   renderProcess();
-  $('pane-how').scrollTop = 0;
+  paneToTop('pane-how');
+  setSheetTitle(openProc.title);
+  if (sheetSize() === 'read') setSheet('split');   // the process plays on the model
   applyStepScene();
 }
 function closeProcessScene() {
   stopPlay();
-  if (openProc) { openProc = null; processParts = null; applyHighlight(); closeSynPanel(); resetView(true); }
+  if (openProc) { openProc = null; processParts = null; applyHighlight(); closeSynPanel(); resetView(true); setSheetTitle(); }
   tickers.delete(sumTick);
   if (myelinOff) setMyelin(false);
 }
@@ -2035,6 +2114,7 @@ function renderQuiz() {
     pane.appendChild(el('p', 'qtext', `Find the part: click the ${p.name.toLowerCase()} on the model.`));
     pane.appendChild(el('p', 'ill', p.short));
     st.findTarget = item.part;
+    if (sheetSize() === 'read') setSheet('split');   // this question needs the model
     if (item.part === 'nucleus') setLookInside(true);
     selected = null; processParts = null; applyHighlight();
     if (!camAnim) resetView(true);
@@ -2162,6 +2242,81 @@ function maybeArrival() {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
+// Phones: three panel sizes, Read / Split / Model (Tier 9)
+// ══════════════════════════════════════════════════════════════════════════
+// The size lives in body[data-sheet]; CSS turns it into heights (desktop ignores it).
+// The choice is kept for the browser session under one key shared with the atlas.
+const SHEET_KEY = 'gyrafold.panel.size';
+const SHEET_SIZES = ['read', 'split', 'model'];
+function sheetSize() { const s = document.body.dataset.sheet; return SHEET_SIZES.includes(s) ? s : 'split'; }
+let refitTimer = null, sheetJustDragged = false;
+function setSheet(size, opts = {}) {
+  if (!SHEET_SIZES.includes(size)) return;
+  const before = sheetSize();
+  document.body.dataset.sheet = size;
+  document.body.style.removeProperty('--sheet-h');
+  document.querySelectorAll('#sheet-bar [data-size]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.size === size)));
+  if (opts.remember !== false) { try { sessionStorage.setItem(SHEET_KEY, size); } catch (e) { /* private mode */ } }
+  if (!MOBILE_QUERY.matches) return;
+  if (before !== size || opts.refit) { clearTimeout(refitTimer); refitTimer = setTimeout(refit, reducedMotion() ? 30 : 300); }
+}
+// after the panel settles: frame the model again in the new stage
+function refit() {
+  resize();
+  if (stageHidden || !lastFrame) return;
+  if (lastFrame.kind === 'part') framePart(lastFrame.id, lastFrame.extra, lastFrame.margin);
+  else resetView(true);
+}
+function setSheetTitle(text) { $('sheet-title').textContent = text || 'Neuron'; }
+// phones scroll the whole panel; desktop scrolls each tab panel
+function paneToTop(id) {
+  if (MOBILE_QUERY.matches) $('panel').scrollTop = 0;
+  else $(id).scrollTop = 0;
+}
+document.querySelectorAll('#sheet-bar [data-size]').forEach(b => b.addEventListener('click', () => {
+  if (sheetJustDragged) return;
+  setSheet(b.dataset.size);
+}));
+(function initSheetDrag() {
+  const bar = $('sheet-bar');
+  let y0 = 0, h0 = 0, pid = null, dragging = false, moved = false;
+  const heights = () => {
+    const vh = window.innerHeight, head = $('topbar').offsetHeight;
+    return { read: vh - head, split: Math.min(vh * 0.56 + 92, vh - head - 140), model: 91 };
+  };
+  bar.addEventListener('pointerdown', e => {
+    if (!MOBILE_QUERY.matches || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    dragging = true; moved = false; pid = e.pointerId;
+    y0 = e.clientY; h0 = $('panel').getBoundingClientRect().height;
+  });
+  bar.addEventListener('pointermove', e => {
+    if (!dragging || e.pointerId !== pid) return;
+    const dy = e.clientY - y0;
+    if (!moved) {
+      if (Math.abs(dy) < 10) return;
+      moved = true;
+      try { bar.setPointerCapture(pid); } catch (err) { /* pointer already gone */ }
+      document.body.classList.add('sheet-dragging');
+    }
+    const hs = heights();
+    document.body.style.setProperty('--sheet-h', Math.max(hs.model, Math.min(hs.read, h0 - dy)) + 'px');
+  });
+  const finish = () => {
+    if (!dragging) return;
+    dragging = false;
+    if (!moved) return;   // a tap: the size button's own click handles it
+    document.body.classList.remove('sheet-dragging');
+    const h = $('panel').getBoundingClientRect().height, hs = heights();
+    const near = SHEET_SIZES.reduce((a, b) => Math.abs(hs[a] - h) <= Math.abs(hs[b] - h) ? a : b);
+    sheetJustDragged = true; setTimeout(() => { sheetJustDragged = false; }, 60);
+    setSheet(near, { refit: true });
+  };
+  bar.addEventListener('pointerup', finish);
+  bar.addEventListener('pointercancel', finish);
+})();
+setSheet(sheetSize(), { remember: false });
+
+// ══════════════════════════════════════════════════════════════════════════
 // Start-up + deep links
 // ══════════════════════════════════════════════════════════════════════════
 
@@ -2172,7 +2327,7 @@ renderHowList();
 applyHighlight();
 const partParam = params.get('part'), procParam = params.get('process'), tabParam = params.get('tab');
 if (tabParam && TABS.includes(tabParam)) switchTab(tabParam);
-if (partParam && PART[partParam]) { switchTab('explore'); selectPart(partParam); }
+if (partParam && PART[partParam]) { switchTab('explore'); selectPart(partParam); if (MOBILE_QUERY.matches && sheetSize() === 'model') setSheet('split', { remember: false }); }
 else if (procParam && PROC[procParam]) openProcess(procParam, 0);
 maybeArrival();
 document.body.dataset.ready = '1';
@@ -2180,7 +2335,18 @@ document.body.dataset.ready = '1';
 window.__neuron = { ready: true, parts: PARTS.map(p => p.id), pick: id => { switchTab('explore'); selectPart(id); }, fire, nodeCount: nodeU.length,
   tris: () => { let t = 0; scene.traverse(o => { if (o.isMesh && o.geometry) { const n = o.geometry.index ? o.geometry.index.count / 3 : o.geometry.attributes.position.count / 3; t += o.isInstancedMesh ? n * o.count : n; } }); return Math.round(t); },
   screenOf: id => { const v = anchors[id].clone().applyMatrix4(neuron.matrixWorld).project(camera); const r = canvas.getBoundingClientRect(); return { x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height }; },
-  idle: () => idle };
+  idle: () => idle,
+  partAt: (x, y) => pickAt(x, y),
+  modelRect: () => {   // screen box of the whole model (its 8 box corners projected)
+    const r = canvas.getBoundingClientRect(), v = new THREE.Vector3(), b = MODEL_BOX;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (let i = 0; i < 8; i++) {
+      v.set(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z).applyMatrix4(neuron.matrixWorld).project(camera);
+      const x = r.left + (v.x + 1) / 2 * r.width, y = r.top + (1 - v.y) / 2 * r.height;
+      x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+    }
+    return { left: x0, top: y0, right: x1, bottom: y1 };
+  } };
 </script>
 <script>
 /* Offline support: register the service worker (https or localhost only). */
