@@ -49,3 +49,8 @@ Each statement cites its source. Sources include OpenStax *Anatomy and Physiolog
 *Introduction to Behavioral Neuroscience* (CC BY 4.0; access for free at https://openstax.org)
 and StatPearls chapters on the NCBI Bookshelf. No source text is reproduced beyond short terms.
 The content is educational and is not medical advice.
+
+`viewer/public/content/ann.json` contains original summaries written for this project. Each
+statement cites its source. The source is *Dive into Deep Learning* by Aston Zhang, Zachary C.
+Lipton, Mu Li and Alexander J. Smola (https://d2l.ai), licensed CC BY-SA 4.0. No source text is
+reproduced beyond short terms and formulas.

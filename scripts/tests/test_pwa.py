@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright
 
 PUB = Path(__file__).resolve().parents[2] / 'viewer' / 'public'
 ARGS = ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist']
-PAGES = ['index.html', 'atlas-viewer.html', 'neuron.html', 'imaging.html', 'privacy.html']
+PAGES = ['index.html', 'atlas-viewer.html', 'neuron.html', 'artificial.html', 'imaging.html', 'privacy.html']
 OFFLINE_MSG = "You're offline. Open the atlas once while online and it will work offline after that."
 PROFILE = ("try{localStorage.setItem('neuroapp.profile.v1',JSON.stringify({level:'beginner',onboarded:true,seen:{}}));"
            "sessionStorage.setItem('gyrafold.guide.hello','1')}catch(e){}")
@@ -153,6 +153,7 @@ try:
             # the stats strip counts up from the lesson JSON once scrolled into view
             'index.html': "document.body.innerText.includes('Explore the human brain') && !document.getElementById('stats-strip').classList.contains('hidden') && /\\d/.test(document.getElementById('stat-lessons').textContent)",
             'neuron.html': "document.body.innerText.includes('Cell body (soma)')",
+            'artificial.html': "document.body.innerText.includes('Weighted sum')",
             'imaging.html': "document.getElementById('intro').textContent.trim().length>20",
             'privacy.html': "document.querySelector('h1').textContent==='Privacy' && document.body.innerText.includes('neuroapp.')",
         }

@@ -41,6 +41,9 @@ the first load downloads about 55 MB of 3D models).
 - **Neuron mode** (`neuron.html`): a clickable 3D neuron with every part explained at two
   levels, step-by-step animations of the action potential, myelin and the synapse, an
   input-summation playground, a comparison with an artificial neuron, and a quiz.
+- **Artificial neuron mode** (`artificial.html`): the artificial side of Neuron mode. It teaches
+  the weighted sum, activation functions, a comparison with the biological neuron, a deep
+  network and how it trains, with a quiz. A Biological/Artificial switch links the two pages.
 - **Brain-imaging guide** (`imaging.html`): what MRI, DTI, CT, fMRI, PET, EEG and MEG
   measure, a time-against-space trade-off chart, an EEG electrode and rhythm explorer, and
   a "which tool would you use?" quiz.
@@ -110,11 +113,13 @@ scripts/convert_atlas.py         VTK -> glTF converter and manifest builder
 scripts/check_atlas_samples.py   3-mesh sanity check (shared reader/writer)
 viewer/public/index.html         the welcome page
 viewer/public/neuron.html        neuron mode (content/neuron.json)
+viewer/public/artificial.html    artificial neuron mode (content/ann.json)
 viewer/public/imaging.html       brain-imaging guide (content/imaging.json)
 viewer/public/atlas-viewer.html  the app (Three.js, no build step)
 viewer/public/atlas-manifest.json  structure names, hierarchy, colors, RadLex IDs
 viewer/public/models/            328 binary glTF meshes
 viewer/public/content/learning.json  cited lessons, glossary, tours, questions
+viewer/public/content/ann.json   cited artificial-neuron lessons, glossary, quiz
 viewer/public/vendor/three/      pinned, checksum-verified three.js r160
 docs/tasks/                      the build specifications used during development
 ```
@@ -162,6 +167,6 @@ three.js is MIT, and cited works remain under their publishers' terms. See
   Surgical Planning Laboratory, Brigham and Women's Hospital, under the 3D Slicer license.
   See [NOTICE.md](NOTICE.md).
 - Rendering: [three.js](https://threejs.org) (MIT).
-- Lesson sources: OpenStax (CC BY 4.0) and StatPearls (NCBI Bookshelf).
+- Lesson sources: OpenStax (CC BY 4.0) and StatPearls (NCBI Bookshelf), and for the artificial side *Dive into Deep Learning* (Zhang, Lipton, Li and Smola; CC BY-SA 4.0).
 
 Built by Giovanni Callahan.
