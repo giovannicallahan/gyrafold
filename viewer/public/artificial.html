@@ -190,6 +190,24 @@ ol.srcs li{margin:8px 0;color:var(--text);font-size:.9rem}
 ol.srcs a{word-break:break-all}
 .closing{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
 
+/* tabbed views: only active under the JS-set .tabs-on class, so no-JS and failed-JSON show one long page
+   (same rules as imaging.html) */
+#tabbar{display:none}
+.tabs-on #tabbar{display:block;position:sticky;top:var(--top-h,60px);z-index:45;background:rgba(10,15,28,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+#tablist{display:flex;gap:4px;max-width:1120px;margin:0 auto;padding:6px clamp(14px,4vw,40px);overflow-x:auto;scrollbar-width:none}
+#tablist::-webkit-scrollbar{display:none}
+#tablist [role="tab"]{flex:none;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:.9rem;font-weight:600;white-space:nowrap}
+#tablist [role="tab"]:hover{color:var(--text)}
+#tablist [role="tab"][aria-selected="true"]{color:var(--text);border-color:rgba(139,108,255,.55);background:rgba(139,108,255,.14)}
+#tablist [role="tab"]:focus-visible{outline-offset:-2px;border-radius:999px}
+html.tabs-on{scroll-padding-top:calc(var(--top-h,60px) + var(--tab-h,57px) + 12px);scroll-behavior:auto}
+.tabs-on .view:not(.active){display:none}
+.tabs-on section{scroll-margin-top:0}
+.tabs-on .view > section:first-child{padding-top:30px}
+.tabs-on #opening{padding-top:30px}
+.pager{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;padding-top:18px;border-top:1px solid var(--border)}
+.pager .next{margin-left:auto}
+
 footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18px clamp(14px,4vw,40px);color:var(--muted);font-size:.88rem;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;max-width:1120px;margin:0 auto}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -205,12 +223,17 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
   dl.parts,dl.gloss,.opts{grid-template-columns:1fr}
   .modes a{padding:0 10px;font-size:.84rem}
   .card{padding:16px}
+  /* the top bar scrolls away on phones, so the tab bar sticks to the very top */
+  .tabs-on #tabbar{top:0}
+  html.tabs-on{scroll-padding-top:calc(var(--tab-h,57px) + 12px)}
+  .pager .btn{flex:1 1 auto}
 }
 @media (max-width:400px){
   .brand{font-size:1rem}
   .modes a{padding:0 8px}
   .sides a{min-width:0;padding:0 18px}
 }
+@media print{.tabs-on .view{display:block!important}.tabs-on .mcard{display:block!important}#tabbar,.pager,#mpick{display:none!important}}
 </style>
 </head>
 <body>
@@ -242,7 +265,10 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
   </nav>
 </header>
 
+<div id="tabbar"><div id="tablist"></div></div>
+
 <main id="main">
+<div class="view" id="view-overview">
   <section id="opening" aria-labelledby="h-open">
     <nav class="sides" aria-label="Biological or artificial neuron"><a href="./neuron.html">Biological</a><a href="./artificial.html" aria-current="page">Artificial</a></nav>
     <h1 id="h-open">How an <span>artificial neuron</span> works</h1>
@@ -265,6 +291,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     <p id="load-err" class="lede" hidden>The content file could not be loaded. Please reload the page.</p>
   </section>
 
+</div>
+<div class="view" id="view-one">
   <section id="one" aria-labelledby="h-one">
     <h2 id="h-one">One artificial neuron</h2>
     <p class="lede" id="neuron-lede"></p>
@@ -295,6 +323,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     </div>
   </section>
 
+</div>
+<div class="view" id="view-compare">
   <section id="compare" aria-labelledby="h-cmp">
     <h2 id="h-cmp">The real neuron and the artificial one</h2>
     <p class="lede" id="cmp-lede"></p>
@@ -310,6 +340,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     </div>
   </section>
 
+</div>
+<div class="view" id="view-network">
   <section id="network" aria-labelledby="h-net">
     <h2 id="h-net">From one neuron to a deep network</h2>
     <p class="lede" id="net-lede"></p>
@@ -344,6 +376,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     <div id="net-expert"></div>
   </section>
 
+</div>
+<div class="view" id="view-training">
   <section id="training" aria-labelledby="h-train">
     <h2 id="h-train">How a network is made</h2>
     <p class="lede" id="train-lede"></p>
@@ -390,6 +424,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     <div id="train-expert"></div>
   </section>
 
+</div>
+<div class="view" id="view-quiz">
   <section id="quiz" aria-labelledby="h-quiz">
     <h2 id="h-quiz">Check yourself</h2>
     <div class="card" id="quiz-card">
@@ -401,6 +437,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     </div>
   </section>
 
+</div>
+<div class="view" id="view-glossary">
   <section id="glossary" aria-labelledby="h-gloss">
     <h2 id="h-gloss">Words to know</h2>
     <dl class="gloss" id="gloss"></dl>
@@ -416,6 +454,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
       <a class="btn" href="./index.html">Home</a>
     </div>
   </section>
+</div>
 </main>
 
 <footer>
@@ -1141,14 +1180,187 @@ document.querySelectorAll('#level-seg button').forEach(b => b.addEventListener('
   level = b.dataset.level; saveLevel(level); closePop(false); renderLevel();
 }));
 
+// stop a signal that is still travelling and show its end state
+function finishNetAnim() {
+  const animating = net.animating; stopNetAnim();
+  if (animating && net.acts) { const last = net.sizes.length - 1; net.lit = last; applyLit(); setNetCaption(layerName(last) + ' computed: ' + valsText(last) + '. Done.'); }
+}
+// redraw the network when its box has a new width (window resized, or its view just became visible)
+function fitNet() {
+  if (!data) return;
+  const box = $('net-wrap');
+  if (!box.clientWidth) return;
+  const w = Math.max(300, Math.round(box.clientWidth - 16));
+  if (w !== net.lastW) { finishNetAnim(); renderNet(); }
+}
 let rsT = 0;
-window.addEventListener('resize', () => {
-  clearTimeout(rsT);
-  rsT = setTimeout(() => {
+window.addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(fitNet, 120); });
+
+// ── tabbed views ──
+// The same setupTabs() is used, word for word, in imaging.html and artificial.html.
+// Views are hidden only under the .tabs-on class it sets, so no-JS and failed loads show one long page.
+function setupTabs(cfg) {
+  const root = document.documentElement, list = document.getElementById('tablist');
+  const bar = document.getElementById('tabbar'), topbar = document.getElementById('topbar');
+  const first = cfg.views[0].id, tabs = new Map(), panels = new Map();
+  let cur = null, on = true;
+  for (const v of cfg.views) {
+    const panel = document.getElementById('view-' + v.id);
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', 'tab-' + v.id);
+    panel.append(el('nav', { class: 'pager', 'aria-label': 'Previous and next' }));
+    const b = el('button', { type: 'button', role: 'tab', id: 'tab-' + v.id, 'aria-controls': 'view-' + v.id, 'aria-selected': 'false', tabindex: '-1', 'data-view': v.id, text: v.label });
+    b.addEventListener('click', () => go({ view: v.id }, { push: true, focus: 'tab' }));
+    list.append(b);
+    tabs.set(v.id, b); panels.set(v.id, panel);
+  }
+  list.setAttribute('role', 'tablist');
+  list.setAttribute('aria-label', cfg.label);
+  list.addEventListener('keydown', e => {
+    const ids = cfg.views.map(v => v.id);
+    let i = ids.indexOf((document.activeElement && document.activeElement.dataset.view) || cur.view);
+    if (e.key === 'ArrowRight') i = (i + 1) % ids.length;
+    else if (e.key === 'ArrowLeft') i = (i - 1 + ids.length) % ids.length;
+    else if (e.key === 'Home') i = 0;
+    else if (e.key === 'End') i = ids.length - 1;
+    else return;
+    e.preventDefault();
+    go({ view: ids[i] }, { push: true, replace: true, focus: 'tab' });
+  });
+  // the sticky stack: tab bar sits under the top bar; its height feeds scroll-padding and sub-bars
+  const measure = () => {
+    root.style.setProperty('--top-h', topbar.offsetHeight + 'px');
+    root.style.setProperty('--tab-h', bar.offsetHeight + 'px');
+  };
+  if ('ResizeObserver' in window) { const ro = new ResizeObserver(measure); ro.observe(topbar); ro.observe(bar); }
+  window.addEventListener('resize', measure);
+
+  function resolve(hash) {
+    let h = '';
+    try { h = decodeURIComponent(String(hash || '').replace(/^#/, '')); } catch (e) { return null; }
+    if (!h) return { view: first };
+    const x = cfg.resolve ? cfg.resolve(h) : null;
+    if (x) return x;
+    if (panels.has(h)) return { view: h };
+    const t = document.getElementById(h), p = t && t.closest('.view');
+    return p ? { view: p.id.slice(5), target: h } : null;
+  }
+  const hashOf = s => (cfg.hashOf && cfg.hashOf(s)) || '#' + (s.target || s.view);
+  function pagerLinks(s) {
+    const own = cfg.pager ? cfg.pager(s) : null;
+    if (own) return own;
+    const i = cfg.views.findIndex(v => v.id === s.view), pv = cfg.views[i - 1], nv = cfg.views[i + 1];
+    return { prev: pv && { href: '#' + pv.id, label: 'Previous: ' + pv.label }, next: nv && { href: '#' + nv.id, label: 'Next: ' + nv.label } };
+  }
+  function renderPager(s) {
+    const nav = panels.get(s.view).querySelector(':scope > .pager');
+    const { prev, next } = pagerLinks(s);
+    nav.replaceChildren(...[
+      prev && el('a', { class: 'btn prev', href: prev.href }, el('span', { 'aria-hidden': 'true', text: '←' }), prev.label),
+      next && el('a', { class: 'btn primary next', href: next.href }, next.label, el('span', { 'aria-hidden': 'true', text: '→' }))
+    ].filter(Boolean));
+  }
+  function keepTabVisible(tab) {
+    const lr = list.getBoundingClientRect(), r = tab.getBoundingClientRect();
+    if (r.left < lr.left + 8) list.scrollLeft -= lr.left + 8 - r.left;
+    else if (r.right > lr.right - 8) list.scrollLeft += r.right - (lr.right - 8);
+  }
+  function headingFor(s) {
+    const own = cfg.headingFor ? cfg.headingFor(s) : null;
+    if (own) return own;
+    const t = s.target && document.getElementById(s.target);
+    if (t) return t.matches('h1,h2,h3') ? t : (t.querySelector('h1,h2,h3') || t);
+    return panels.get(s.view).querySelector('h1,h2');
+  }
+  // a view opens at its top; a link to something inside a view lands on that thing
+  function place(s) {
+    const t = s.target && document.getElementById(s.target);
+    if (!t || t === panels.get(s.view).firstElementChild) window.scrollTo({ top: 0, behavior: 'instant' });
+    else t.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+  function go(s, o) {
+    o = o || {};
+    if (!on) return;
+    const prev = cur; cur = s;
+    for (const [id, panel] of panels) {
+      const act = id === s.view, tab = tabs.get(id);
+      panel.classList.toggle('active', act);
+      tab.setAttribute('aria-selected', String(act));
+      tab.tabIndex = act ? 0 : -1;
+    }
+    if (cfg.onShow) cfg.onShow(s, prev);
+    renderPager(s);
+    const hash = hashOf(s);
+    const same = prev && prev.view === s.view && (prev.sub || '') === (s.sub || '');
+    if (o.push && location.hash !== hash) {
+      // no extra Back step for re-selecting the current view or for arrow-key moves
+      if (same || o.replace) history.replaceState(null, '', hash); else history.pushState(null, '', hash);
+    }
+    place(s);
+    keepTabVisible(tabs.get(s.view));
+    if (o.focus === 'tab') tabs.get(s.view).focus({ preventScroll: true });
+    else if (o.focus === 'heading') {
+      const h = headingFor(s);
+      if (h) { if (!h.hasAttribute('tabindex') && !h.matches('a,button,input,select,textarea')) h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    }
+  }
+  // in-page links (chips, pager, "Read about ...") switch views instead of jumping
+  document.addEventListener('click', e => {
+    if (!on || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const s = resolve(a.getAttribute('href'));
+    if (!s) return;
+    e.preventDefault();
+    go(s, { push: true, focus: a.closest('[data-keep-focus]') ? 'none' : 'heading' });
+  });
+  const sync = () => {
+    if (!on) return;
+    const s = resolve(location.hash) || { view: first };
+    if (cur && s.view === cur.view && hashOf(s) === hashOf(cur)) return;
+    go(s);
+    // the browser may still jump to the fragment after this event; put the view back in place
+    requestAnimationFrame(() => { if (cur === s) place(s); });
+  };
+  window.addEventListener('popstate', sync);
+  window.addEventListener('hashchange', sync);
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  root.classList.add('tabs-on');
+  measure();
+  go(resolve(location.hash) || { view: first });
+  return {
+    refresh() { go(resolve(location.hash) || cur || { view: first }); },
+    show(s, o) { go(s, o); },
+    current() { return cur; },
+    off() {
+      on = false;
+      root.classList.remove('tabs-on');
+      for (const p of panels.values()) p.querySelector(':scope > .pager').remove();
+      if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
+    }
+  };
+}
+
+// artificial page: seven views; Words and sources holds the glossary and the source list
+const tabs = setupTabs({
+  label: 'Artificial side topics',
+  views: [
+    { id: 'overview', label: 'Overview' },
+    { id: 'one', label: 'One neuron' },
+    { id: 'compare', label: 'Real and artificial' },
+    { id: 'network', label: 'Deep network' },
+    { id: 'training', label: 'Training' },
+    { id: 'quiz', label: 'Quiz' },
+    { id: 'glossary', label: 'Words and sources' }
+  ],
+  onShow: (s, prev) => {
+    closePop(false);
     if (!data) return;
-    const w = Math.max(300, Math.round($('net-wrap').clientWidth - 16));
-    if (w !== net.lastW) { const animating = net.animating; stopNetAnim(); if (animating && net.acts) { const last = net.sizes.length - 1; net.lit = last; setNetCaption(layerName(last) + ' computed: ' + valsText(last) + '. Done.'); } renderNet(); }
-  }, 120);
+    // nothing keeps running in a view that cannot be seen
+    if (prev && prev.view === 'training' && s.view !== 'training' && tr.running) { setRunning(false); setStatus('Paused at step ' + nf.format(tr.steps) + '.'); }
+    if (prev && prev.view === 'network' && s.view !== 'network') finishNetAnim();
+    if (s.view === 'network') fitNet();
+  }
 });
 
 // Until the lesson content has loaded (or if it fails to), buttons do nothing.
@@ -1161,6 +1373,7 @@ async function init() {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     data = await res.json();
   } catch (e) {
+    tabs.off();
     $('load-err').hidden = false;
     return;
   }
@@ -1179,10 +1392,7 @@ async function init() {
   // 6, 7
   renderQuiz(); renderGlossary(); renderSources();
   renderLevel();
-  if (location.hash.length > 1) {
-    const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
-    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: 'instant', block: 'start' }));
-  }
+  tabs.refresh();
   document.body.dataset.ready = '1';
 }
 init();

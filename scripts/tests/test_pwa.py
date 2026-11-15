@@ -153,7 +153,7 @@ try:
             # the stats strip counts up from the lesson JSON once scrolled into view
             'index.html': "document.body.innerText.includes('Explore the human brain') && !document.getElementById('stats-strip').classList.contains('hidden') && /\\d/.test(document.getElementById('stat-lessons').textContent)",
             'neuron.html': "document.body.innerText.includes('Cell body (soma)')",
-            'artificial.html': "document.body.innerText.includes('Weighted sum')",
+            'artificial.html': "document.getElementById('main').textContent.includes('Weighted sum')",
             'imaging.html': "document.getElementById('intro').textContent.trim().length>20",
             'privacy.html': "document.querySelector('h1').textContent==='Privacy' && document.body.innerText.includes('neuroapp.')",
         }
