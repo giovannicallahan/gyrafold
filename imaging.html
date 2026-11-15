@@ -196,6 +196,32 @@ ol.srcs a{word-break:break-all}
 .note-small{color:var(--muted);font-size:.85rem;margin-top:10px}
 .closing{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
 
+/* tabbed views: only active under the JS-set .tabs-on class, so no-JS and failed-JSON show one long page */
+#tabbar,#mpick{display:none}
+.tabs-on #tabbar{display:block;position:sticky;top:var(--top-h,60px);z-index:45;background:rgba(10,15,28,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+#tablist{display:flex;gap:4px;max-width:1120px;margin:0 auto;padding:6px clamp(14px,4vw,40px);overflow-x:auto;scrollbar-width:none}
+#tablist::-webkit-scrollbar{display:none}
+#tablist [role="tab"]{flex:none;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:.9rem;font-weight:600;white-space:nowrap}
+#tablist [role="tab"]:hover{color:var(--text)}
+#tablist [role="tab"][aria-selected="true"]{color:var(--text);border-color:rgba(139,108,255,.55);background:rgba(139,108,255,.14)}
+#tablist [role="tab"]:focus-visible{outline-offset:-2px;border-radius:999px}
+html.tabs-on{scroll-padding-top:calc(var(--top-h,60px) + var(--tab-h,57px) + 12px);scroll-behavior:auto}
+.tabs-on .view:not(.active){display:none}
+.tabs-on section{scroll-margin-top:0}
+/* a jump straight to a method card clears the sticky method picker */
+.tabs-on .mcard{scroll-margin-top:66px}
+.tabs-on .view > section:first-child{padding-top:30px}
+.tabs-on #opening{padding-top:30px}
+.tabs-on #mpick{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:calc(var(--top-h,60px) + var(--tab-h,57px));z-index:40;padding:8px 0;margin-bottom:14px;background:rgba(6,9,18,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#mpick .chip{min-height:40px;padding:0 13px;font-size:.88rem}
+#mpick .chip[aria-current="true"]{border-color:var(--text);background:rgba(255,255,255,.1)}
+.tabs-on .mcard:not(.current){display:none}
+.tabs-on .mcard{margin-bottom:0}
+.tabs-on .mtoggle{display:none}
+.pager{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;padding-top:18px;border-top:1px solid var(--border)}
+.pager .next{margin-left:auto}
+.tabs-on #methods .lede{margin-bottom:10px}
+
 footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18px clamp(14px,4vw,40px);color:var(--muted);font-size:.88rem;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;max-width:1120px;margin:0 auto}
 #foot-sources{max-width:1120px;margin:0 auto;padding:0 clamp(14px,4vw,40px) 30px;position:relative;z-index:1}
 
@@ -216,11 +242,21 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
   .modes a{padding:0 10px;font-size:.84rem}
   .card{padding:16px}
   #chart-wrap{padding:10px 2px 4px}
+  /* the top bar scrolls away on phones, so the tab bar sticks to the very top */
+  .tabs-on #tabbar{top:0}
+  html.tabs-on{scroll-padding-top:calc(var(--tab-h,57px) + 12px)}
+  .tabs-on #mpick{top:var(--tab-h,57px);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:calc(-1 * clamp(14px,4vw,40px));margin-right:calc(-1 * clamp(14px,4vw,40px));padding-left:clamp(14px,4vw,40px);padding-right:clamp(14px,4vw,40px)}
+  #mpick::-webkit-scrollbar{display:none}
+  #mpick .chip{flex:none;min-height:44px}
+  #mpick .chip:focus-visible{outline-offset:-2px}
+  .tabs-on .mcard:not(.open) .mbody{display:grid}
+  .pager .btn{flex:1 1 auto}
 }
 @media (max-width:400px){
   .brand{font-size:1rem}
   .modes a{padding:0 8px}
 }
+@media print{.tabs-on .view{display:block!important}.tabs-on .mcard{display:block!important}#tabbar,.pager,#mpick{display:none!important}}
 </style>
 </head>
 <body>
@@ -252,7 +288,10 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
   </nav>
 </header>
 
+<div id="tabbar"><div id="tablist"></div></div>
+
 <main id="main">
+<div class="view" id="view-overview">
   <section id="opening" aria-labelledby="h-open">
     <h1 id="h-open">How scientists <span>look at the brain</span></h1>
     <p id="intro"></p>
@@ -272,6 +311,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     <div class="fam" id="fam"></div>
   </section>
 
+</div>
+<div class="view" id="view-compare">
   <section id="tradeoff" aria-labelledby="h-chart">
     <h2 id="h-chart">The trade-off: when against where</h2>
     <p class="lede">Each box spans the cited range for a method. Further left means finer timing; lower means finer detail. Select a box or a button to read the numbers.</p>
@@ -292,12 +333,17 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     </div>
   </section>
 
+</div>
+<div class="view" id="view-methods">
   <section id="methods" aria-labelledby="h-methods">
     <h2 id="h-methods">The methods, one by one</h2>
     <p class="lede">Each drawing is an illustration, not a real scan and not to scale.</p>
+    <nav class="chips" id="mpick" aria-label="Choose a method" data-keep-focus></nav>
     <div id="cards"></div>
   </section>
 
+</div>
+<div class="view" id="view-eeg">
   <section id="eeg" aria-labelledby="h-eeg">
     <h2 id="h-eeg">EEG explorer</h2>
     <p class="lede" id="eeg-system"></p>
@@ -337,6 +383,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     <div class="card" id="depth"></div>
   </section>
 
+</div>
+<div class="view" id="view-quiz">
   <section id="quiz" aria-labelledby="h-quiz">
     <h2 id="h-quiz">Which tool would you use?</h2>
     <p class="lede">Pick the best method for each research question. Each answer names the trade-off.</p>
@@ -349,11 +397,15 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
     </div>
   </section>
 
+</div>
+<div class="view" id="view-glossary">
   <section id="glossary" aria-labelledby="h-gloss">
     <h2 id="h-gloss">Glossary</h2>
     <dl class="gloss" id="gloss"></dl>
   </section>
 
+</div>
+<div class="view" id="view-sources">
   <section id="sources" aria-labelledby="h-src">
     <h2 id="h-src">Sources</h2>
     <p class="lede" id="src-note"></p>
@@ -364,6 +416,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
       <a class="btn" href="./neuron.html">Look inside a neuron</a>
     </div>
   </section>
+</div>
 </main>
 
 <footer>
@@ -894,7 +947,8 @@ function answer(o) {
   const best = methodById(q.answer);
   document.getElementById('quiz-fb').replaceChildren(
     el('p', null, el('span', { class: 'verdict ' + (ok ? 'ok' : 'no'), text: ok ? 'Correct. ' : 'Not quite. The best choice is ' + best.name + '. ' })),
-    withCites('p', q.explain, q.cite));
+    withCites('p', q.explain, q.cite),
+    el('p', null, el('a', { href: '#m-' + q.answer, text: 'Read about ' + best.name })));
   const next = document.getElementById('quiz-next');
   next.hidden = false; next.textContent = qi + 1 < data.chooser.length ? 'Next question' : 'See your score';
   next.focus();
@@ -929,6 +983,7 @@ function renderLevel() {
   document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.level === level)));
   renderIntro();
   renderCards();
+  applyMethod();
 }
 document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
   if (level === b.dataset.level) return;
@@ -936,7 +991,203 @@ document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click'
 }));
 
 let rsT = 0;
-window.addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(() => { renderChart(); drawWave(); }, 120); });
+window.addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(() => { if (data) { renderChart(); drawWave(); } }, 120); });
+
+// ── tabbed views ──
+// The same setupTabs() is used, word for word, in imaging.html and artificial.html.
+// Views are hidden only under the .tabs-on class it sets, so no-JS and failed loads show one long page.
+function setupTabs(cfg) {
+  const root = document.documentElement, list = document.getElementById('tablist');
+  const bar = document.getElementById('tabbar'), topbar = document.getElementById('topbar');
+  const first = cfg.views[0].id, tabs = new Map(), panels = new Map();
+  let cur = null, on = true;
+  for (const v of cfg.views) {
+    const panel = document.getElementById('view-' + v.id);
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', 'tab-' + v.id);
+    panel.append(el('nav', { class: 'pager', 'aria-label': 'Previous and next' }));
+    const b = el('button', { type: 'button', role: 'tab', id: 'tab-' + v.id, 'aria-controls': 'view-' + v.id, 'aria-selected': 'false', tabindex: '-1', 'data-view': v.id, text: v.label });
+    b.addEventListener('click', () => go({ view: v.id }, { push: true, focus: 'tab' }));
+    list.append(b);
+    tabs.set(v.id, b); panels.set(v.id, panel);
+  }
+  list.setAttribute('role', 'tablist');
+  list.setAttribute('aria-label', cfg.label);
+  list.addEventListener('keydown', e => {
+    const ids = cfg.views.map(v => v.id);
+    let i = ids.indexOf((document.activeElement && document.activeElement.dataset.view) || cur.view);
+    if (e.key === 'ArrowRight') i = (i + 1) % ids.length;
+    else if (e.key === 'ArrowLeft') i = (i - 1 + ids.length) % ids.length;
+    else if (e.key === 'Home') i = 0;
+    else if (e.key === 'End') i = ids.length - 1;
+    else return;
+    e.preventDefault();
+    go({ view: ids[i] }, { push: true, replace: true, focus: 'tab' });
+  });
+  // the sticky stack: tab bar sits under the top bar; its height feeds scroll-padding and sub-bars
+  const measure = () => {
+    root.style.setProperty('--top-h', topbar.offsetHeight + 'px');
+    root.style.setProperty('--tab-h', bar.offsetHeight + 'px');
+  };
+  if ('ResizeObserver' in window) { const ro = new ResizeObserver(measure); ro.observe(topbar); ro.observe(bar); }
+  window.addEventListener('resize', measure);
+
+  function resolve(hash) {
+    let h = '';
+    try { h = decodeURIComponent(String(hash || '').replace(/^#/, '')); } catch (e) { return null; }
+    if (!h) return { view: first };
+    const x = cfg.resolve ? cfg.resolve(h) : null;
+    if (x) return x;
+    if (panels.has(h)) return { view: h };
+    const t = document.getElementById(h), p = t && t.closest('.view');
+    return p ? { view: p.id.slice(5), target: h } : null;
+  }
+  const hashOf = s => (cfg.hashOf && cfg.hashOf(s)) || '#' + (s.target || s.view);
+  function pagerLinks(s) {
+    const own = cfg.pager ? cfg.pager(s) : null;
+    if (own) return own;
+    const i = cfg.views.findIndex(v => v.id === s.view), pv = cfg.views[i - 1], nv = cfg.views[i + 1];
+    return { prev: pv && { href: '#' + pv.id, label: 'Previous: ' + pv.label }, next: nv && { href: '#' + nv.id, label: 'Next: ' + nv.label } };
+  }
+  function renderPager(s) {
+    const nav = panels.get(s.view).querySelector(':scope > .pager');
+    const { prev, next } = pagerLinks(s);
+    nav.replaceChildren(...[
+      prev && el('a', { class: 'btn prev', href: prev.href }, el('span', { 'aria-hidden': 'true', text: '←' }), prev.label),
+      next && el('a', { class: 'btn primary next', href: next.href }, next.label, el('span', { 'aria-hidden': 'true', text: '→' }))
+    ].filter(Boolean));
+  }
+  function keepTabVisible(tab) {
+    const lr = list.getBoundingClientRect(), r = tab.getBoundingClientRect();
+    if (r.left < lr.left + 8) list.scrollLeft -= lr.left + 8 - r.left;
+    else if (r.right > lr.right - 8) list.scrollLeft += r.right - (lr.right - 8);
+  }
+  function headingFor(s) {
+    const own = cfg.headingFor ? cfg.headingFor(s) : null;
+    if (own) return own;
+    const t = s.target && document.getElementById(s.target);
+    if (t) return t.matches('h1,h2,h3') ? t : (t.querySelector('h1,h2,h3') || t);
+    return panels.get(s.view).querySelector('h1,h2');
+  }
+  // a view opens at its top; a link to something inside a view lands on that thing
+  function place(s) {
+    const t = s.target && document.getElementById(s.target);
+    if (!t || t === panels.get(s.view).firstElementChild) window.scrollTo({ top: 0, behavior: 'instant' });
+    else t.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+  function go(s, o) {
+    o = o || {};
+    if (!on) return;
+    const prev = cur; cur = s;
+    for (const [id, panel] of panels) {
+      const act = id === s.view, tab = tabs.get(id);
+      panel.classList.toggle('active', act);
+      tab.setAttribute('aria-selected', String(act));
+      tab.tabIndex = act ? 0 : -1;
+    }
+    if (cfg.onShow) cfg.onShow(s, prev);
+    renderPager(s);
+    const hash = hashOf(s);
+    const same = prev && prev.view === s.view && (prev.sub || '') === (s.sub || '');
+    if (o.push && location.hash !== hash) {
+      // no extra Back step for re-selecting the current view or for arrow-key moves
+      if (same || o.replace) history.replaceState(null, '', hash); else history.pushState(null, '', hash);
+    }
+    place(s);
+    keepTabVisible(tabs.get(s.view));
+    if (o.focus === 'tab') tabs.get(s.view).focus({ preventScroll: true });
+    else if (o.focus === 'heading') {
+      const h = headingFor(s);
+      if (h) { if (!h.hasAttribute('tabindex') && !h.matches('a,button,input,select,textarea')) h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    }
+  }
+  // in-page links (chips, pager, "Read about ...") switch views instead of jumping
+  document.addEventListener('click', e => {
+    if (!on || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const s = resolve(a.getAttribute('href'));
+    if (!s) return;
+    e.preventDefault();
+    go(s, { push: true, focus: a.closest('[data-keep-focus]') ? 'none' : 'heading' });
+  });
+  const sync = () => {
+    if (!on) return;
+    const s = resolve(location.hash) || { view: first };
+    if (cur && s.view === cur.view && hashOf(s) === hashOf(cur)) return;
+    go(s);
+    // the browser may still jump to the fragment after this event; put the view back in place
+    requestAnimationFrame(() => { if (cur === s) place(s); });
+  };
+  window.addEventListener('popstate', sync);
+  window.addEventListener('hashchange', sync);
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  root.classList.add('tabs-on');
+  measure();
+  go(resolve(location.hash) || { view: first });
+  return {
+    refresh() { go(resolve(location.hash) || cur || { view: first }); },
+    show(s, o) { go(s, o); },
+    current() { return cur; },
+    off() {
+      on = false;
+      root.classList.remove('tabs-on');
+      for (const p of panels.values()) p.querySelector(':scope > .pager').remove();
+      if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
+    }
+  };
+}
+
+// imaging page: seven views; Methods shows one method at a time
+let curMethod = 'mri';
+const tabs = setupTabs({
+  label: 'Imaging topics',
+  views: [
+    { id: 'overview', label: 'Overview' },
+    { id: 'compare', label: 'Compare' },
+    { id: 'methods', label: 'Methods' },
+    { id: 'eeg', label: 'EEG explorer' },
+    { id: 'quiz', label: 'Quiz' },
+    { id: 'glossary', label: 'Glossary' },
+    { id: 'sources', label: 'Sources' }
+  ],
+  // #m-<id> (used by the welcome page's guide) opens Methods on that method
+  resolve: h => h.startsWith('m-') && (!data || methodById(h.slice(2))) ? { view: 'methods', sub: h.slice(2) } : null,
+  hashOf: s => s.sub ? '#m-' + s.sub : null,
+  headingFor: s => s.view === 'methods' && s.sub ? document.getElementById('mh-' + s.sub) : null,
+  pager: s => {
+    if (s.view !== 'methods' || !data) return null;
+    const ms = data.methods, i = Math.max(0, ms.findIndex(m => m.id === curMethod));
+    return {
+      prev: i > 0 ? { href: '#m-' + ms[i - 1].id, label: 'Previous method: ' + ms[i - 1].name } : { href: '#compare', label: 'Previous: Compare' },
+      next: i < ms.length - 1 ? { href: '#m-' + ms[i + 1].id, label: 'Next method: ' + ms[i + 1].name } : { href: '#eeg', label: 'Next: EEG explorer' }
+    };
+  },
+  onShow: s => {
+    closePop(false);
+    if (!data) return;
+    if (s.view === 'methods') { if (s.sub && methodById(s.sub)) curMethod = s.sub; applyMethod(); }
+    if (s.view === 'compare') renderChart();
+    if (s.view === 'eeg') drawWave();
+  }
+});
+function renderMethodPicker() {
+  document.getElementById('mpick').replaceChildren(...data.methods.map(m =>
+    el('a', { class: 'chip', href: '#m-' + m.id, 'data-method': m.id },
+      el('span', { class: 'dot', style: 'background:' + COLORS[m.id], 'aria-hidden': 'true' }), m.name)));
+}
+function applyMethod() {
+  document.querySelectorAll('#cards .mcard').forEach(c => c.classList.toggle('current', c.dataset.method === curMethod));
+  document.querySelectorAll('#mpick .chip').forEach(a => {
+    const act = a.dataset.method === curMethod;
+    if (act) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    if (act) {
+      const box = a.parentElement, br = box.getBoundingClientRect(), r = a.getBoundingClientRect();
+      if (r.left < br.left) box.scrollLeft -= br.left - r.left + 16;
+      else if (r.right > br.right) box.scrollLeft += r.right - br.right + 16;
+    }
+  });
+}
 
 async function init() {
   loadLevel();
@@ -945,11 +1196,12 @@ async function init() {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     data = await res.json();
   } catch (e) {
+    tabs.off();
     document.getElementById('load-err').hidden = false;
     return;
   }
   Object.keys(data.sources).forEach((id, i) => citeNum.set(id, i + 1));
-  renderChips(); renderFamilies(); renderPicker(); renderTable(); renderChart();
+  renderChips(); renderFamilies(); renderPicker(); renderTable(); renderMethodPicker(); renderChart();
   renderLevel();
   data.eeg && document.getElementById('eeg-system').replaceChildren(data.eeg.system.text, ' ', ...citeButtons(data.eeg.system.cite));
   renderHead(); selectElectrode('Cz');
@@ -957,7 +1209,7 @@ async function init() {
   document.getElementById('depth').replaceChildren(el('h3', { style: 'font-size:1.05rem;margin-bottom:6px', text: 'Why scalp EEG mostly sees the cortex' }), withCites('p', data.eeg.depth.text, data.eeg.depth.cite));
   renderQuiz(); renderGlossary(); renderSources();
   setPlaying(!reducedMQ.matches);
-  if (location.hash.startsWith('#m-')) { openCard(location.hash.slice(3)); document.getElementById(location.hash.slice(1))?.scrollIntoView(); }
+  tabs.refresh();
   document.body.dataset.ready = '1';
 }
 init();
