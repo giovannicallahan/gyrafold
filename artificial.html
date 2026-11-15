@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; manifest-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' blob: data:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="See how one artificial neuron works, how neurons stack into a deep neural network, and how a network is trained. Every fact is cited.">
+<link rel="icon" href="./assets/favicon.svg">
+<link rel="canonical" href="https://gyrafold.com/artificial.html">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#0b1120">
+<link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon-180.png">
+<title>Artificial neurons: Gyrafold</title>
+<style>
+@font-face{font-family:"Inter";src:url("./vendor/fonts/inter-var.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Space Grotesk";src:url("./vendor/fonts/space-grotesk-var.woff2") format("woff2");font-weight:300 700;font-display:swap}
+:root{
+  --bg-0:#060912; --bg-1:#0b1120; --bg-2:#111a2e;
+  --surface:rgba(16,24,42,.72); --surface-solid:#121b30; --border:rgba(148,163,209,.16);
+  --text:#e8ecf6; --muted:#9aa5bd; --faint:#6b7590;
+  --violet:#8b6cff; --cyan:#22d3ee; --pink:#f472b6; --green:#34d399; --amber:#fbbf24; --red:#f87171;
+  --grad:linear-gradient(135deg,#8b6cff 0%,#22d3ee 100%);
+  --radius:14px; --radius-sm:10px; --shadow:0 10px 40px rgba(0,0,0,.45);
+  --link:#a5b4fc;
+}
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:76px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{background:var(--bg-0);color:var(--text);font-family:"Inter",system-ui,sans-serif;font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(ellipse 60vw 60vw at 0% 0%,rgba(139,108,255,.18) 0%,transparent 65%),radial-gradient(ellipse 55vw 55vw at 100% 100%,rgba(34,211,238,.16) 0%,transparent 65%);filter:blur(120px);pointer-events:none;z-index:0}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+a{color:var(--link)}
+h1,h2,h3{font-family:"Space Grotesk",sans-serif;line-height:1.2;font-weight:600}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:default;opacity:.5}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header */
+#topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;padding:8px clamp(14px,4vw,48px);min-height:60px;background:rgba(10,15,28,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.1rem;color:var(--text);min-height:44px}
+.modes{display:flex;gap:4px;flex-wrap:wrap}
+.modes a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:999px;color:var(--muted);text-decoration:none;font-size:.88rem;border:1px solid transparent}
+.modes a:hover{color:var(--text)}
+.modes a[aria-current="page"]{color:var(--text);border-color:rgba(139,108,255,.55);background:rgba(139,108,255,.14)}
+
+main{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 clamp(14px,4vw,40px) 40px}
+section{padding:44px 0 8px;scroll-margin-top:72px}
+section > h2{font-size:clamp(1.35rem,2.6vw,1.8rem);margin-bottom:8px}
+.lede{color:var(--muted);max-width:68ch;margin-bottom:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card h3{font-size:1.1rem;margin-bottom:6px}
+.illus{font-size:.78rem;color:var(--muted);font-style:italic}
+.note-small{color:var(--muted);font-size:.85rem;margin-top:10px}
+.stack-gap > * + *{margin-top:18px}
+
+/* opening */
+#opening{padding-top:40px}
+#opening h1{font-size:clamp(1.8rem,4.6vw,2.9rem);max-width:22ch;margin-bottom:14px}
+#opening h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+#intro{font-size:1.06rem;max-width:62ch;color:var(--text);margin-bottom:18px}
+.sides{display:inline-flex;border:1px solid var(--border);border-radius:999px;padding:3px;background:var(--surface-solid);margin-bottom:22px}
+.sides a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:120px;padding:0 20px;border-radius:999px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.95rem;border:1px solid transparent}
+.sides a:hover{color:var(--text)}
+.sides a[aria-current="page"]{color:var(--text);border-color:rgba(139,108,255,.55);background:rgba(139,108,255,.14)}
+.level{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.level .lbl,.ctl-lbl{color:var(--muted);font-size:.9rem}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--border);border-radius:24px;padding:3px;background:var(--surface-solid)}
+.seg button{min-height:44px;min-width:44px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:var(--muted);font-size:.9rem;font-weight:500}
+.seg button[aria-pressed="true"]{background:var(--grad);color:#060912;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--border);background:var(--surface-solid);color:var(--text);text-decoration:none;font-weight:600;font-size:.92rem}
+.chip:hover{border-color:rgba(139,108,255,.55)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--border);background:var(--surface-solid);color:var(--text);font-weight:600;text-decoration:none}
+.btn.primary{background:var(--grad);color:#060912;border:0}
+.btn:hover{border-color:rgba(139,108,255,.55)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* diagrams */
+.diag{background:var(--bg-1);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px}
+.diag svg{display:block;width:100%;height:auto}
+.diag svg text{font-family:"Inter",sans-serif;fill:var(--muted)}
+#ndiag g.hl{filter:drop-shadow(0 0 5px #fbbf24)}
+#ndiag g.hl circle,#ndiag g.hl rect{stroke:#fbbf24}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.82rem;color:var(--muted);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend svg{width:30px;height:10px}
+
+/* one neuron */
+.neuron-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+.sliders{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 18px;margin-top:16px}
+.sl{display:flex;flex-direction:column}
+.sl .top{display:flex;justify-content:space-between;gap:8px;font-size:.88rem}
+.sl label{color:var(--text);font-weight:600}
+.sl output{font-variant-numeric:tabular-nums;color:var(--muted)}
+input[type=range]{width:100%;min-height:44px;accent-color:var(--violet);background:transparent;cursor:pointer}
+.readout{margin-top:14px;padding:12px 14px;border-radius:var(--radius-sm);background:var(--surface-solid);border:1px solid var(--border);font-variant-numeric:tabular-nums;font-size:.98rem;overflow-wrap:anywhere}
+.fn-box{display:grid;grid-template-columns:1fr;gap:10px}
+.fn-name{font-family:"Space Grotesk",sans-serif;font-size:1.15rem;font-weight:600}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88rem;background:rgba(255,255,255,.05);padding:2px 7px;border-radius:6px;color:var(--text)}
+.meta{color:var(--muted);font-size:.88rem}
+dl.parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+dl.parts div{padding:12px 14px;background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius-sm)}
+dl.parts div.hl{border-color:rgba(251,191,36,.6)}
+dl.parts dt{font-weight:700;font-family:"Space Grotesk",sans-serif}
+dl.parts dd{margin-top:4px;font-size:.92rem}
+dl.parts dd .formula{display:inline-block;margin-top:6px}
+.expert-note{margin-top:16px;padding:12px 14px;border-left:3px solid var(--violet);background:rgba(139,108,255,.08);border-radius:0 8px 8px 0}
+.expert-note .tag{font-weight:700;color:#c4b5fd;margin-right:6px}
+ul.points{padding-left:20px;max-width:75ch}
+ul.points li{margin:8px 0}
+
+/* compare */
+.tbl-wrap{margin-top:4px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+caption{text-align:left;color:var(--muted);padding:0 0 8px;font-size:.88rem}
+th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{color:var(--muted);font-weight:600;font-size:.85rem}
+tbody th{font-family:"Space Grotesk",sans-serif;font-weight:600}
+td.art{color:#9ee8f5;font-weight:600}
+td a{display:inline-flex;align-items:center;min-height:44px}
+.caveat{margin-top:16px;padding:12px 14px;border-left:3px solid var(--amber);background:rgba(251,191,36,.07);border-radius:0 8px 8px 0;color:var(--text)}
+.caveat strong{color:#fcd34d}
+@media (max-width:640px){
+  #cmp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  #cmp tr{display:block;padding:12px 14px;margin-bottom:10px;background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius-sm)}
+  #cmp th,#cmp td{display:block;border:0;padding:3px 0}
+  #cmp th::before,#cmp td::before{content:attr(data-label);display:block;color:var(--muted);font-size:.78rem;font-weight:600;font-family:"Inter",sans-serif}
+}
+
+/* network */
+.net-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+#net-caption{min-height:3em;margin-top:10px;padding:10px 12px;border-radius:var(--radius-sm);background:var(--surface-solid);border:1px solid var(--border);font-variant-numeric:tabular-nums}
+.count-line{font-family:"Space Grotesk",sans-serif;font-size:1.05rem;font-weight:600}
+
+/* training */
+ol.steps{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;counter-reset:st;margin-bottom:22px}
+ol.steps li{counter-increment:st;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)}
+ol.steps li::before{content:counter(st);display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--grad);color:#060912;font-weight:700;margin-bottom:8px}
+ol.steps h3{font-size:1rem;margin-bottom:4px}
+ol.steps p{font-size:.92rem}
+.train-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:16px;align-items:start}
+.stats{display:flex;gap:24px;flex-wrap:wrap;margin:14px 0 6px}
+.stat .k{color:var(--muted);font-size:.82rem}
+.stat .v{font-family:"Space Grotesk",sans-serif;font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums}
+#train-status{min-height:1.6em;font-weight:600}
+#ex-table td,#ex-table th{text-align:center;font-variant-numeric:tabular-nums}
+
+/* quiz */
+#quiz .q{font-size:1.1rem;margin:6px 0 14px;max-width:70ch}
+#quiz .progress{color:var(--muted);font-size:.88rem}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.opts button{min-height:52px;padding:10px 14px;text-align:left;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface-solid);font-weight:600;font-size:.98rem}
+.opts button:disabled{cursor:default;opacity:1}
+.opts button.right{border-color:var(--green);background:rgba(52,211,153,.18)}
+.opts button.wrong{border-color:var(--red);background:rgba(248,113,113,.15)}
+.opts .mark{display:block;font-size:.78rem;font-weight:700;margin-top:2px}
+.opts .right .mark{color:#86efac}
+.opts .wrong .mark{color:#fca5a5}
+#quiz-fb{margin-top:14px;min-height:1.5em}
+#quiz-fb .verdict{font-weight:700}
+#quiz-fb .verdict.ok{color:#86efac}
+#quiz-fb .verdict.no{color:#fca5a5}
+.quiz-actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+
+/* cite markers */
+.cite{position:relative;display:inline-block;margin:0 1px 0 3px;padding:1px 6px;min-width:22px;border:0;border-radius:5px;background:rgba(88,166,255,.14);color:#9ccbff;font-size:.72rem;line-height:1.5;vertical-align:super;font-weight:600}
+.cite::after{content:"";position:absolute;left:0;right:0;top:50%;height:40px;transform:translateY(-50%)}
+.cite:hover{background:rgba(88,166,255,.28)}
+@media (max-width:760px){
+  .cite{margin:0 3px 0 4px;padding:2px 8px;min-width:26px;vertical-align:super}
+  .cite::after{left:-4px;right:-4px;height:44px}
+}
+#cite-pop{position:absolute;z-index:80;max-width:min(420px,calc(100vw - 24px));padding:14px 16px;background:#16213b;border:1px solid rgba(148,163,209,.35);border-radius:var(--radius-sm);box-shadow:var(--shadow);font-size:.88rem;color:var(--text)}
+#cite-pop[hidden]{display:none}
+#cite-pop p{margin-bottom:6px;padding-right:30px}
+#cite-pop a{word-break:break-all}
+#cite-pop .close{position:absolute;top:4px;right:4px;width:44px;height:44px;border:0;background:transparent;color:var(--muted);font-size:1.2rem}
+
+/* glossary & sources */
+dl.gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+dl.gloss div{padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)}
+dl.gloss dt{font-weight:700;font-family:"Space Grotesk",sans-serif}
+dl.gloss dd{color:var(--text);margin-top:4px}
+ol.srcs{padding-left:28px}
+ol.srcs li{margin:8px 0;color:var(--text);font-size:.9rem}
+ol.srcs a{word-break:break-all}
+.closing{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18px clamp(14px,4vw,40px);color:var(--muted);font-size:.88rem;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;max-width:1120px;margin:0 auto}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+@media (max-width:900px){
+  .neuron-grid,.net-grid,.train-grid{grid-template-columns:1fr}
+  dl.parts{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  section{padding-top:34px}
+  #topbar{position:relative}
+  .sliders{grid-template-columns:1fr}
+  dl.parts,dl.gloss,.opts{grid-template-columns:1fr}
+  .modes a{padding:0 10px;font-size:.84rem}
+  .card{padding:16px}
+}
+@media (max-width:400px){
+  .brand{font-size:1rem}
+  .modes a{padding:0 8px}
+  .sides a{min-width:0;padding:0 18px}
+}
+</style>
+</head>
+<body>
+
+<header id="topbar">
+  <a href="./index.html" class="brand" aria-label="Gyrafold home">
+    <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8b6cff"/>
+          <stop offset="100%" stop-color="#22d3ee"/>
+        </linearGradient>
+      </defs>
+      <circle cx="15" cy="15" r="4.5" stroke="url(#ng)" stroke-width="1.8" fill="none"/>
+      <path d="M15 10.5 C14 6, 10 4, 8 2" stroke="url(#ng)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M15 10.5 C16.5 7, 20 5.5, 22 3.5" stroke="url(#ng)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M18.9 13 C22 12, 25.5 10, 28 9" stroke="url(#ng)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M18.9 17 C22 19, 26 20.5, 28 22" stroke="url(#ng)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M15 19.5 C14 23, 11 26, 9 28" stroke="url(#ng)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M11.1 17 C8 18.5, 5 20, 2 21" stroke="url(#ng)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+    </svg>
+    Gyrafold
+  </a>
+  <nav class="modes" aria-label="Modes">
+    <a href="./index.html">Home</a>
+    <a href="./atlas-viewer.html">Whole brain</a>
+    <a href="./neuron.html" aria-current="page">Neuron</a>
+    <a href="./imaging.html">Imaging</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section id="opening" aria-labelledby="h-open">
+    <nav class="sides" aria-label="Biological or artificial neuron"><a href="./neuron.html">Biological</a><a href="./artificial.html" aria-current="page">Artificial</a></nav>
+    <h1 id="h-open">How an <span>artificial neuron</span> works</h1>
+    <p id="intro"></p>
+    <div class="level" role="group" aria-labelledby="lvl-lbl">
+      <span class="lbl" id="lvl-lbl">Level:</span>
+      <div class="seg" id="level-seg">
+        <button type="button" data-level="beginner" aria-pressed="true">New to it</button>
+        <button type="button" data-level="expert" aria-pressed="false">Expert</button>
+      </div>
+    </div>
+    <nav class="chips" aria-label="Jump to a section">
+      <a class="chip" href="#one">One neuron</a>
+      <a class="chip" href="#compare">Real and artificial</a>
+      <a class="chip" href="#network">Deep network</a>
+      <a class="chip" href="#training">Training</a>
+      <a class="chip" href="#quiz">Check yourself</a>
+      <a class="chip" href="#glossary">Words to know</a>
+    </nav>
+    <p id="load-err" class="lede" hidden>The content file could not be loaded. Please reload the page.</p>
+  </section>
+
+  <section id="one" aria-labelledby="h-one">
+    <h2 id="h-one">One artificial neuron</h2>
+    <p class="lede" id="neuron-lede"></p>
+    <div class="card">
+      <div class="neuron-grid">
+        <div>
+          <div class="diag"><svg id="ndiag" viewBox="0 8 520 272" role="img" aria-labelledby="ndiag-title"><title id="ndiag-title">Diagram of one artificial neuron: three inputs, their weights, a bias, the weighted sum, the activation function and the output</title></svg></div>
+          <div class="legend" aria-hidden="true">
+            <span><svg viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#22d3ee" stroke-width="3"/></svg>positive weight</span>
+            <span><svg viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#f472b6" stroke-width="3" stroke-dasharray="5 4"/></svg>negative weight (dashed)</span>
+            <span>thicker line = larger weight</span>
+          </div>
+        </div>
+        <div class="fn-box">
+          <div class="diag"><svg id="fplot" viewBox="0 0 280 180" role="img" aria-labelledby="fplot-title"><title id="fplot-title">Plot of the chosen activation function from z = −4 to 4, with a dot at the current value</title></svg></div>
+          <div id="fn-info"></div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:16px">
+        <span class="ctl-lbl" id="act-lbl">Activation function:</span>
+        <div class="seg" id="act-seg" role="group" aria-labelledby="act-lbl"></div>
+      </div>
+      <div class="sliders" id="sliders"></div>
+      <div class="row" style="margin-top:8px"><button type="button" class="btn" id="n-reset">Reset</button></div>
+      <p class="readout" id="n-readout" aria-live="polite"></p>
+      <dl class="parts" id="parts"></dl>
+      <div id="neuron-expert"></div>
+    </div>
+  </section>
+
+  <section id="compare" aria-labelledby="h-cmp">
+    <h2 id="h-cmp">The real neuron and the artificial one</h2>
+    <p class="lede" id="cmp-lede"></p>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table id="cmp">
+          <caption>How the parts line up</caption>
+          <thead><tr><th scope="col">Biological</th><th scope="col">Artificial</th><th scope="col">What happens</th><th scope="col">On the real neuron</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="caveat" id="cmp-caveat"></p>
+    </div>
+  </section>
+
+  <section id="network" aria-labelledby="h-net">
+    <h2 id="h-net">From one neuron to a deep network</h2>
+    <p class="lede" id="net-lede"></p>
+    <div class="card">
+      <div class="net-grid">
+        <div>
+          <div class="row" style="margin-bottom:12px">
+            <span class="ctl-lbl" id="hl-lbl">Hidden layers:</span>
+            <div class="seg" id="hl-seg" role="group" aria-labelledby="hl-lbl">
+              <button type="button" data-n="1" aria-pressed="false">1</button>
+              <button type="button" data-n="2" aria-pressed="true">2</button>
+              <button type="button" data-n="3" aria-pressed="false">3</button>
+            </div>
+          </div>
+          <div class="diag" id="net-wrap"><svg id="netsvg" role="img" aria-labelledby="net-title"><title id="net-title">Diagram of a fully connected network</title></svg></div>
+          <div class="row" style="margin-top:12px">
+            <button type="button" class="btn primary" id="net-send">Send a signal</button>
+            <button type="button" class="btn" id="net-new">New inputs</button>
+          </div>
+          <p id="net-caption" aria-live="polite"></p>
+          <p class="illus" style="margin-top:6px">Illustration: the weights are made-up fixed numbers, not a trained network. Hidden layers use ReLU; the outputs are squashed with the sigmoid for display.</p>
+        </div>
+        <div class="stack-gap">
+          <p class="count-line" id="net-count"></p>
+          <p id="net-counting"></p>
+          <p id="net-forward"></p>
+        </div>
+      </div>
+    </div>
+    <h3 style="font-size:1.1rem;margin:22px 0 6px">Why stack neurons?</h3>
+    <ul class="points" id="net-points"></ul>
+    <div id="net-expert"></div>
+  </section>
+
+  <section id="training" aria-labelledby="h-train">
+    <h2 id="h-train">How a network is made</h2>
+    <p class="lede" id="train-lede"></p>
+    <ol class="steps" id="train-steps"></ol>
+    <div class="card">
+      <h3 id="demo-title"></h3>
+      <p id="demo-text"></p>
+      <p class="illus" id="demo-note" style="margin-top:6px"></p>
+      <div class="row" style="margin-top:14px">
+        <button type="button" class="btn primary" id="t-train" aria-pressed="false">Train</button>
+        <button type="button" class="btn" id="t-step">One step</button>
+        <button type="button" class="btn" id="t-reset">Start over</button>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <span class="ctl-lbl" id="lr-lbl">Learning rate:</span>
+        <div class="seg" id="lr-seg" role="group" aria-labelledby="lr-lbl">
+          <button type="button" data-lr="0.1" aria-pressed="false">Small (0.1)</button>
+          <button type="button" data-lr="0.5" aria-pressed="true">Medium (0.5)</button>
+          <button type="button" data-lr="2" aria-pressed="false">Large (2)</button>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="k">Step</div><div class="v" id="t-steps">0</div></div>
+        <div class="stat"><div class="k">Loss</div><div class="v" id="t-loss">0.000</div></div>
+      </div>
+      <p id="train-status" aria-live="polite"></p>
+      <div class="train-grid">
+        <div>
+          <div class="diag"><svg id="losssvg" viewBox="0 0 400 200" role="img" aria-labelledby="loss-title"><title id="loss-title">Loss curve: loss against training step</title></svg></div>
+          <table id="ex-table" style="margin-top:14px">
+            <caption>The four examples</caption>
+            <thead><tr><th scope="col">Input 1</th><th scope="col">Input 2</th><th scope="col">Target</th><th scope="col">Prediction</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div>
+          <div class="diag"><svg id="tnet" viewBox="0 0 300 230" role="img" aria-labelledby="tnet-title"><title id="tnet-title">The 2-4-1 network being trained. Line thickness follows the size of each weight.</title></svg></div>
+          <p class="illus" style="margin-top:6px">Solid cyan: positive weight. Dashed pink: negative weight. Thicker: larger.</p>
+        </div>
+      </div>
+    </div>
+    <h3 style="font-size:1.1rem;margin:22px 0 6px">More about training</h3>
+    <ul class="points" id="train-points"></ul>
+    <div id="train-expert"></div>
+  </section>
+
+  <section id="quiz" aria-labelledby="h-quiz">
+    <h2 id="h-quiz">Check yourself</h2>
+    <div class="card" id="quiz-card">
+      <p class="progress" id="quiz-progress"></p>
+      <p class="q" id="quiz-q" tabindex="-1"></p>
+      <div class="opts" id="quiz-opts" role="group" aria-labelledby="quiz-q"></div>
+      <div id="quiz-fb" aria-live="polite"></div>
+      <div class="quiz-actions"><button type="button" class="btn primary" id="quiz-next" hidden>Next question</button></div>
+    </div>
+  </section>
+
+  <section id="glossary" aria-labelledby="h-gloss">
+    <h2 id="h-gloss">Words to know</h2>
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <section id="sources" aria-labelledby="h-src">
+    <h2 id="h-src">Sources</h2>
+    <p class="lede" id="src-note"></p>
+    <ol class="srcs" id="src-list"></ol>
+    <h2 style="font-size:1.3rem;margin-top:34px">Keep exploring</h2>
+    <div class="closing">
+      <a class="btn primary" href="./neuron.html">Look inside a real neuron</a>
+      <a class="btn" href="./index.html">Home</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Educational use only.</span>
+  <a class="btn" href="./index.html">Home</a>
+</footer>
+
+<div id="cite-pop" role="dialog" aria-label="Source" hidden></div>
+
+<script type="module">
+const PROFILE_KEY = 'neuroapp.profile.v1';
+const SVGNS = 'http://www.w3.org/2000/svg';
+const CYAN = '#22d3ee', PINK = '#f472b6';
+const reducedMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+let data = null;
+let level = 'beginner';
+let citeNum = new Map();
+
+// Only http(s) links may be built from data files (blocks javascript:, data:, etc.)
+function safeUrl(u) {
+  try {
+    const url = new URL(String(u), window.location.href);
+    return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : null;
+  } catch (e) { return null; }
+}
+
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === 'class') n.className = v;
+    else if (k === 'text') n.textContent = v;
+    else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of kids.flat()) if (c != null) n.append(c instanceof Node ? c : document.createTextNode(String(c)));
+  return n;
+}
+function sv(tag, attrs, ...kids) {
+  const n = document.createElementNS(SVGNS, tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) if (v != null) {
+    if (k === 'text') n.textContent = v; else n.setAttribute(k, v);
+  }
+  for (const c of kids.flat()) if (c != null) n.append(c);
+  return n;
+}
+const $ = id => document.getElementById(id);
+
+// numbers: real minus sign, no "−0.00"
+function fmt(v, d) {
+  let s = Number(v).toFixed(d);
+  if (/^-0\.?0*$/.test(s)) s = s.slice(1);
+  return s.replace('-', '−');
+}
+
+// ── level (shared with the atlas viewer) ──
+function readProfile() {
+  try { const raw = localStorage.getItem(PROFILE_KEY); const p = raw ? JSON.parse(raw) : null;
+    return (p && typeof p === 'object' && !Array.isArray(p)) ? p : {}; } catch (e) { return {}; }
+}
+function loadLevel() {
+  const p = readProfile();
+  // the viewer also has "some" (some background); this page has two levels, so it shows the expert text
+  level = (p.level === 'expert' || p.level === 'some') ? 'expert' : 'beginner';
+}
+function saveLevel(l) {
+  try {
+    const p = readProfile();
+    p.level = l;
+    if (!p.seen) p.seen = {};
+    localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+  } catch (e) { /* storage unavailable: keep level in memory */ }
+}
+
+// ── citations ──
+function citeButtons(ids) {
+  return (ids || []).filter(id => data.sources[id]).map(id => {
+    const n = citeNum.get(id);
+    return el('button', { type: 'button', class: 'cite', 'data-src': id, 'aria-label': 'Source ' + n + ': ' + data.sources[id].citation, 'aria-expanded': 'false', text: String(n) });
+  });
+}
+function withCites(tag, text, cite, attrs) {
+  return el(tag, attrs || null, text, ' ', ...citeButtons(cite));
+}
+
+const pop = $('cite-pop');
+let popOwner = null;
+function closePop(returnFocus) {
+  if (pop.hidden) return;
+  pop.hidden = true;
+  if (popOwner) { popOwner.setAttribute('aria-expanded', 'false'); if (returnFocus) popOwner.focus(); }
+  popOwner = null;
+}
+function openPop(btn) {
+  const id = btn.dataset.src, s = data.sources[id];
+  if (!s) return;
+  if (popOwner === btn) { closePop(true); return; }
+  closePop(false);
+  pop.replaceChildren();
+  pop.append(el('button', { type: 'button', class: 'close', 'aria-label': 'Close', text: '×', onclick: () => closePop(true) }));
+  pop.append(el('p', { text: '[' + citeNum.get(id) + '] ' + s.citation }));
+  const href = safeUrl(s.url);
+  if (href) pop.append(el('p', null, el('a', { href, target: '_blank', rel: 'noopener noreferrer', text: href })));
+  if (s.license) pop.append(el('p', { class: 'note-small', text: 'Licence: ' + s.license }));
+  pop.hidden = false;
+  const r = btn.getBoundingClientRect();
+  const pw = pop.offsetWidth, ph = pop.offsetHeight;
+  let left = r.left + window.scrollX - 20;
+  left = Math.max(window.scrollX + 12, Math.min(left, window.scrollX + document.documentElement.clientWidth - pw - 12));
+  let top = r.bottom + window.scrollY + 8;
+  if (r.bottom + ph + 16 > window.innerHeight && r.top > ph + 16) top = r.top + window.scrollY - ph - 8;
+  pop.style.left = left + 'px'; pop.style.top = top + 'px';
+  popOwner = btn; btn.setAttribute('aria-expanded', 'true');
+  const a = pop.querySelector('a'); (a || pop.querySelector('.close')).focus();
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('.cite');
+  if (b) { e.preventDefault(); openPop(b); return; }
+  if (!pop.hidden && !pop.contains(e.target)) closePop(false);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(true); });
+
+function expertBox(items) {
+  const list = Array.isArray(items) ? items : [items];
+  return el('div', { class: 'expert-note' },
+    el('span', { class: 'tag', text: 'Expert' }),
+    list.length === 1 ? el('span', null, list[0].text, ' ', ...citeButtons(list[0].cite))
+      : el('ul', { class: 'points', style: 'margin-top:6px' }, ...list.map(it => withCites('li', it.text, it.cite))));
+}
+
+// ═════════════ 1. One artificial neuron ═════════════
+const ACT = {
+  step: z => (z >= 0 ? 1 : 0),
+  sigmoid: z => 1 / (1 + Math.exp(-z)),
+  tanh: z => Math.tanh(z),
+  relu: z => Math.max(z, 0)
+};
+const ACT_Y = { step: [-0.2, 1.2], sigmoid: [-0.2, 1.2], tanh: [-1.2, 1.2], relu: [-0.6, 4.2] };
+const brightOf = (id, o) => id === 'tanh' ? (o + 1) / 2 : id === 'relu' ? Math.min(o / 4, 1) : o;
+const N_DEFAULT = { x: [0.5, -0.3, 1.0], w: [1.2, 0.8, -0.5], b: 0.2, act: 'sigmoid' };
+const nState = { x: [...N_DEFAULT.x], w: [...N_DEFAULT.w], b: N_DEFAULT.b, act: N_DEFAULT.act };
+const nRef = {};
+const SUB = ['₁', '₂', '₃'];
+const IN_Y = [70, 150, 230], BODY = { x: 300, y: 150, r: 44 }, BOX = { x: 375, y: 122, w: 62, h: 56 }, OUT = { x: 486, y: 150, r: 26 };
+
+function lineStyle(line, w, maxW) {
+  const m = Math.min(Math.abs(w), maxW) / maxW;
+  line.setAttribute('stroke', w >= 0 ? CYAN : PINK);
+  line.setAttribute('stroke-width', (1 + m * 7).toFixed(2));
+  line.setAttribute('stroke-dasharray', w < 0 ? '7 5' : 'none');
+  line.setAttribute('stroke-opacity', Math.abs(w) < 0.05 ? 0.25 : 0.9);
+}
+function haloText(attrs) { return sv('text', Object.assign({ 'paint-order': 'stroke', stroke: '#0b1120', 'stroke-width': 5, 'stroke-linejoin': 'round' }, attrs)); }
+
+function buildNeuronDiagram() {
+  const svg = $('ndiag');
+  const g = id => sv('g', { 'data-part': id });
+  const gW = g('weights'), gIn = g('inputs'), gB = g('bias'), gSum = g('sum'), gAct = g('activation'), gOut = g('output');
+  nRef.lines = []; nRef.wl = []; nRef.inTxt = [];
+  for (let i = 0; i < 3; i++) {
+    const line = sv('line', { x1: 50, y1: IN_Y[i], x2: BODY.x, y2: BODY.y, 'stroke-linecap': 'round' });
+    gW.append(line); nRef.lines.push(line);
+    const t = 0.42, lx = 50 + (BODY.x - 50) * t, ly = IN_Y[i] + (BODY.y - IN_Y[i]) * t;
+    const wl = haloText({ x: lx, y: ly + [-12, -10, 22][i],'text-anchor': 'middle', 'font-size': 16, style: 'fill:#e8ecf6' });
+    gW.append(wl); nRef.wl.push(wl);
+    gIn.append(sv('circle', { cx: 50, cy: IN_Y[i], r: 24, fill: '#1b2747', stroke: 'rgba(148,163,209,.6)', 'stroke-width': 1.5 }));
+    const tx = sv('text', { x: 50, y: IN_Y[i] + 5, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 600, style: 'fill:#e8ecf6' });
+    gIn.append(tx); nRef.inTxt.push(tx);
+    gIn.append(sv('text', { x: 50, y: IN_Y[i] - 30, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 600, text: 'x' + (i + 1) }));
+  }
+  // bias
+  nRef.bLine = sv('line', { x1: BODY.x, y1: 46, x2: BODY.x, y2: BODY.y - BODY.r, 'stroke-linecap': 'round' });
+  gB.append(nRef.bLine, sv('circle', { cx: BODY.x, cy: 34, r: 14, fill: '#1b2747', stroke: 'rgba(148,163,209,.6)', 'stroke-width': 1.5 }),
+    sv('text', { x: BODY.x, y: 39, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 600, style: 'fill:#e8ecf6', text: 'b' }));
+  nRef.bTxt = haloText({ x: BODY.x + 22, y: 39, 'font-size': 15, style: 'fill:#e8ecf6' });
+  gB.append(nRef.bTxt);
+  // body
+  gSum.append(sv('circle', { cx: BODY.x, cy: BODY.y, r: BODY.r, fill: '#1a2342', stroke: '#8b6cff', 'stroke-width': 2 }),
+    sv('text', { x: BODY.x, y: BODY.y - 8, 'text-anchor': 'middle', 'font-size': 22, style: 'fill:#c4b5fd', text: 'Σ' }));
+  nRef.zTxt = sv('text', { x: BODY.x, y: BODY.y + 20, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 600, style: 'fill:#e8ecf6' });
+  gSum.append(nRef.zTxt, sv('text', { x: BODY.x, y: BODY.y + BODY.r + 22, 'text-anchor': 'middle', 'font-size': 13, text: 'weighted sum' }));
+  // activation box
+  gAct.append(sv('line', { x1: BODY.x + BODY.r, y1: BODY.y, x2: BOX.x, y2: BODY.y, stroke: 'rgba(148,163,209,.6)', 'stroke-width': 2 }),
+    sv('rect', { x: BOX.x, y: BOX.y, width: BOX.w, height: BOX.h, rx: 8, fill: '#1a2342', stroke: '#8b6cff', 'stroke-width': 2 }));
+  nRef.glyph = sv('polyline', { fill: 'none', stroke: '#e8ecf6', 'stroke-width': 2, 'stroke-linejoin': 'round' });
+  nRef.actName = sv('text', { x: BOX.x + BOX.w / 2, y: BOX.y + BOX.h + 22, 'text-anchor': 'middle', 'font-size': 13 });
+  gAct.append(nRef.glyph, nRef.actName);
+  // output
+  gOut.append(sv('line', { x1: BOX.x + BOX.w, y1: BODY.y, x2: OUT.x - OUT.r, y2: BODY.y, stroke: 'rgba(148,163,209,.6)', 'stroke-width': 2 }));
+  nRef.outC = sv('circle', { cx: OUT.x, cy: OUT.y, r: OUT.r, stroke: CYAN, 'stroke-width': 2 });
+  nRef.outTxt = sv('text', { x: OUT.x, y: OUT.y + 5, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700 });
+  gOut.append(nRef.outC, nRef.outTxt, sv('text', { x: OUT.x, y: OUT.y + OUT.r + 22, 'text-anchor': 'middle', 'font-size': 13, text: 'output' }));
+  svg.append(gW, gB, gIn, gSum, gAct, gOut);
+}
+function glyphPoints(id) {
+  const pts = [], [y0, y1] = ACT_Y[id];
+  for (let i = 0; i <= 40; i++) {
+    const z = -4 + 8 * i / 40, o = ACT[id](z);
+    const x = BOX.x + 6 + (BOX.w - 12) * i / 40;
+    const y = BOX.y + BOX.h - 6 - (BOX.h - 12) * (o - y0) / (y1 - y0);
+    pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+  }
+  return pts.join(' ');
+}
+function actById(id) { return data.activations.find(a => a.id === id); }
+
+function updateNeuron() {
+  const s = nState;
+  let z = s.b; for (let i = 0; i < 3; i++) z += s.x[i] * s.w[i];
+  z = Math.round(z * 1e9) / 1e9;
+  const out = ACT[s.act](z);
+  const a = actById(s.act);
+  for (let i = 0; i < 3; i++) {
+    lineStyle(nRef.lines[i], s.w[i], 2);
+    nRef.wl[i].textContent = 'w' + (i + 1) + ' = ' + fmt(s.w[i], 1);
+    nRef.inTxt[i].textContent = fmt(s.x[i], 1);
+  }
+  lineStyle(nRef.bLine, s.b, 2);
+  nRef.bTxt.textContent = '= ' + fmt(s.b, 1);
+  nRef.zTxt.textContent = 'z = ' + fmt(z, 2);
+  nRef.glyph.setAttribute('points', glyphPoints(s.act));
+  nRef.actName.textContent = a ? a.name : s.act;
+  const br = Math.max(0, Math.min(1, brightOf(s.act, out)));
+  nRef.outC.setAttribute('fill', `rgba(34,211,238,${(0.08 + 0.82 * br).toFixed(3)})`);
+  nRef.outTxt.setAttribute('style', 'fill:' + (br > 0.55 ? '#060912' : '#e8ecf6'));
+  nRef.outTxt.textContent = fmt(out, 2);
+  const terms = s.x.map((x, i) => '(' + fmt(x, 1) + ' × ' + fmt(s.w[i], 1) + ')');
+  $('n-readout').textContent = terms.join(' + ') + ' + ' + fmt(s.b, 1) + ' = ' + fmt(z, 2) + ' → ' + (a ? a.name : s.act) + ' → ' + fmt(out, 2);
+  drawPlot(z, out);
+}
+
+function drawPlot(z, out) {
+  const svg = $('fplot');
+  const keep = svg.querySelector('title');
+  svg.replaceChildren(keep);
+  const L = 34, R = 270, T = 12, B = 150;
+  const [y0, y1] = ACT_Y[nState.act];
+  const X = v => L + (v + 4) / 8 * (R - L);
+  const Y = v => B - (v - y0) / (y1 - y0) * (B - T);
+  svg.append(sv('rect', { x: L, y: T, width: R - L, height: B - T, fill: 'rgba(255,255,255,.025)', stroke: 'rgba(148,163,209,.25)', rx: 4 }));
+  svg.append(sv('line', { x1: X(0), x2: X(0), y1: T, y2: B, stroke: 'rgba(148,163,209,.35)' }));
+  svg.append(sv('line', { x1: L, x2: R, y1: Y(0), y2: Y(0), stroke: 'rgba(148,163,209,.35)' }));
+  const yt = nState.act === 'relu' ? [0, 2, 4] : nState.act === 'tanh' ? [-1, 0, 1] : [0, 1];
+  for (const v of yt) svg.append(sv('text', { x: L - 6, y: Y(v) + 4, 'text-anchor': 'end', 'font-size': 11, text: fmt(v, 0) }));
+  for (const v of [-4, -2, 0, 2, 4]) svg.append(sv('text', { x: X(v), y: B + 14, 'text-anchor': 'middle', 'font-size': 11, text: fmt(v, 0) }));
+  svg.append(sv('text', { x: (L + R) / 2, y: 176, 'text-anchor': 'middle', 'font-size': 11, style: 'fill:#e8ecf6', text: 'weighted sum z' }));
+  svg.append(sv('text', { x: 10, y: (T + B) / 2, 'text-anchor': 'middle', 'font-size': 11, style: 'fill:#e8ecf6', transform: `rotate(-90 10 ${(T + B) / 2})`, text: 'output' }));
+  const pts = [];
+  const f = ACT[nState.act];
+  for (let i = 0; i <= 160; i++) {
+    const v = -4 + 8 * i / 160;
+    // draw the threshold jump as a vertical segment
+    if (nState.act === 'step' && i > 0 && f(v) !== f(-4 + 8 * (i - 1) / 160)) pts.push(X(0).toFixed(1) + ',' + Y(0).toFixed(1));
+    pts.push(X(v).toFixed(1) + ',' + Y(f(v)).toFixed(1));
+  }
+  svg.append(sv('polyline', { points: pts.join(' '), fill: 'none', stroke: '#8b6cff', 'stroke-width': 2.5, 'stroke-linejoin': 'round' }));
+  const zc = Math.max(-4, Math.min(4, z)), oc = Math.max(y0, Math.min(y1, out));
+  svg.append(sv('circle', { cx: X(zc), cy: Y(oc), r: 6, fill: CYAN, stroke: '#060912', 'stroke-width': 2 }));
+  if (z !== zc) svg.append(sv('text', { x: z > 0 ? R - 4 : L + 4, y: T + 14, 'text-anchor': z > 0 ? 'end' : 'start', 'font-size': 11, text: 'z is off the chart' }));
+}
+
+function renderFnInfo() {
+  const a = actById(nState.act);
+  if (!a) return;
+  $('fn-info').replaceChildren(
+    el('p', { class: 'fn-name', text: a.name }),
+    el('p', null, el('span', { class: 'formula', text: a.formula })),
+    el('p', { class: 'meta', text: 'Output range: ' + a.range }),
+    withCites('p', a.text, a.cite, { style: 'margin-top:6px' }));
+}
+function renderActSeg() {
+  $('act-seg').replaceChildren(...data.activations.map(a => el('button', { type: 'button', 'data-act': a.id, 'aria-pressed': String(a.id === nState.act),
+    onclick: () => { nState.act = a.id; syncActSeg(); renderFnInfo(); updateNeuron(); } }, a.name)));
+}
+function syncActSeg() { document.querySelectorAll('#act-seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.act === nState.act))); }
+
+function slider(id, label, min, max, get, set) {
+  const out = el('output', { for: id, id: id + '-v' });
+  const inp = el('input', { type: 'range', id, min, max, step: '0.1', value: String(get()) });
+  const sync = () => { out.textContent = fmt(get(), 1); };
+  inp.addEventListener('input', () => { set(Math.round(parseFloat(inp.value) * 10) / 10); sync(); updateNeuron(); });
+  sync();
+  return { node: el('div', { class: 'sl' }, el('div', { class: 'top' }, el('label', { for: id, text: label }), out), inp), inp, sync };
+}
+let sliderRefs = [];
+function buildSliders() {
+  const s = nState;
+  sliderRefs = [];
+  const col = items => el('div', null, ...items.map(it => { sliderRefs.push(it); return it.node; }));
+  const ins = [0, 1, 2].map(i => slider('sx' + i, 'Input x' + SUB[i], '-1', '1', () => s.x[i], v => { s.x[i] = v; }));
+  const ws = [0, 1, 2].map(i => slider('sw' + i, 'Weight w' + SUB[i], '-2', '2', () => s.w[i], v => { s.w[i] = v; }));
+  const b = slider('sb', 'Bias b', '-2', '2', () => s.b, v => { s.b = v; });
+  $('sliders').replaceChildren(col(ins), col(ws), col([b]));
+}
+$('n-reset').addEventListener('click', () => {
+  nState.x = [...N_DEFAULT.x]; nState.w = [...N_DEFAULT.w]; nState.b = N_DEFAULT.b; nState.act = N_DEFAULT.act;
+  const vals = [...nState.x, ...nState.w, nState.b];
+  sliderRefs.forEach((r, i) => { r.inp.value = String(vals[i]); r.sync(); });
+  syncActSeg(); renderFnInfo(); updateNeuron();
+});
+
+function renderParts() {
+  const dl = $('parts');
+  dl.replaceChildren(...data.neuron.parts.map(p => {
+    const d = el('div', { 'data-part': p.id },
+      el('dt', { text: p.name }),
+      el('dd', null, p.text, ' ', ...citeButtons(p.cite), p.formula ? el('br') : null, p.formula ? el('span', { class: 'formula', text: p.formula }) : null));
+    const on = () => { d.classList.add('hl'); document.querySelector('#ndiag g[data-part="' + p.id + '"]')?.classList.add('hl'); };
+    const off = () => { d.classList.remove('hl'); document.querySelector('#ndiag g[data-part="' + p.id + '"]')?.classList.remove('hl'); };
+    d.addEventListener('mouseenter', on); d.addEventListener('mouseleave', off);
+    d.addEventListener('focusin', on); d.addEventListener('focusout', off);
+    return d;
+  }));
+}
+
+// ═════════════ 3. Compare ═════════════
+function renderCompare() {
+  const c = data.compare;
+  $('cmp-lede').replaceChildren(c.lede);
+  document.querySelector('#cmp tbody').replaceChildren(...c.rows.map(r => {
+    const href = safeUrl(r.href);
+    return el('tr', null,
+      el('th', { scope: 'row', 'data-label': 'Biological', text: r.bio }),
+      el('td', { class: 'art', 'data-label': 'Artificial', text: r.art }),
+      el('td', { 'data-label': 'What happens' }, r.text, ' ', ...citeButtons(r.cite)),
+      el('td', { 'data-label': 'On the real neuron' }, href ? el('a', { href, text: r.link }) : null));
+  }));
+  $('cmp-caveat').replaceChildren(el('strong', { text: 'Keep in mind: ' }), c.caveat.text, ' ', ...citeButtons(c.caveat.cite));
+}
+
+// ═════════════ 4. Network ═════════════
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const net = { N: 2, sizes: [], W: [], B: [], inputs: [], acts: null, lit: -1, nodes: [], edges: [], gen: 0, raf: 0, animating: false, lastW: 0 };
+function buildNetParams() {
+  net.sizes = [3, ...Array(net.N).fill(4), 2];
+  const rand = mulberry32(20240611);
+  net.W = []; net.B = [];
+  for (let l = 0; l < net.sizes.length - 1; l++) {
+    const nIn = net.sizes[l], nOut = net.sizes[l + 1];
+    net.W.push(Array.from({ length: nIn }, () => Array.from({ length: nOut }, () => Math.round((rand() * 2 - 1) * 100) / 100)));
+    net.B.push(Array.from({ length: nOut }, () => Math.round((rand() * 0.6 - 0.2) * 100) / 100));
+  }
+  net.acts = null; net.lit = 0;
+}
+function netForward() {
+  const acts = [net.inputs.slice()];
+  for (let l = 0; l < net.W.length; l++) {
+    const prev = acts[l], last = l === net.W.length - 1;
+    const z = net.B[l].map((b, k) => prev.reduce((s, a, j) => s + a * net.W[l][j][k], b));
+    acts.push(z.map(v => last ? 1 / (1 + Math.exp(-v)) : Math.max(v, 0)));
+  }
+  return acts;
+}
+function layerName(l) { return l === 0 ? 'Input layer' : l === net.sizes.length - 1 ? 'Output layer' : 'Hidden layer ' + l; }
+function renderNet() {
+  const svg = $('netsvg');
+  const keep = svg.querySelector('title');
+  svg.replaceChildren(keep);
+  const W = Math.max(300, Math.round($('net-wrap').clientWidth - 16));
+  net.lastW = W;
+  const narrow = W < 520;
+  const H = narrow ? 300 : 330;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const cols = net.sizes.length, padX = narrow ? 34 : 64;
+  const X = i => padX + i * (W - 2 * padX) / (cols - 1);
+  const top = narrow ? 84 : 78, bot = H - 28, gap = (bot - top) / 3;
+  const Y = (j, n) => (top + bot) / 2 + (j - (n - 1) / 2) * gap;
+  const r = narrow ? 14 : 17, fs = narrow ? 11 : 13;
+  // column labels
+  for (let i = 0; i < cols; i++) {
+    const nm = layerName(i), parts = narrow ? nm.split(' layer') : [nm];
+    svg.append(sv('text', { x: X(i), y: 22, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 600, style: 'fill:#e8ecf6', text: parts[0] }));
+    if (narrow) svg.append(sv('text', { x: X(i), y: 22 + fs + 3, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 600, style: 'fill:#e8ecf6', text: 'layer' + parts[1] }));
+  }
+  const gE = sv('g'), gP = sv('g'), gN = sv('g');
+  net.edges = []; net.nodes = [];
+  for (let l = 0; l < cols - 1; l++) {
+    const row = [];
+    for (let j = 0; j < net.sizes[l]; j++) {
+      const cells = [];
+      for (let k = 0; k < net.sizes[l + 1]; k++) {
+        const w = net.W[l][j][k];
+        const line = sv('line', { x1: X(l), y1: Y(j, net.sizes[l]), x2: X(l + 1), y2: Y(k, net.sizes[l + 1]) });
+        lineStyle(line, w, 1);
+        line.setAttribute('stroke-width', (0.6 + Math.min(Math.abs(w), 1) * 3).toFixed(2));
+        line.setAttribute('stroke-dasharray', w < 0 ? '5 4' : 'none');
+        line.setAttribute('stroke-opacity', 0.55);
+        gE.append(line); cells.push(line);
+      }
+      row.push(cells);
+    }
+    net.edges.push(row);
+  }
+  for (let l = 0; l < cols; l++) {
+    const row = [];
+    for (let j = 0; j < net.sizes[l]; j++) {
+      const c = sv('circle', { cx: X(l), cy: Y(j, net.sizes[l]), r, stroke: l === 0 ? 'rgba(148,163,209,.7)' : CYAN, 'stroke-width': 1.5, fill: '#1b2747' });
+      const t = sv('text', { x: X(l), y: Y(j, net.sizes[l]) + 4, 'text-anchor': 'middle', 'font-size': narrow ? 9.5 : 11, 'font-weight': 600, style: 'fill:#e8ecf6' });
+      gN.append(c, t); row.push({ c, t });
+    }
+    net.nodes.push(row);
+  }
+  net.pulseLayer = gP;
+  svg.append(gE, gP, gN);
+  $('net-title').textContent = 'Diagram of a fully connected network: 3 inputs, ' + net.N + ' hidden layer' + (net.N > 1 ? 's' : '') + ' of 4 neurons each, and 2 outputs. Solid cyan lines are positive weights, dashed pink lines negative.';
+  applyLit();
+}
+function applyLit() {
+  const acts = net.acts || [net.inputs];
+  for (let l = 0; l < net.nodes.length; l++) {
+    const vals = l <= net.lit && acts[l] ? acts[l] : null;
+    const mx = vals ? Math.max(1, ...vals) : 1;
+    net.nodes[l].forEach((n, j) => {
+      if (!vals) { n.c.setAttribute('fill', '#1b2747'); n.t.textContent = ''; n.t.setAttribute('style', 'fill:#e8ecf6'); return; }
+      const v = vals[j], br = l === net.nodes.length - 1 ? v : Math.min(v / mx, 1);
+      n.c.setAttribute('fill', l === 0 ? '#1b2747' : `rgba(34,211,238,${(0.08 + 0.82 * br).toFixed(3)})`);
+      n.t.setAttribute('style', 'fill:' + (l > 0 && br > 0.55 ? '#060912' : '#e8ecf6'));
+      n.t.textContent = fmt(v, l === 0 ? 1 : 2);
+    });
+  }
+}
+function valsText(l) { return net.acts[l].map(v => fmt(v, l === 0 ? 1 : 2)).join(', '); }
+function setNetCaption(t) { $('net-caption').textContent = t; }
+function stopNetAnim() { net.gen++; net.animating = false; if (net.raf) cancelAnimationFrame(net.raf); net.raf = 0; net.pulseLayer && net.pulseLayer.replaceChildren(); }
+function rollInputs(rand) { net.inputs = [0, 1, 2].map(() => Math.round(rand() * 10) / 10); }
+function sendSignal() {
+  stopNetAnim();
+  net.acts = netForward();
+  const last = net.sizes.length - 1;
+  if (reducedMQ.matches) {
+    net.lit = last; applyLit();
+    setNetCaption('All layers computed at once. ' + net.acts.map((_, l) => layerName(l) + ': ' + valsText(l) + '.').join(' '));
+    return;
+  }
+  net.animating = true;
+  net.lit = 0; applyLit();
+  setNetCaption('Input layer: ' + valsText(0) + '. Sending the signal…');
+  const gen = net.gen, TRAVEL = 750, HOLD = 380;
+  let l = 0;
+  const runLayer = () => {
+    if (gen !== net.gen) return;
+    const pulses = [];
+    net.edges[l].forEach(row => row.forEach(line => {
+      const p = sv('circle', { r: 3.5, fill: line.getAttribute('stroke') });
+      net.pulseLayer.append(p);
+      pulses.push({ p, x1: +line.getAttribute('x1'), y1: +line.getAttribute('y1'), x2: +line.getAttribute('x2'), y2: +line.getAttribute('y2') });
+    }));
+    const t0 = performance.now();
+    const frame = now => {
+      if (gen !== net.gen) return;
+      const f = Math.min(1, (now - t0) / TRAVEL);
+      for (const q of pulses) { q.p.setAttribute('cx', q.x1 + (q.x2 - q.x1) * f); q.p.setAttribute('cy', q.y1 + (q.y2 - q.y1) * f); }
+      if (f < 1) { net.raf = requestAnimationFrame(frame); return; }
+      net.raf = 0;
+      net.pulseLayer.replaceChildren();
+      l++; net.lit = l; applyLit();
+      setNetCaption(layerName(l) + ' computed: ' + valsText(l) + (l === last ? '. Done.' : '.'));
+      if (l < last) setTimeout(runLayer, HOLD); else net.animating = false;
+    };
+    net.raf = requestAnimationFrame(frame);
+  };
+  setTimeout(runLayer, HOLD);
+}
+function renderNetCount() {
+  $('net-count').textContent = 'This network has ' + (net.N + 1) + ' layers: ' + net.N + ' hidden and 1 output.';
+}
+function setHidden(n) {
+  stopNetAnim();
+  net.N = n;
+  document.querySelectorAll('#hl-seg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.n === n)));
+  buildNetParams(); renderNetCount(); renderNet();
+  setNetCaption('Press "Send a signal" to run the network.');
+}
+document.querySelectorAll('#hl-seg button').forEach(b => b.addEventListener('click', () => setHidden(+b.dataset.n)));
+$('net-send').addEventListener('click', sendSignal);
+$('net-new').addEventListener('click', () => {
+  stopNetAnim(); rollInputs(Math.random); net.acts = null; net.lit = 0; applyLit();
+  setNetCaption('New inputs: ' + net.inputs.map(v => fmt(v, 1)).join(', ') + '. Press "Send a signal".');
+});
+function renderNetText() {
+  const n = data.network;
+  $('net-lede').replaceChildren(n.lede);
+  $('net-counting').replaceChildren(n.counting.text, ' ', ...citeButtons(n.counting.cite));
+  $('net-forward').replaceChildren(n.forward.text, ' ', ...citeButtons(n.forward.cite));
+  $('net-points').replaceChildren(...n.points.map(p => withCites('li', p.text, p.cite)));
+}
+
+// ═════════════ 5. Training ═════════════
+const TX = [[0, 0], [0, 1], [1, 0], [1, 1]], TY = [0, 1, 1, 0], HN = 4;
+const INIT_SCALE = 1, TARGET = 0.002, MAX_STEPS = 20000;
+const STEPS_PER_FRAME = { '0.1': 24, '0.5': 6, '2': 2 };
+const tr = { net: null, steps: 0, loss: 0, hist: [], running: false, done: null, lr: 0.5, raf: 0 };
+function initTrainNet(rand) {
+  const u = () => (rand() * 2 - 1) * INIT_SCALE;
+  return { W1: Array.from({ length: HN }, () => [u(), u()]), b1: Array.from({ length: HN }, u), W2: Array.from({ length: HN }, u), b2: u() };
+}
+const sigm = z => 1 / (1 + Math.exp(-z));
+function tForward(n, x) {
+  const h = n.W1.map((w, j) => Math.tanh(w[0] * x[0] + w[1] * x[1] + n.b1[j]));
+  let z = n.b2; for (let j = 0; j < HN; j++) z += n.W2[j] * h[j];
+  return { h, y: sigm(z) };
+}
+function tLoss(n) { let L = 0; for (let i = 0; i < 4; i++) { const d = tForward(n, TX[i]).y - TY[i]; L += 0.5 * d * d; } return L / 4; }
+// full-batch gradient descent; gradients by backpropagation (checked against finite differences)
+function tStep(n, lr) {
+  const gW1 = n.W1.map(() => [0, 0]), gb1 = new Array(HN).fill(0), gW2 = new Array(HN).fill(0);
+  let gb2 = 0;
+  for (let i = 0; i < 4; i++) {
+    const { h, y } = tForward(n, TX[i]);
+    const dz = (y - TY[i]) * y * (1 - y) / 4;
+    gb2 += dz;
+    for (let j = 0; j < HN; j++) {
+      gW2[j] += dz * h[j];
+      const dh = dz * n.W2[j] * (1 - h[j] * h[j]);
+      gW1[j][0] += dh * TX[i][0]; gW1[j][1] += dh * TX[i][1]; gb1[j] += dh;
+    }
+  }
+  for (let j = 0; j < HN; j++) { n.W1[j][0] -= lr * gW1[j][0]; n.W1[j][1] -= lr * gW1[j][1]; n.b1[j] -= lr * gb1[j]; n.W2[j] -= lr * gW2[j]; }
+  n.b2 -= lr * gb2;
+}
+function doOneStep() {
+  tStep(tr.net, tr.lr); tr.steps++;
+  tr.loss = tLoss(tr.net); tr.hist.push(tr.loss);
+  if (tr.loss < TARGET) tr.done = 'learned';
+  else if (tr.steps >= MAX_STEPS) tr.done = 'limit';
+}
+const nf = new Intl.NumberFormat('en-US');
+function setStatus(t) { $('train-status').textContent = t; }
+function finishIfDone() {
+  if (!tr.done) return false;
+  setRunning(false);
+  setStatus(tr.done === 'learned' ? 'Learned in ' + nf.format(tr.steps) + ' steps.' : 'Not there after ' + nf.format(MAX_STEPS) + ' steps. Start over to try new random weights.');
+  $('t-train').disabled = true; $('t-step').disabled = true;
+  return true;
+}
+function trainFrame() {
+  tr.raf = 0;
+  if (!tr.running) return;
+  const k = STEPS_PER_FRAME[String(tr.lr)] || 6;
+  for (let i = 0; i < k && !tr.done; i++) doOneStep();
+  updateTrainUI();
+  if (finishIfDone()) return;
+  tr.raf = requestAnimationFrame(trainFrame);
+}
+function setRunning(on) {
+  tr.running = on;
+  const b = $('t-train');
+  b.textContent = on ? 'Pause' : 'Train';
+  b.setAttribute('aria-pressed', String(on));
+  if (on && !tr.raf) tr.raf = requestAnimationFrame(trainFrame);
+  if (!on && tr.raf) { cancelAnimationFrame(tr.raf); tr.raf = 0; }
+}
+$('t-train').addEventListener('click', () => {
+  if (tr.done) return;
+  if (tr.running) { setRunning(false); setStatus('Paused at step ' + nf.format(tr.steps) + '.'); }
+  else { setRunning(true); setStatus('Training…'); }
+});
+$('t-step').addEventListener('click', () => {
+  if (tr.done) return;
+  if (tr.running) setRunning(false);
+  doOneStep(); updateTrainUI();
+  if (!finishIfDone()) setStatus('Step ' + nf.format(tr.steps) + ': loss ' + tr.loss.toFixed(3) + '.');
+});
+$('t-reset').addEventListener('click', resetTraining);
+document.querySelectorAll('#lr-seg button').forEach(b => b.addEventListener('click', () => {
+  tr.lr = parseFloat(b.dataset.lr);
+  document.querySelectorAll('#lr-seg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+}));
+function resetTraining() {
+  setRunning(false);
+  tr.net = initTrainNet(Math.random); tr.steps = 0; tr.done = null;
+  tr.loss = tLoss(tr.net); tr.hist = [tr.loss];
+  $('t-train').disabled = false; $('t-step').disabled = false;
+  buildTnet(); buildExTable(); updateTrainUI();
+  setStatus('New random weights. Press Train to start.');
+}
+let exCells = [];
+function buildExTable() {
+  exCells = [];
+  document.querySelector('#ex-table tbody').replaceChildren(...TX.map((x, i) => {
+    const td = el('td', { text: '' }); exCells.push(td);
+    return el('tr', null, el('td', { text: String(x[0]) }), el('td', { text: String(x[1]) }), el('td', { text: String(TY[i]) }), td);
+  }));
+}
+const tRef = {};
+function buildTnet() {
+  const svg = $('tnet');
+  svg.replaceChildren(svg.querySelector('title'));
+  const IX = 46, HX = 150, OX = 256;
+  const iy = [80, 160], hy = [40, 93, 147, 200], oy = 120;
+  const gE = sv('g'), gN = sv('g');
+  tRef.l1 = []; tRef.l2 = [];
+  for (let j = 0; j < HN; j++) {
+    tRef.l1.push([0, 1].map(k => { const ln = sv('line', { x1: IX, y1: iy[k], x2: HX, y2: hy[j], 'stroke-linecap': 'round' }); gE.append(ln); return ln; }));
+    const ln = sv('line', { x1: HX, y1: hy[j], x2: OX, y2: oy, 'stroke-linecap': 'round' }); gE.append(ln); tRef.l2.push(ln);
+  }
+  const node = (x, y, label) => gN.append(sv('circle', { cx: x, cy: y, r: 15, fill: '#1b2747', stroke: 'rgba(148,163,209,.7)', 'stroke-width': 1.5 }),
+    sv('text', { x, y: y + 5, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 600, style: 'fill:#e8ecf6', text: label }));
+  node(IX, iy[0], 'x1'); node(IX, iy[1], 'x2');
+  hy.forEach(y => node(HX, y, 'h'));
+  node(OX, oy, 'ŷ');
+  gN.append(sv('text', { x: IX, y: 222, 'text-anchor': 'middle', 'font-size': 11, text: 'inputs' }),
+    sv('text', { x: HX, y: 228, 'text-anchor': 'middle', 'font-size': 11, text: 'hidden (tanh)' }),
+    sv('text', { x: OX, y: 158, 'text-anchor': 'middle', 'font-size': 11, text: 'output' }));
+  svg.append(gE, gN);
+}
+function trainLine(line, w) {
+  const m = Math.min(Math.abs(w), 6) / 6;
+  line.setAttribute('stroke', w >= 0 ? CYAN : PINK);
+  line.setAttribute('stroke-width', (0.6 + m * 6).toFixed(2));
+  line.setAttribute('stroke-dasharray', w < 0 ? '6 4' : 'none');
+  line.setAttribute('stroke-opacity', 0.85);
+}
+function updateTrainUI() {
+  $('t-steps').textContent = nf.format(tr.steps);
+  $('t-loss').textContent = tr.loss.toFixed(3);
+  TX.forEach((x, i) => { exCells[i].textContent = tForward(tr.net, x).y.toFixed(2); });
+  for (let j = 0; j < HN; j++) { trainLine(tRef.l1[j][0], tr.net.W1[j][0]); trainLine(tRef.l1[j][1], tr.net.W1[j][1]); trainLine(tRef.l2[j], tr.net.W2[j]); }
+  drawLoss();
+}
+function drawLoss() {
+  const svg = $('losssvg');
+  svg.replaceChildren(svg.querySelector('title'));
+  const L = 48, R = 390, T = 14, B = 164;
+  const h = tr.hist, n = h.length;
+  const xMax = Math.max(100, n - 1);
+  const yMax = Math.max(0.01, Math.max(...h.slice(0, Math.min(n, 50))) * 1.1);
+  const X = i => L + i / xMax * (R - L), Y = v => B - Math.min(v, yMax) / yMax * (B - T);
+  svg.append(sv('rect', { x: L, y: T, width: R - L, height: B - T, fill: 'rgba(255,255,255,.025)', stroke: 'rgba(148,163,209,.25)', rx: 4 }));
+  svg.append(sv('line', { x1: L, x2: R, y1: Y(TARGET), y2: Y(TARGET), stroke: 'rgba(52,211,153,.6)', 'stroke-dasharray': '4 4' }));
+  svg.append(sv('text', { x: L - 6, y: T + 10, 'text-anchor': 'end', 'font-size': 11, text: yMax.toFixed(2) }));
+  svg.append(sv('text', { x: L - 6, y: B + 4, 'text-anchor': 'end', 'font-size': 11, text: '0' }));
+  svg.append(sv('text', { x: L, y: B + 16, 'text-anchor': 'middle', 'font-size': 11, text: '0' }));
+  svg.append(sv('text', { x: R, y: B + 16, 'text-anchor': 'end', 'font-size': 11, text: nf.format(xMax) }));
+  svg.append(sv('text', { x: (L + R) / 2, y: 194, 'text-anchor': 'middle', 'font-size': 12, style: 'fill:#e8ecf6', text: 'Step' }));
+  svg.append(sv('text', { x: 12, y: (T + B) / 2, 'text-anchor': 'middle', 'font-size': 12, style: 'fill:#e8ecf6', transform: `rotate(-90 12 ${(T + B) / 2})`, text: 'Loss' }));
+  const every = Math.max(1, Math.ceil(n / 400));
+  const pts = [];
+  for (let i = 0; i < n; i += every) pts.push(X(i).toFixed(1) + ',' + Y(h[i]).toFixed(1));
+  if ((n - 1) % every) pts.push(X(n - 1).toFixed(1) + ',' + Y(h[n - 1]).toFixed(1));
+  svg.append(sv('polyline', { points: pts.join(' '), fill: 'none', stroke: '#8b6cff', 'stroke-width': 2.2, 'stroke-linejoin': 'round' }));
+  svg.append(sv('circle', { cx: X(n - 1), cy: Y(h[n - 1]), r: 4, fill: CYAN }));
+}
+function renderTrainText() {
+  const t = data.training;
+  $('train-lede').replaceChildren(t.lede);
+  $('train-steps').replaceChildren(...t.steps.map(s => el('li', null, el('h3', { text: s.title }), withCites('p', s.text, s.cite))));
+  $('demo-title').textContent = t.demo.title;
+  $('demo-text').textContent = t.demo.text;
+  $('demo-note').textContent = t.demo.note;
+  $('train-points').replaceChildren(...t.points.map(p => withCites('li', p.text, p.cite)));
+}
+
+// ═════════════ 6. Quiz ═════════════
+let qi = 0, score = 0;
+function shuffled(n) {
+  const a = Array.from({ length: n }, (_, i) => i);
+  for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function renderQuiz() {
+  const Q = data.quiz, q = Q[qi];
+  const fb = $('quiz-fb'); fb.replaceChildren();
+  $('quiz-next').hidden = true;
+  if (!q) {
+    $('quiz-progress').textContent = 'Finished';
+    $('quiz-q').textContent = 'You got ' + score + ' of ' + Q.length + ' right.';
+    const again = el('button', { type: 'button', class: 'btn primary', text: 'Try again', onclick: () => { qi = 0; score = 0; renderQuiz(); $('quiz-q').focus(); } });
+    $('quiz-opts').replaceChildren(again);
+    fb.textContent = 'Score: ' + score + ' of ' + Q.length + '.';
+    return;
+  }
+  $('quiz-progress').textContent = 'Question ' + (qi + 1) + ' of ' + Q.length + ' · score ' + score;
+  const qp = $('quiz-q'); qp.textContent = q.q; qp.setAttribute('tabindex', '-1');
+  $('quiz-opts').replaceChildren(...shuffled(q.options.length).map(i =>
+    el('button', { type: 'button', 'data-opt': String(i), onclick: () => answer(i) }, el('span', { text: q.options[i] }))));
+}
+function answer(i) {
+  const q = data.quiz[qi];
+  const ok = i === q.answer;
+  if (ok) score++;
+  document.querySelectorAll('#quiz-opts button').forEach(b => {
+    b.disabled = true;
+    const o = +b.dataset.opt;
+    if (o === q.answer) { b.classList.add('right'); b.append(el('span', { class: 'mark', text: 'Right answer' })); }
+    else if (o === i) { b.classList.add('wrong'); b.append(el('span', { class: 'mark', text: 'Your answer' })); }
+  });
+  $('quiz-fb').replaceChildren(
+    el('p', null, el('span', { class: 'verdict ' + (ok ? 'ok' : 'no'), text: ok ? 'Correct. ' : 'Not quite. The right answer is: ' + q.options[q.answer] + '.' })),
+    withCites('p', q.explain, q.cite));
+  const next = $('quiz-next');
+  next.hidden = false; next.textContent = qi + 1 < data.quiz.length ? 'Next question' : 'See your score';
+  next.focus();
+}
+$('quiz-next').addEventListener('click', () => { qi++; renderQuiz(); $('quiz-q').focus(); });
+
+// ═════════════ 7. Glossary, sources ═════════════
+function renderGlossary() {
+  $('gloss').replaceChildren(...data.glossary.map(g => el('div', null, el('dt', { text: g.term }), withCites('dd', g.definition, g.cite))));
+}
+function renderSources() {
+  $('src-note').textContent = data.note;
+  $('src-list').replaceChildren(...[...citeNum.entries()].map(([id, n]) => {
+    const s = data.sources[id];
+    const href = safeUrl(s.url);
+    return el('li', { value: String(n) }, s.citation, ' ', href ? el('a', { href, target: '_blank', rel: 'noopener noreferrer', text: href }) : null,
+      s.license ? ' Licence: ' + s.license + '.' : null);
+  }));
+}
+
+// ── level-dependent rendering ──
+function renderLevel() {
+  document.querySelectorAll('#level-seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.level === level)));
+  $('intro').replaceChildren(data.intro[level], ' ', ...citeButtons(data.intro.cite));
+  const ex = level === 'expert';
+  $('neuron-expert').replaceChildren(...(ex ? [expertBox(data.neuron.expert)] : []));
+  $('net-expert').replaceChildren(...(ex ? [expertBox(data.network.expert)] : []));
+  $('train-expert').replaceChildren(...(ex ? [expertBox(data.training.expert)] : []));
+}
+document.querySelectorAll('#level-seg button').forEach(b => b.addEventListener('click', () => {
+  if (level === b.dataset.level) return;
+  level = b.dataset.level; saveLevel(level); closePop(false); renderLevel();
+}));
+
+let rsT = 0;
+window.addEventListener('resize', () => {
+  clearTimeout(rsT);
+  rsT = setTimeout(() => {
+    if (!data) return;
+    const w = Math.max(300, Math.round($('net-wrap').clientWidth - 16));
+    if (w !== net.lastW) { const animating = net.animating; stopNetAnim(); if (animating && net.acts) { const last = net.sizes.length - 1; net.lit = last; setNetCaption(layerName(last) + ' computed: ' + valsText(last) + '. Done.'); } renderNet(); }
+  }, 120);
+});
+
+// Until the lesson content has loaded (or if it fails to), buttons do nothing.
+$('main').addEventListener('click', e => { if (!data && e.target.closest('button')) { e.stopPropagation(); e.preventDefault(); } }, true);
+
+async function init() {
+  loadLevel();
+  try {
+    const res = await fetch('./content/ann.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    data = await res.json();
+  } catch (e) {
+    $('load-err').hidden = false;
+    return;
+  }
+  Object.keys(data.sources).forEach((id, i) => citeNum.set(id, i + 1));
+  // 1
+  $('neuron-lede').textContent = data.neuron.lede;
+  buildNeuronDiagram(); renderActSeg(); renderFnInfo(); buildSliders(); renderParts(); updateNeuron();
+  // 3
+  renderCompare();
+  // 4
+  renderNetText();
+  rollInputs(mulberry32(5));
+  setHidden(2);
+  // 5
+  renderTrainText(); resetTraining();
+  // 6, 7
+  renderQuiz(); renderGlossary(); renderSources();
+  renderLevel();
+  if (location.hash.length > 1) {
+    const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: 'instant', block: 'start' }));
+  }
+  document.body.dataset.ready = '1';
+}
+init();
+</script>
+<script>
+/* Offline support: register the service worker (https or localhost only). */
+(function () {
+  try {
+    var h = location.hostname, local = h === "localhost" || h === "127.0.0.1" || h === "[::1]";
+    if (!("serviceWorker" in navigator) || !(location.protocol === "https:" || local)) return;
+    window.addEventListener("load", function () { navigator.serviceWorker.register("./sw.js").catch(function () {}); });
+  } catch (e) { /* no offline support here */ }
+})();
+</script>
+</body>
+</html>

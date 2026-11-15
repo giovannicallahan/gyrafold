@@ -1,0 +1,342 @@
+{
+  "version": 1,
+  "note": "Paraphrased from the cited sources. Educational use only. The interactive demos are illustrations that run in your browser; they are not taken from the sources.",
+  "sources": {
+    "d2l_intro": {
+      "citation": "Zhang, A., Lipton, Z. C., Li, M., & Smola, A. J. (2023). Dive into deep learning (Chapter 1: Introduction). Cambridge University Press.",
+      "url": "https://d2l.ai/chapter_introduction/index.html",
+      "license": "CC BY-SA 4.0",
+      "checked": "https://d2l.ai/chapter_introduction/index.html"
+    },
+    "d2l_linreg": {
+      "citation": "Zhang, A., Lipton, Z. C., Li, M., & Smola, A. J. (2023). Dive into deep learning (Section 3.1: Linear regression). Cambridge University Press.",
+      "url": "https://d2l.ai/chapter_linear-regression/linear-regression.html",
+      "license": "CC BY-SA 4.0",
+      "checked": "https://d2l.ai/chapter_linear-regression/linear-regression.html"
+    },
+    "d2l_mlp": {
+      "citation": "Zhang, A., Lipton, Z. C., Li, M., & Smola, A. J. (2023). Dive into deep learning (Section 5.1: Multilayer perceptrons). Cambridge University Press.",
+      "url": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html",
+      "license": "CC BY-SA 4.0",
+      "checked": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html"
+    },
+    "d2l_backprop": {
+      "citation": "Zhang, A., Lipton, Z. C., Li, M., & Smola, A. J. (2023). Dive into deep learning (Section 5.3: Forward propagation, backward propagation, and computational graphs). Cambridge University Press.",
+      "url": "https://d2l.ai/chapter_multilayer-perceptrons/backprop.html",
+      "license": "CC BY-SA 4.0",
+      "checked": "https://d2l.ai/chapter_multilayer-perceptrons/backprop.html"
+    }
+  },
+  "intro": {
+    "beginner": "An artificial neural network is built from many simple units connected together, an idea borrowed from real nervous systems. The name comes from biology, but over time the link to biology has become less literal. Here you can try one artificial neuron, see how neurons stack into a deep network, and watch a network being trained.",
+    "expert": "A network of stacked fully connected layers is commonly called a multilayer perceptron (MLP). Each hidden layer applies an affine transformation followed by a nonlinear activation function, and the operations at every layer are learned jointly from data.",
+    "cite": ["d2l_intro", "d2l_linreg", "d2l_mlp"]
+  },
+  "neuron": {
+    "lede": "One artificial neuron takes some numbers in, weighs them, adds them up and gives one number out.",
+    "parts": [
+      {
+        "id": "inputs",
+        "name": "Inputs",
+        "text": "The numbers fed into the neuron. Each one is a feature of the example, such as the area of a house when predicting its price.",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "id": "weights",
+        "name": "Weights",
+        "text": "Each input has its own weight. The weight sets how much that input influences the result.",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "id": "bias",
+        "name": "Bias",
+        "text": "One extra number added to the sum. It sets the value of the weighted sum when every input is zero.",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "id": "sum",
+        "name": "Weighted sum",
+        "text": "The neuron multiplies each input by its weight, adds the results together, then adds the bias.",
+        "formula": "z = w₁x₁ + w₂x₂ + … + b",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "id": "activation",
+        "name": "Activation function",
+        "text": "The activation function decides whether the neuron should be activated, working from the weighted sum plus the bias. It turns that sum into the neuron's output, and most activation functions add nonlinearity.",
+        "cite": ["d2l_mlp"]
+      },
+      {
+        "id": "output",
+        "name": "Output",
+        "text": "The value that comes out of the activation function is called an activation. In a network it is passed on to the next layer.",
+        "cite": ["d2l_mlp"]
+      }
+    ],
+    "expert": {
+      "text": "With no activation function, this single unit is linear regression: a single-layer fully connected network with one computed neuron. The inputs are given, not computed, so they are not counted as a layer.",
+      "cite": ["d2l_linreg"]
+    }
+  },
+  "activations": [
+    {
+      "id": "step",
+      "name": "Threshold",
+      "formula": "0 below the threshold, 1 above it (in this demo the threshold is 0)",
+      "range": "0 or 1",
+      "text": "Gives 0 below a threshold and 1 above it. The first artificial neurons, described by McCulloch and Pitts in 1943, were thresholding units like this.",
+      "cite": ["d2l_mlp"]
+    },
+    {
+      "id": "sigmoid",
+      "name": "Sigmoid",
+      "formula": "1 / (1 + exp(−x))",
+      "range": "between 0 and 1",
+      "text": "Squashes any input into a value between 0 and 1. It is a smooth version of the threshold unit, which suited it to learning with gradients. Its gradient vanishes for large positive and negative inputs, and in hidden layers it has largely been replaced by ReLU.",
+      "cite": ["d2l_mlp"]
+    },
+    {
+      "id": "tanh",
+      "name": "Tanh",
+      "formula": "(1 − exp(−2x)) / (1 + exp(−2x))",
+      "range": "between −1 and 1",
+      "text": "Shaped like the sigmoid, but it squashes inputs into values between −1 and 1 and is symmetric about the origin.",
+      "cite": ["d2l_mlp"]
+    },
+    {
+      "id": "relu",
+      "name": "ReLU",
+      "formula": "max(x, 0)",
+      "range": "0 or more",
+      "text": "Keeps positive values and sets negative values to 0. It is the most popular choice because it is simple to implement and performs well on a variety of tasks.",
+      "cite": ["d2l_mlp"]
+    }
+  ],
+  "compare": {
+    "lede": "One textbook compares the artificial neuron with a simple picture of a nerve cell. This is how it lines the two up.",
+    "rows": [
+      {
+        "bio": "Dendrites",
+        "art": "Inputs",
+        "text": "Information arrives at the dendrites, the cell's input terminals.",
+        "href": "./neuron.html?part=dendrites",
+        "link": "See dendrites on the real neuron",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "bio": "Synapses",
+        "art": "Weights",
+        "text": "Each arriving signal is weighted by a synaptic weight, which sets whether it excites or inhibits, and how strongly.",
+        "href": "./neuron.html?part=synapse",
+        "link": "See the synapse on the real neuron",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "bio": "Cell body",
+        "art": "Weighted sum and activation function",
+        "text": "The weighted inputs are added together, in the source's picture inside the nucleus, and may then pass through a nonlinear function.",
+        "href": "./neuron.html?process=summation",
+        "link": "See how a real neuron adds up its inputs",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "bio": "Axon and axon terminals",
+        "art": "Output",
+        "text": "The result travels along the axon, the output wire, to the axon terminals, which connect to other neurons through synapses.",
+        "href": "./neuron.html?part=axon",
+        "link": "See the axon on the real neuron",
+        "cite": ["d2l_linreg"]
+      }
+    ],
+    "caveat": {
+      "text": "This is a simplified picture, not a model of the brain. The name 'neural network' comes from biology, but the interpretation has become less literal over time. Deep learning now draws at least as much on mathematics, statistics and computer science as on neuroscience. As one textbook comparison puts it, aeroplanes may have been inspired by birds, but the study of birds has not been the main driver of aircraft design for centuries.",
+      "cite": ["d2l_intro", "d2l_linreg"]
+    }
+  },
+  "network": {
+    "lede": "One neuron can only do so much. Deep networks get their power from stacking many neurons in layers.",
+    "points": [
+      {
+        "text": "Without an activation function, a neuron is a linear model, and linear models are limited: raising an input can only ever push the output one way, up or down, depending on the sign of its weight.",
+        "cite": ["d2l_mlp"]
+      },
+      {
+        "text": "Adding one or more hidden layers between the input and the output overcomes this limit. The simplest way is to stack fully connected layers, in which every input influences every neuron in the next layer.",
+        "cite": ["d2l_mlp"]
+      },
+      {
+        "text": "The hidden layers need a nonlinear activation function. Without one, the stacked layers collapse into a single linear model and nothing is gained.",
+        "cite": ["d2l_mlp"]
+      },
+      {
+        "text": "Deep learning is called deep because its models learn many layers of transformations, chained one after another.",
+        "cite": ["d2l_intro"]
+      },
+      {
+        "text": "The layers before the last one act as a learned representation of the data, and the final layer makes the prediction from it. Both are learned together from data instead of being designed by hand.",
+        "cite": ["d2l_mlp", "d2l_intro"]
+      }
+    ],
+    "forward": {
+      "text": "Sending a signal through the network is called forward propagation: values are calculated and stored in order, from the input layer to the output layer.",
+      "cite": ["d2l_backprop"]
+    },
+    "counting": {
+      "text": "The input layer does no calculation, so it is not counted. A network with one hidden layer and one output layer has two layers.",
+      "cite": ["d2l_mlp"]
+    },
+    "expert": [
+      {
+        "text": "A network built this way is commonly called a multilayer perceptron (MLP). With one hidden layer: H = σ(XW⁽¹⁾ + b⁽¹⁾), O = HW⁽²⁾ + b⁽²⁾.",
+        "cite": ["d2l_mlp"]
+      },
+      {
+        "text": "Universal approximation: results such as Cybenko (1989) suggest that even one hidden layer, given enough neurons and the right weights, can model any function. Learning those weights is the hard part.",
+        "cite": ["d2l_mlp"]
+      },
+      {
+        "text": "Deeper networks can approximate many functions much more compactly than wider ones.",
+        "cite": ["d2l_mlp"]
+      }
+    ]
+  },
+  "training": {
+    "lede": "Nobody types in the weights. A network is created by training: it typically starts out random and is adjusted, little by little, using examples.",
+    "steps": [
+      {
+        "title": "Start at random",
+        "text": "Training starts from a model whose parameters are typically set at random. It cannot do anything useful yet.",
+        "cite": ["d2l_intro", "d2l_linreg"]
+      },
+      {
+        "title": "Take some examples",
+        "text": "Grab some of the data. In supervised learning each example has features, which are the inputs, and a label, which is the right answer.",
+        "cite": ["d2l_intro"]
+      },
+      {
+        "title": "Measure the error",
+        "text": "A loss function measures how far the predictions are from the real values. Smaller is better, and a perfect prediction scores 0.",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "title": "Adjust the weights",
+        "text": "Gradient descent checks, for each parameter, how the loss would change if that parameter were nudged a little, then moves it in the direction that lowers the loss. The learning rate, a small positive number, sets the size of each step.",
+        "cite": ["d2l_intro", "d2l_linreg"]
+      },
+      {
+        "title": "Repeat",
+        "text": "Take more examples and adjust again, over and over, until the model performs well.",
+        "cite": ["d2l_intro"]
+      }
+    ],
+    "points": [
+      {
+        "text": "Parameters are like knobs: turning them changes how the program behaves. Once they are fixed, the program is called a model.",
+        "cite": ["d2l_intro"]
+      },
+      {
+        "text": "Backpropagation calculates the gradient for every parameter by moving through the network in reverse, from the output layer to the input layer, using the chain rule from calculus. Those gradients are then used to update the parameters.",
+        "cite": ["d2l_backprop"]
+      },
+      {
+        "text": "During training, forward propagation and backpropagation alternate.",
+        "cite": ["d2l_backprop"]
+      },
+      {
+        "text": "A model is checked on test data that was held out from training. A model that does well on its training data but fails on unseen data is overfitting.",
+        "cite": ["d2l_intro"]
+      }
+    ],
+    "expert": [
+      {
+        "text": "Squared error for one example: l = ½(ŷ − y)². The training loss is the average over the examples.",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "text": "Minibatch stochastic gradient descent: sample a random minibatch, compute the gradient of its average loss, multiply by the learning rate η and subtract the result from the parameters.",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "text": "The learning rate and the minibatch size are set by the user and are not updated in the training loop. Such values are called hyperparameters.",
+        "cite": ["d2l_linreg"]
+      },
+      {
+        "text": "Backpropagation reuses the intermediate values stored during forward propagation, so they must be kept until it finishes. This is one of the reasons training needs significantly more memory than prediction.",
+        "cite": ["d2l_backprop"]
+      }
+    ],
+    "demo": {
+      "title": "Train a tiny network",
+      "text": "This is a real, tiny network running in your browser: 2 inputs, one hidden layer of 4 neurons and 1 output. It has four examples to learn: the answer is 1 when the two inputs differ and 0 when they match. Press Train and watch the loss fall as the weights are adjusted.",
+      "note": "Illustration only. It uses squared-error loss and gradient descent on all four examples at once."
+    }
+  },
+  "quiz": [
+    {
+      "q": "What does a weight do in an artificial neuron?",
+      "options": ["Sets how much one input influences the result", "Stores the training examples", "Counts the layers in the network", "Decides how long training lasts"],
+      "answer": 0,
+      "explain": "Each input has its own weight, and the weight sets how much that input influences the result.",
+      "cite": ["d2l_linreg"]
+    },
+    {
+      "q": "What does the ReLU activation function do?",
+      "options": ["Squashes every value to between 0 and 1", "Keeps positive values and sets negative values to 0", "Adds the bias to the sum", "Picks the weights at random"],
+      "answer": 1,
+      "explain": "ReLU is max(x, 0): positive values pass through and negative values become 0.",
+      "cite": ["d2l_mlp"]
+    },
+    {
+      "q": "What happens if you stack layers without a nonlinear activation function?",
+      "options": ["The network learns faster", "The network needs no training", "The layers collapse into a single linear model", "The network becomes a model of the brain"],
+      "answer": 2,
+      "explain": "Without a nonlinear activation function the stacked layers are still just one linear model, so nothing is gained.",
+      "cite": ["d2l_mlp"]
+    },
+    {
+      "q": "Why is deep learning called deep?",
+      "options": ["It needs very large computers", "Its models learn many layers of transformations", "It copies the deepest parts of the brain", "Its results are hard to understand"],
+      "answer": 1,
+      "explain": "The models chain many layers of transformations one after another, and that depth gives deep learning its name.",
+      "cite": ["d2l_intro"]
+    },
+    {
+      "q": "A network's weights at the very start of training are usually…",
+      "options": ["Copied from a real brain", "All set to 1", "Typed in by an expert", "Set at random"],
+      "answer": 3,
+      "explain": "Training typically starts from randomly set parameters and adjusts them step by step using examples.",
+      "cite": ["d2l_intro", "d2l_linreg"]
+    },
+    {
+      "q": "In which direction does backpropagation move through the network?",
+      "options": ["From the output layer back to the input layer", "From the input layer to the output layer", "Only within the hidden layers", "In a random order"],
+      "answer": 0,
+      "explain": "Backpropagation calculates gradients in reverse order, from the output layer to the input layer, using the chain rule.",
+      "cite": ["d2l_backprop"]
+    },
+    {
+      "q": "What does a loss function measure?",
+      "options": ["How many neurons the network has", "How fast the computer is", "How far the predictions are from the real values", "How many examples are in the dataset"],
+      "answer": 2,
+      "explain": "The loss measures the distance between predicted and real values. Smaller is better, and a perfect prediction scores 0.",
+      "cite": ["d2l_linreg"]
+    }
+  ],
+  "glossary": [
+    { "term": "Artificial neuron", "definition": "A simple computing unit: it multiplies each input by a weight, adds the results and a bias, and may pass the sum through an activation function.", "cite": ["d2l_linreg"] },
+    { "term": "Weight", "definition": "A number attached to one input of an artificial neuron. It sets how much that input influences the result.", "cite": ["d2l_linreg"] },
+    { "term": "Bias (artificial neuron)", "definition": "An extra number added to the weighted sum. It sets the value of the sum when every input is zero.", "cite": ["d2l_linreg"] },
+    { "term": "Activation function", "definition": "A function applied to a neuron's weighted sum that decides whether the neuron should be activated. Most add nonlinearity.", "cite": ["d2l_mlp"] },
+    { "term": "ReLU", "definition": "The activation function max(x, 0): it keeps positive values and sets negative values to 0.", "cite": ["d2l_mlp"] },
+    { "term": "Sigmoid", "definition": "An activation function that squashes any input into a value between 0 and 1.", "cite": ["d2l_mlp"] },
+    { "term": "Hidden layer", "definition": "A layer of neurons between the input and the output of a network.", "cite": ["d2l_mlp"] },
+    { "term": "Multilayer perceptron (MLP)", "definition": "A network made by stacking fully connected layers, with one or more hidden layers.", "cite": ["d2l_mlp"] },
+    { "term": "Deep learning", "definition": "Machine learning with models that learn many layers of transformations of the data.", "cite": ["d2l_intro"] },
+    { "term": "Loss function", "definition": "A measure of how far a model's predictions are from the real values. Smaller is better.", "cite": ["d2l_linreg"] },
+    { "term": "Gradient descent", "definition": "A way of training: repeatedly move each parameter a small step in the direction that lowers the loss.", "cite": ["d2l_intro", "d2l_linreg"] },
+    { "term": "Learning rate", "definition": "A small positive number that sets the size of each gradient descent step.", "cite": ["d2l_linreg"] },
+    { "term": "Forward propagation", "definition": "Calculating and storing a network's values in order, from the input layer to the output layer.", "cite": ["d2l_backprop"] },
+    { "term": "Backpropagation", "definition": "The method for calculating the gradient of every parameter, working in reverse from the output layer to the input layer with the chain rule.", "cite": ["d2l_backprop"] },
+    { "term": "Overfitting", "definition": "When a model does well on its training data but fails on data it has not seen.", "cite": ["d2l_intro"] }
+  ]
+}

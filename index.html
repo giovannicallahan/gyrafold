@@ -6,9 +6,9 @@
 <meta http-equiv="Content-Security-Policy"
   content="default-src 'self'; manifest-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
-<meta name="description" content="Spin, slice and click through 300+ structures. Learn what each part does with cited lessons, take a guided tour, and quiz yourself with questions that adapt to you.">
-<meta property="og:title" content="Gyrafold: explore the human brain in 3D">
-<meta property="og:description" content="Spin, slice and click through 300+ structures. Learn what each part does with cited lessons, take a guided tour, and quiz yourself with questions that adapt to you.">
+<meta name="description" content="Explore the human brain in 3D, then cross to the artificial side: see how an artificial neuron computes, how deep neural networks work and how they learn. Free, with cited lessons.">
+<meta property="og:title" content="Gyrafold: explore the human brain and the artificial one">
+<meta property="og:description" content="Explore the human brain in 3D, then cross to the artificial side: see how an artificial neuron computes, how deep neural networks work and how they learn. Free, with cited lessons.">
 <meta property="og:image" content="https://gyrafold.com/assets/og-card.png">
 <meta property="og:url" content="https://gyrafold.com/">
 <link rel="icon" href="./assets/favicon.svg">
@@ -17,7 +17,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#0b1120">
 <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon-180.png">
-<title>Gyrafold — learn the human brain in 3D</title>
+<title>Gyrafold: the human brain and the artificial one</title>
 <style>
 /* ── Fonts ── */
 @font-face{font-family:"Inter";src:url("./vendor/fonts/inter-var.woff2") format("woff2");font-weight:100 900;font-display:swap}
@@ -295,11 +295,21 @@ body::after{
 }
 .mode-card:hover,.mode-card:focus-visible{transform:translateY(-3px);border-color:rgba(139,108,255,.55);box-shadow:0 12px 40px rgba(139,108,255,.18)}
 .mode-card:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
-.mode-card h3{font-family:"Space Grotesk",sans-serif;font-size:1.15rem;font-weight:600}
+.mode-card h4{font-family:"Space Grotesk",sans-serif;font-size:1.15rem;font-weight:600}
 .mode-card p{font-size:.9rem;color:var(--muted);line-height:1.6;flex:1}
 .mode-go{font-size:.88rem;font-weight:600;color:var(--cyan)}
 @media(prefers-reduced-motion:reduce){.mode-card{transition:none}.mode-card:hover{transform:none}}
 @media(max-width:820px){.modes-grid{grid-template-columns:1fr}}
+/* two sides: biological and artificial */
+.side{margin-bottom:44px}
+.side:last-child{margin-bottom:0}
+.side-head{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:18px}
+.side-tag{font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:999px;border:1px solid}
+.side-bio .side-tag{color:#c9bcff;border-color:rgba(139,108,255,.45);background:rgba(139,108,255,.10)}
+.side-art .side-tag{color:#8ee9f5;border-color:rgba(34,211,238,.45);background:rgba(34,211,238,.08)}
+.side-head h3{font-family:"Space Grotesk",sans-serif;font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:600;letter-spacing:-.01em}
+.side-head p{color:var(--muted);font-size:.95rem;max-width:62ch}
+@media(max-width:760px){.side-head{align-items:center;text-align:center}}
 
 /* ── How it works ── */
 #how-it-works{
@@ -557,6 +567,7 @@ body{padding-bottom:96px}
   </a>
   <nav class="nav-links" aria-label="Site navigation">
     <a href="./neuron.html" class="nav-link">Neuron</a>
+    <a href="./artificial.html" class="nav-link">Artificial</a>
     <a href="./imaging.html" class="nav-link">Imaging</a>
     <a href="#features" class="nav-link">Features</a>
     <a href="./atlas-viewer.html" class="btn btn-secondary">Open the atlas</a>
@@ -569,12 +580,12 @@ body{padding-bottom:96px}
   <canvas id="neural-bg" aria-hidden="true"></canvas>
   <div class="hero-inner">
     <div class="hero-text">
-      <p class="hero-pill"><span class="dot" aria-hidden="true"></span>New: neuron mode and brain imaging</p>
-      <h1 class="hero-heading" id="hero-heading">Explore the human brain in 3D</h1>
+      <p class="hero-pill"><span class="dot" aria-hidden="true"></span>New: the artificial side, with neural networks you can run</p>
+      <h1 class="hero-heading" id="hero-heading">Explore the human brain and the artificial one</h1>
       <p class="hero-subtitle fx" style="--d:.75s">
-        Spin, slice and click through 300+ structures. Learn what each part does
-        with cited lessons, take a guided tour, and quiz yourself with questions
-        that adapt to you.
+        One you were born with, one that was built. Spin, slice and click through
+        300+ structures of the real brain in 3D, then cross to the artificial side
+        and watch a neural network compute and learn. Every lesson is cited.
       </p>
 
       <!-- Level picker -->
@@ -588,9 +599,9 @@ body{padding-bottom:96px}
       </div>
 
       <div class="hero-cta fx" style="--d:1.05s">
-        <a href="./atlas-viewer.html" class="btn btn-primary" id="cta-explore">Start exploring</a>
+        <a href="./atlas-viewer.html" class="btn btn-primary" id="cta-explore">The human brain</a>
+        <a href="./artificial.html" class="btn btn-secondary" id="cta-artificial">The artificial brain</a>
         <a href="./atlas-viewer.html?start=tour" class="btn btn-secondary" id="cta-tour">Take the 5-minute tour</a>
-        <a href="./atlas-viewer.html?start=quiz" class="btn btn-secondary" id="cta-quiz">Quiz me</a>
         <button type="button" class="btn btn-secondary" id="cta-install" hidden>Install app</button>
       </div>
       <p class="hero-note fx" style="--d:1.2s">Free. No account. Works on your phone.</p>
@@ -641,38 +652,87 @@ body{padding-bottom:96px}
 
 <!-- ══ MODES ══ -->
 <section id="modes" aria-labelledby="modes-heading">
-  <h2 class="section-heading" id="modes-heading">Three ways into the brain</h2>
+  <h2 class="section-heading" id="modes-heading">Two brains to explore</h2>
+
+  <div class="side side-bio" role="group" aria-labelledby="side-bio-h">
+    <div class="side-head">
+      <span class="side-tag">Biological</span>
+      <h3 id="side-bio-h">The human brain</h3>
+      <p>The real thing: living tissue, real neurons, and the scanners used to study them.</p>
+    </div>
   <div class="modes-grid">
-    <a class="mode-card" href="./atlas-viewer.html">
-      <div class="icon-wrap" aria-hidden="true">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 4.5a3.5 3.5 0 0 1 6.5-1.6A3.6 3.6 0 0 1 18.5 8a3.4 3.4 0 0 1-.6 6.3A3.5 3.5 0 0 1 12 17.5V19M8 4.5A3.6 3.6 0 0 0 4 8.6a3.4 3.4 0 0 0 1 6 3.4 3.4 0 0 0 5 2.4M11 3.5v14"/>
-        </svg>
-      </div>
-      <h3>The whole brain</h3>
-      <p>Turn the full 3D atlas, click any structure to learn what it does, and follow guided tours of how regions work together.</p>
-      <span class="mode-go">Open the atlas</span>
-    </a>
-    <a class="mode-card" href="./neuron.html?from=atlas">
-      <div class="icon-wrap" aria-hidden="true">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="7" cy="9" r="3"/><path d="M5 6.5L3 3.5M7 6V2.5M9.3 7L12 4M4.2 10.5L1.5 12M9.8 10.2C13 12 15 15 19.5 15.5M19.5 15.5l1-2M19.5 15.5l.5 2.3"/>
-        </svg>
-      </div>
-      <h3>A single neuron</h3>
-      <p>Zoom in to one nerve cell. Click its parts, watch a signal travel down the axon and cross a synapse, then test yourself.</p>
-      <span class="mode-go">Look inside a neuron</span>
-    </a>
-    <a class="mode-card" href="./imaging.html">
-      <div class="icon-wrap" aria-hidden="true">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M1.5 12h3l1.5-5 2.5 10 2.5-13 2.5 11 1.5-3h5.5"/>
-        </svg>
-      </div>
-      <h3>Brain imaging</h3>
-      <p>What MRI, fMRI, EEG, MEG and PET each measure, what they can and cannot tell you, and which one fits which question.</p>
-      <span class="mode-go">Compare the methods</span>
-    </a>
+      <a class="mode-card" href="./atlas-viewer.html">
+        <div class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 4.5a3.5 3.5 0 0 1 6.5-1.6A3.6 3.6 0 0 1 18.5 8a3.4 3.4 0 0 1-.6 6.3A3.5 3.5 0 0 1 12 17.5V19M8 4.5A3.6 3.6 0 0 0 4 8.6a3.4 3.4 0 0 0 1 6 3.4 3.4 0 0 0 5 2.4M11 3.5v14"/>
+          </svg>
+        </div>
+        <h4>The whole brain</h4>
+        <p>Turn the full 3D atlas, click any structure to learn what it does, and follow guided tours of how regions work together.</p>
+        <span class="mode-go">Open the atlas</span>
+      </a>
+      <a class="mode-card" href="./neuron.html?from=atlas">
+        <div class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7" cy="9" r="3"/><path d="M5 6.5L3 3.5M7 6V2.5M9.3 7L12 4M4.2 10.5L1.5 12M9.8 10.2C13 12 15 15 19.5 15.5M19.5 15.5l1-2M19.5 15.5l.5 2.3"/>
+          </svg>
+        </div>
+        <h4>A single neuron</h4>
+        <p>Zoom in to one nerve cell. Click its parts, watch a signal travel down the axon and cross a synapse, then test yourself.</p>
+        <span class="mode-go">Look inside a neuron</span>
+      </a>
+      <a class="mode-card" href="./imaging.html">
+        <div class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1.5 12h3l1.5-5 2.5 10 2.5-13 2.5 11 1.5-3h5.5"/>
+          </svg>
+        </div>
+        <h4>Brain imaging</h4>
+        <p>What MRI, fMRI, EEG, MEG and PET each measure, what they can and cannot tell you, and which one fits which question.</p>
+        <span class="mode-go">Compare the methods</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="side side-art" role="group" aria-labelledby="side-art-h">
+    <div class="side-head">
+      <span class="side-tag">Artificial</span>
+      <h3 id="side-art-h">The artificial brain</h3>
+      <p>Neural networks borrow their name from the brain. See what is inside one and how it is made.</p>
+    </div>
+    <div class="modes-grid">
+      <a class="mode-card" href="./artificial.html#one">
+        <div class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="11" r="3.4"/><path d="M2 4.5l7.2 4.6M2 11h6.6M2 17.5l7.2-4.6M15.4 11H20.5"/>
+          </svg>
+        </div>
+        <h4>One artificial neuron</h4>
+        <p>Move the inputs, weights and bias, switch the activation function, and watch the output change as you go.</p>
+        <span class="mode-go">Try an artificial neuron</span>
+      </a>
+      <a class="mode-card" href="./artificial.html#network">
+        <div class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="3.5" cy="6" r="1.7"/><circle cx="3.5" cy="16" r="1.7"/><circle cx="11" cy="3.5" r="1.7"/><circle cx="11" cy="11" r="1.7"/><circle cx="11" cy="18.5" r="1.7"/><circle cx="18.5" cy="11" r="1.7"/>
+            <path d="M5.1 5.4l4.3-1.4M5.1 6.8l4.4 3.3M5.1 15.2l4.4-3.3M5.1 16.6l4.3 1.4M12.6 4.4l4.5 5.4M12.7 11h4.1M12.6 17.6l4.5-5.4"/>
+          </svg>
+        </div>
+        <h4>A deep neural network</h4>
+        <p>Stack neurons into layers and send a signal through, one layer at a time, from input to output.</p>
+        <span class="mode-go">See a network at work</span>
+      </a>
+      <a class="mode-card" href="./artificial.html#training">
+        <div class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#060912" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.5 2.5v17h17M5.5 5.5c2 6.5 5 10 12.5 10.5"/>
+          </svg>
+        </div>
+        <h4>How a network learns</h4>
+        <p>Networks are trained, not programmed. Train a tiny one in your browser and watch its error fall.</p>
+        <span class="mode-go">Train a network</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -771,7 +831,10 @@ body{padding-bottom:96px}
 <section id="final-cta" aria-label="Final call to action">
   <div class="cta-panel">
     <h2>Ready to look inside?</h2>
-    <a href="./atlas-viewer.html" class="btn btn-primary" id="cta-final">Start exploring</a>
+    <div class="hero-cta" style="justify-content:center;margin-top:0">
+      <a href="./atlas-viewer.html" class="btn btn-primary" id="cta-final">The human brain</a>
+      <a href="./artificial.html" class="btn btn-secondary">The artificial brain</a>
+    </div>
   </div>
 </section>
 </main>
@@ -1187,7 +1250,7 @@ body{padding-bottom:96px}
     });
 
     // scroll reveal, staggered within each group
-    const groups = [".section-heading", ".modes-grid > *", ".features-grid > *", ".steps-row > *", "#stats-strip > *", ".cta-panel"];
+    const groups = [".section-heading", ".side-head", ".modes-grid > *", ".features-grid > *", ".steps-row > *", "#stats-strip > *", ".cta-panel"];
     const targets = [];
     groups.forEach(sel => {
       document.querySelectorAll(sel).forEach(el => {
@@ -1233,17 +1296,18 @@ body{padding-bottom:96px}
       }));
     }
     const START = [
-      { label: "What can I do here?", run: () => { say("Three things. Turn the whole brain and click any structure to learn it; zoom in to a single neuron and watch it fire; or compare the brain-imaging methods. Every lesson shows its source."); setChips(START.slice(1)); } },
+      { label: "What can I do here?", run: () => { say("There are two sides. On the biological side, turn the whole brain and click any structure, zoom in to a single neuron and watch it fire, or compare the brain-imaging methods. On the artificial side, try an artificial neuron and train a small neural network. Every lesson shows its source."); setChips(START.slice(1)); } },
       { label: "Take the tour", run: () => say(["A five-minute tour of the brain's main regions.", { href: "./atlas-viewer.html?start=tour", label: "Start the tour" }]) },
       { label: "Quiz me", run: () => say(["A quick quiz that brings back what you miss.", { href: "./atlas-viewer.html?start=quiz", label: "Start a quiz" }]) },
       { label: "Show me a neuron", run: () => say(["Click the parts of a nerve cell and watch a signal travel.", { href: "./neuron.html?from=atlas", label: "Open neuron mode" }]) },
+      { label: "Artificial neurons", run: () => say(["Change the inputs and weights of an artificial neuron, then watch a small network learn.", { href: "./artificial.html", label: "Open the artificial side" }]) },
       { label: "MRI or EEG?", run: () => say(["What each imaging method measures, and what it can't tell you.", { href: "./imaging.html", label: "Open the imaging guide" }]) }
     ];
 
     async function loadIndex() {
       if (index) return index;
       const get = u => fetch(u).then(r => r.ok ? r.json() : null).catch(() => null);
-      const [L, N, I] = await Promise.all([get("./content/learning.json"), get("./content/neuron.json"), get("./content/imaging.json")]);
+      const [L, N, I, A] = await Promise.all([get("./content/learning.json"), get("./content/neuron.json"), get("./content/imaging.json"), get("./content/ann.json")]);
       const out = [];
       const add = (title, text, href, label, kind) => { if (title && text) out.push({ title, text, href, label, kind, key: title.toLowerCase() }); };
       if (L) {
@@ -1258,6 +1322,11 @@ body{padding-bottom:96px}
       if (I) {
         (I.methods || []).forEach(m => { add(m.name, m.short, "./imaging.html#m-" + encodeURIComponent(m.id), "Read about " + m.name, m.full); if (m.full) add(m.full, m.short, "./imaging.html#m-" + encodeURIComponent(m.id), "Read about " + m.name, m.name); });
         (I.glossary || []).forEach(g => add(g.term, g.definition, "./imaging.html", "Open the imaging guide", "Glossary"));
+      }
+      if (A) {
+        ((A.neuron && A.neuron.parts) || []).forEach(p => add(p.name, p.text, "./artificial.html#one", "Try it on an artificial neuron", "Part of an artificial neuron"));
+        (A.activations || []).forEach(f => add(f.name, f.text, "./artificial.html#one", "Try this activation function", "Activation function"));
+        (A.glossary || []).forEach(g => add(g.term, g.definition, "./artificial.html#glossary", "Open the artificial side", "Artificial networks"));
       }
       index = out; return out;
     }
@@ -1294,7 +1363,7 @@ body{padding-bottom:96px}
     }
     async function answer(q) {
       const lq = q.toLowerCase();
-      if (/\b(hi|hello|hey)\b/.test(lq) && lq.length < 14) { say("Hello! Ask me about a brain structure, a part of a neuron, or an imaging method. I do enjoy a good term."); return; }
+      if (/\b(hi|hello|hey)\b/.test(lq) && lq.length < 14) { say("Hello! Ask me about a brain structure, a part of a neuron, an imaging method, or a neural-network term. I do enjoy a good term."); return; }
       if (/\b(are you|r u|is this|you an?)\b.*\b(ai|a\.i|bot|robot|chatbot|human|real|chatgpt|claude)\b|\bwho are you\b|\bwhat are you\b/.test(lq)) { say("I'm Oron, a lookup guide, not an AI. I match your words against Gyrafold's own lessons and show you the closest one."); return; }
       if (/\b(free|cost|price|pay|account|sign ?up)\b/.test(lq)) { say("Gyrafold is free, with no account. It runs in your browser on a computer or phone."); return; }
       if (/who (made|built|created)|author|creator/.test(lq)) { say(["Gyrafold was created by Giovanni Callahan.", { href: "https://giovannicallahan.github.io/", label: "About the creator" }]); return; }

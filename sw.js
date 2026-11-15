@@ -9,7 +9,7 @@
  *
  * Same-origin GET requests only. Nothing here talks to any other host.
  */
-const VERSION = "2026-11-14.2";
+const VERSION = "2026-11-14.3";
 const SHELL_CACHE = "gyrafold-shell-" + VERSION;
 const RUNTIME_CACHE = "gyrafold-runtime-" + VERSION;
 const MODELS_CACHE = "gyrafold-models-v1"; // also named in atlas-viewer.html
@@ -19,6 +19,7 @@ const SHELL = [
   "./index.html",
   "./atlas-viewer.html",
   "./neuron.html",
+  "./artificial.html",
   "./imaging.html",
   "./privacy.html",
   "./manifest.webmanifest",
@@ -37,6 +38,7 @@ const SHELL = [
   "./vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
   "./content/learning.json",
   "./content/neuron.json",
+  "./content/ann.json",
   "./content/imaging.json",
   "./atlas-manifest.json"
 ];

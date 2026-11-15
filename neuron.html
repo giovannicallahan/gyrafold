@@ -56,6 +56,11 @@ a{color:var(--cyan)}
 .hud-btn{background:rgba(18,27,48,.88);border:1px solid var(--border);border-radius:999px;padding:7px 13px;font-size:12.5px;min-height:36px;color:var(--text)}
 .hud-btn:hover{border-color:rgba(139,108,255,.5)}
 .hud-btn[aria-pressed="true"],.hud-btn[aria-checked="true"]{background:rgba(139,108,255,.25);border-color:var(--violet)}
+.sides{position:absolute;right:12px;top:8px;z-index:6;display:flex;gap:2px;padding:0;background:rgba(11,17,32,.88);border:1px solid var(--border);border-radius:999px}
+.sides a{color:var(--muted);text-decoration:none;font-size:.85rem;padding:0 16px;min-height:44px;display:flex;align-items:center;border-radius:999px;border:1px solid transparent}
+.sides a:hover{color:var(--text)}
+.sides a[aria-current="page"]{color:var(--text);border-color:rgba(139,108,255,.5);background:rgba(139,108,255,.14)}
+.sides a:focus-visible{outline:2px solid var(--cyan);outline-offset:1px}
 #stage-note{position:absolute;left:12px;bottom:10px;font-size:11.5px;color:var(--muted);background:rgba(6,9,18,.6);padding:3px 8px;border-radius:6px;z-index:4}
 #arrive-chip{position:absolute;right:12px;bottom:10px;z-index:7;display:none;align-items:center;gap:8px;background:rgba(18,27,48,.95);border:1px solid var(--pink);
   border-radius:999px;padding:6px 8px 6px 14px;font-size:12.5px}
@@ -228,6 +233,8 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
   [role="tab"]{min-height:44px}
   .hud-btn{min-height:44px;padding:8px 12px}
   #hud{top:8px;left:8px}
+  .sides{top:58px;right:8px}
+  .sides a{padding:0 14px}
   .seg button{min-height:44px}
   #search{font-size:16px;min-height:44px}
   .dot{min-width:44px;height:44px}
@@ -286,6 +293,7 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
   <svg id="lbl-svg" aria-hidden="true"></svg>
   <div id="lbl-layer" aria-hidden="true"></div>
   <div id="tooltip" aria-hidden="true"></div>
+  <nav class="sides" aria-label="Biological or artificial neuron"><a href="./neuron.html" aria-current="page">Biological</a><a href="./artificial.html">Artificial</a></nav>
   <div id="hud">
     <button class="hud-btn" id="btn-reset" type="button">Reset view</button>
     <button class="hud-btn" id="btn-labels" type="button" aria-pressed="false">Labels</button>
