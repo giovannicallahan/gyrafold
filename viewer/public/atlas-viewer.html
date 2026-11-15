@@ -641,27 +641,50 @@ body{
 body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.touring #nav-reset{display:none!important}
 
 /* ══ MOBILE LAYOUT (≤760px): the side panel becomes a bottom sheet ══ */
-#sheet-handle{display:none}
+/* Phones (Tier 9): the panel is a bottom sheet with three sizes, Read / Split / Model, set by
+   body[data-sheet]. The size row and the tabs stay pinned at its top; the rest of the sheet
+   scrolls as one column. */
+.sheet-bar{display:none}
 @media (max-width:760px){
-  body{font-size:14px}
+  body{font-size:14px;--sheet-h:min(calc(56dvh + 92px + env(safe-area-inset-bottom)), calc(100dvh - 170px))}
+  body[data-sheet="read"]{--sheet-h:calc(100dvh - env(safe-area-inset-top) - 56px)}
+  body[data-sheet="model"]{--sheet-h:calc(91px + env(safe-area-inset-bottom))}
   #canvas-wrap{left:0}
-  #panel{top:auto;left:0;right:0;bottom:0;width:100%;height:var(--sheet-h,64px);
+  #panel{top:auto;left:0;right:0;bottom:0;width:100%;height:var(--sheet-h);
     border-right:none;border-top:1px solid #30363d;border-radius:14px 14px 0 0;
-    background:rgba(13,17,23,0.97);padding-bottom:env(safe-area-inset-bottom);
+    background:#0d1117!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+    overflow-y:auto!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
     transition:height .25s ease;box-shadow:0 -6px 24px rgba(0,0,0,.45)}
-  #panel.dragging{transition:none}
-  #sheet-handle{display:flex;align-items:center;justify-content:center;height:24px;flex-shrink:0;
-    cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
-  #sheet-handle::before{content:"";width:42px;height:5px;border-radius:3px;background:#484f58}
+  body[data-sheet="model"] #panel{overflow-y:hidden!important}
+  body.sheet-dragging #panel{transition:none}
+  #panel > *{flex-shrink:0}
+  .sheet-bar{display:flex;position:sticky;top:0;z-index:3;height:44px;align-items:center;gap:6px;padding:0 4px 0 12px;
+    background:#0d1117;touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;border-radius:14px 14px 0 0}
+  .sheet-grip{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+  .sheet-grip i{display:block;width:16px;height:2px;border-radius:2px;background:#5b6683}
+  .sheet-title{flex:1;min-width:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sheet-sizes{display:flex;flex-shrink:0}
+  .sheet-sizes button{background:none;border:none;min-height:44px;padding:0 2px;font:inherit;font-size:12.5px;color:var(--muted);cursor:pointer}
+  .sheet-sizes button span{display:block;padding:5px 11px;border-radius:999px;border:1px solid var(--border)}
+  .sheet-sizes button[aria-pressed="true"]{color:var(--text)}
+  .sheet-sizes button[aria-pressed="true"] span{background:rgba(139,108,255,.3);border-color:var(--violet)}
+  .sheet-sizes button:focus-visible{outline:none}
+  .sheet-sizes button:focus-visible span{outline:2px solid var(--violet);outline-offset:1px}
+  #panel-tabs{position:sticky;top:44px;z-index:3}
   #panel-top{display:none}
   .panel-pane,.pane-scroll,#focus-subpane,#info{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-  #pane-explore{overflow-y:auto}
+  .panel-pane{flex:none;overflow:visible}
+  .pane-scroll{flex:none;overflow:visible;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+  #pane-explore{overflow:visible;min-height:calc(var(--sheet-h) - 92px)}
   #pane-explore > *{flex-shrink:0}
+  #footer{padding-bottom:calc(10px + env(safe-area-inset-bottom))!important}
   #focus-page{flex:none!important;overflow:visible!important}
   #focus-subpane{flex:none;overflow:visible}
+  body[data-sheet="read"] #gizmo{visibility:hidden}
+  body[data-sheet="read"] #nav-float{top:calc(env(safe-area-inset-top) + 6px)}
 
   /* bigger tap targets */
-  .ptab{padding:11px 2px;font-size:11px}
+  .ptab{padding:11px 2px;font-size:11px;min-height:44px}
   .stab{padding:9px 9px;font-size:11px}
   .foc-btn,.iso-btn{padding:9px 12px;font-size:13px}
   .tog-btn{padding:9px 4px;font-size:12px}
@@ -719,6 +742,10 @@ body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.tou
 </style>
 </head>
 <body>
+<script>
+/* phones: apply the remembered panel size before the first paint (Tier 9) */
+(function () { try { var s = sessionStorage.getItem('gyrafold.panel.size'); if (s === 'read' || s === 'model' || s === 'split') document.body.dataset.sheet = s; } catch (e) { /* storage blocked */ } })();
+</script>
 
 <div id="canvas-wrap"><canvas id="c"></canvas></div>
 <nav id="nav-float" aria-label="Navigation">
@@ -731,7 +758,15 @@ body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.tou
 </nav>
 
 <div id="panel">
-  <div id="sheet-handle" role="button" aria-label="Resize panel" tabindex="0"></div>
+  <div class="sheet-bar" id="sheet-bar">
+    <span class="sheet-grip" aria-hidden="true"><i></i><i></i></span>
+    <span class="sheet-title" id="sheet-title">Whole brain</span>
+    <div class="sheet-sizes" role="group" aria-label="Panel size">
+      <button type="button" data-size="read" aria-pressed="false"><span>Read</span></button>
+      <button type="button" data-size="split" aria-pressed="true"><span>Split</span></button>
+      <button type="button" data-size="model" aria-pressed="false"><span>Model</span></button>
+    </div>
+  </div>
   <!-- ── header row ── -->
   <div id="panel-top" style="padding:8px 12px 0">
     <h1>
@@ -1270,20 +1305,24 @@ function onResize() {
   const w = window.innerWidth - (isMobile() ? 0 : PANEL_W), h = window.innerHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
-  // On phones the bottom sheet covers part of the canvas; shift the rendered
-  // image up by half the sheet height so the brain sits in the visible area.
+  // On phones the bottom sheet (and a quiz or tour box) covers the lower part of the canvas and
+  // the Home / Back / Reset buttons sit at the top. Frame the brain inside the free band between
+  // them: the camera's view is that band, and the canvas shows it at the band's place.
   // Raycasting stays correct because the offset lives in the projection matrix.
-  let covered = 0;   // height of the screen's bottom part hidden by the sheet or a bottom box
+  let free = null;
   if (isMobile()) {
+    let bottom = h;   // top of whatever covers the bottom of the screen
     ['panel', 'quiz-hud', 'tour-hud'].forEach(id => {
       const el = document.getElementById(id);
       if (!el || getComputedStyle(el).display === 'none') return;
       const top = el.getBoundingClientRect().top;
-      if (top > 0 && top < h) covered = Math.max(covered, h - top);
+      if (top > 0 && top < h) bottom = Math.min(bottom, top);
     });
+    const nav = document.getElementById('nav-float').getBoundingClientRect();
+    const top = nav.height > 0 && nav.bottom < h / 2 ? nav.bottom + 6 : 0;
+    if (bottom - 6 - top >= 80) free = { y: top, h: bottom - 6 - top };
   }
-  const shift = Math.min(covered, h * 0.6) / 2;
-  if (shift > 0) camera.setViewOffset(w, h, 0, shift, w, h);
+  if (free) camera.setViewOffset(w, free.h, 0, -free.y, w, h);   // sets camera.aspect to w / free.h
   else camera.clearViewOffset();
   camera.updateProjectionMatrix();
 }
@@ -2301,7 +2340,11 @@ function checkDeepLink() {
   const modelId = atlasIdToModelId.get(hash);
   if (modelId) {
     // Small delay to let fitAll settle first
-    setTimeout(() => selectModel(modelId), 200);
+    setTimeout(() => {
+      selectModel(modelId);
+      // a link to one structure opens with its explanation in view, even if "Model" was the last size used
+      if (isMobile() && sheetSize() === 'model') setSheet('split', { remember: false });
+    }, 200);
   }
 }
 
@@ -5214,100 +5257,120 @@ showNextQuestion = function() {
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ══════════════════════════════════════════════════════════════════════════════
-// MOBILE LAYOUT — bottom sheet with three heights (peek / half / full)
+// MOBILE LAYOUT (Tier 9) — bottom sheet with three named sizes: Read / Split / Model
 // ══════════════════════════════════════════════════════════════════════════════
-const sheetPanel  = document.getElementById('panel');
-const sheetHandle = document.getElementById('sheet-handle');
-let sheetState = 'peek';
+// The size lives in body[data-sheet]; CSS turns it into heights (desktop ignores it).
+// The choice is kept for the browser session under one key shared with the neuron page.
+const sheetPanel = document.getElementById('panel');
+const sheetBar   = document.getElementById('sheet-bar');
+const SHEET_KEY = 'gyrafold.panel.size';
+const SHEET_SIZES = ['read', 'split', 'model'];
+function sheetSize() { const s = document.body.dataset.sheet; return SHEET_SIZES.includes(s) ? s : 'split'; }
+let sheetJustDragged = false;
 
-function sheetHeights() {
-  const vh = window.innerHeight;
-  const tabs = document.getElementById('panel-tabs').getBoundingClientRect().height || 40;
-  const peek = Math.round(24 + tabs + 2);   // handle + tab bar
-  return { peek, half: Math.round(vh * 0.5), full: Math.round(vh - 56) };
-}
-
-function applySheetHeight(px) {
-  sheetPanel.style.setProperty('--sheet-h', px + 'px');
-  document.documentElement.style.setProperty('--sheet-h', px + 'px');
-}
-
-function setSheet(state) {
-  if (!isMobile()) return;
-  sheetState = state;
-  applySheetHeight(sheetHeights()[state]);
-  sheetPanel.dataset.sheet = state;
-  requestAnimationFrame(onResize);
+function setSheet(size, opts = {}) {
+  if (!SHEET_SIZES.includes(size)) return;
+  document.body.dataset.sheet = size;
+  document.body.style.removeProperty('--sheet-h');
+  sheetBar.querySelectorAll('[data-size]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.size === size)));
+  if (opts.remember !== false) { try { sessionStorage.setItem(SHEET_KEY, size); } catch (e) { /* private mode */ } }
+  if (isMobile()) { requestAnimationFrame(onResize); setTimeout(onResize, 300); }
 }
 
 // Re-centre on every size change of the sheet or the quiz/tour boxes (fires during animation too).
 const sheetRO = new ResizeObserver(() => { if (isMobile()) onResize(); });
 ['panel', 'quiz-hud', 'tour-hud'].forEach(id => { const el = document.getElementById(id); if (el) sheetRO.observe(el); });
 
-// Drag the handle to resize; a short tap steps peek → half → full → peek.
-(function initSheetDrag() {
-  let startY = 0, startH = 0, moved = false, dragging = false;
-  sheetHandle.addEventListener('pointerdown', e => {
-    if (!isMobile()) return;
-    dragging = true; moved = false;
-    startY = e.clientY;
-    startH = sheetPanel.getBoundingClientRect().height;
-    sheetPanel.classList.add('dragging');
-    sheetHandle.setPointerCapture(e.pointerId);
-  });
-  sheetHandle.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    const dy = e.clientY - startY;
-    if (Math.abs(dy) > 6) moved = true;
-    const { peek, full } = sheetHeights();
-    applySheetHeight(Math.max(peek, Math.min(full, startH - dy)));
-    onResize();
-  });
-  const finish = e => {
-    if (!dragging) return;
-    dragging = false;
-    sheetPanel.classList.remove('dragging');
-    if (!moved) {
-      setSheet({ peek: 'half', half: 'full', full: 'peek' }[sheetState]);
-    } else {
-      const h = sheetPanel.getBoundingClientRect().height;
-      const hs = sheetHeights();
-      const nearest = Object.keys(hs).reduce((a, b) => Math.abs(hs[a] - h) <= Math.abs(hs[b] - h) ? a : b);
-      setSheet(nearest);
-    }
-    setTimeout(onResize, 280);
-  };
-  sheetHandle.addEventListener('pointerup', finish);
-  sheetHandle.addEventListener('pointercancel', finish);
-  sheetHandle.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSheet({ peek: 'half', half: 'full', full: 'peek' }[sheetState]); }
-  });
-})();
-
-// Opening a tab from the collapsed sheet shows its content.
-document.querySelectorAll('.ptab').forEach(btn => btn.addEventListener('click', () => {
-  if (isMobile() && sheetState === 'peek') setSheet('half');
+sheetBar.querySelectorAll('[data-size]').forEach(b => b.addEventListener('click', () => {
+  if (sheetJustDragged) return;
+  setSheet(b.dataset.size);
 }));
 
-// Tapping a structure on the brain opens the sheet to show its page.
+// Dragging the size row moves the sheet and snaps to the nearest size; a tap uses the buttons.
+(function initSheetDrag() {
+  let y0 = 0, h0 = 0, pid = null, dragging = false, moved = false;
+  const heights = () => {
+    const vh = window.innerHeight;
+    return { read: vh - 56, split: Math.min(vh * 0.56 + 92, vh - 170), model: 91 };
+  };
+  sheetBar.addEventListener('pointerdown', e => {
+    if (!isMobile() || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    dragging = true; moved = false; pid = e.pointerId;
+    y0 = e.clientY; h0 = sheetPanel.getBoundingClientRect().height;
+  });
+  sheetBar.addEventListener('pointermove', e => {
+    if (!dragging || e.pointerId !== pid) return;
+    const dy = e.clientY - y0;
+    if (!moved) {
+      if (Math.abs(dy) < 10) return;
+      moved = true;
+      try { sheetBar.setPointerCapture(pid); } catch (err) { /* pointer already gone */ }
+      document.body.classList.add('sheet-dragging');
+    }
+    const hs = heights();
+    document.body.style.setProperty('--sheet-h', Math.max(hs.model, Math.min(hs.read, h0 - dy)) + 'px');
+  });
+  const finish = () => {
+    if (!dragging) return;
+    dragging = false;
+    if (!moved) return;   // a tap: the size button's own click handles it
+    document.body.classList.remove('sheet-dragging');
+    const h = sheetPanel.getBoundingClientRect().height, hs = heights();
+    const near = SHEET_SIZES.reduce((a, b) => Math.abs(hs[a] - h) <= Math.abs(hs[b] - h) ? a : b);
+    sheetJustDragged = true; setTimeout(() => { sheetJustDragged = false; }, 60);
+    setSheet(near);
+  };
+  sheetBar.addEventListener('pointerup', finish);
+  sheetBar.addEventListener('pointercancel', finish);
+})();
+
+// Opening a tab from the "Model" size shows its content; a new tab starts at its top.
+document.querySelectorAll('.ptab').forEach(btn => btn.addEventListener('click', () => {
+  if (!isMobile()) return;
+  if (sheetSize() === 'model' && !document.body.classList.contains('quizzing') && !document.body.classList.contains('touring')) setSheet('split');
+  sheetPanel.scrollTop = 0;
+}));
+
+// Tapping a structure on the brain in the "Model" size brings the panel back to "Split".
 (function openSheetOnSelect() {
-  let before = null;
-  renderer.domElement.addEventListener('pointerdown', () => { before = selectedModelId; });
   renderer.domElement.addEventListener('pointerup', () => {
     setTimeout(() => {
-      if (isMobile() && !quizCurrentQ && sheetState === 'peek' &&
-          selectedModelId && selectedModelId !== before) setSheet('half');
+      if (isMobile() && !quizCurrentQ && sheetSize() === 'model' && selectedModelId) setSheet('split');
     }, 0);
   });
 })();
 
-// Quizzes and tours need the brain, so collapse the sheet when one starts.
+// The sheet's title follows the selected structure; a new selection starts at the top of the sheet.
+(function sheetTitle() {
+  const titleEl = document.getElementById('sheet-title');
+  const page = document.getElementById('focus-page');
+  const nameEl = document.getElementById('focus-header-name');
+  let last = '';
+  const update = () => {
+    const name = page.style.display !== 'none' ? (nameEl.textContent || '').trim() : '';
+    titleEl.textContent = name || 'Whole brain';
+    if (name && name !== last && isMobile()) sheetPanel.scrollTop = 0;
+    last = name;
+  };
+  new MutationObserver(update).observe(nameEl, { childList: true, characterData: true, subtree: true });
+  new MutationObserver(update).observe(page, { attributes: true, attributeFilter: ['style'] });
+})();
+
+// Quizzes and tours put their own box over the brain, so they use the "Model" size while they
+// run (the quiz box needs the room above the sheet); the earlier size comes back afterwards.
 (function collapseForOverlays() {
+  let restoreTo = null;
   const watch = (id, cls) => {
     const el = document.getElementById(id);
     if (!el) return;
+    let wasOn = el.classList.contains(cls);
     new MutationObserver(() => {
-      if (isMobile() && el.classList.contains(cls)) setSheet('peek');
+      const on = el.classList.contains(cls);
+      if (on !== wasOn && isMobile()) {
+        if (on) { if (restoreTo === null) restoreTo = sheetSize(); setSheet('model', { remember: false }); }
+        else if (restoreTo !== null) { setSheet(restoreTo); restoreTo = null; }   // remembered again, so the next page opens the same way
+      }
+      wasOn = on;
       if (isMobile()) requestAnimationFrame(onResize);
     }).observe(el, { attributes: true, attributeFilter: ['class'] });
   };
@@ -5316,16 +5379,28 @@ document.querySelectorAll('.ptab').forEach(btn => btn.addEventListener('click', 
 })();
 
 function onLayoutChange() {
-  if (isMobile()) setSheet(sheetState);
-  else {
-    sheetPanel.style.removeProperty('--sheet-h');
-    document.documentElement.style.removeProperty('--sheet-h');
-  }
+  if (isMobile()) setSheet(sheetSize(), { remember: false });
   onResize();
 }
 MOBILE_QUERY.addEventListener('change', onLayoutChange);
-window.addEventListener('resize', () => { if (isMobile()) setSheet(sheetState); });
 onLayoutChange();
+
+// tiny read-only hook for automated tests: the screen box of the shown brain
+window.__atlas = {
+  brainRect() {
+    const box = new THREE.Box3();
+    group.traverse(c => { if (c.isMesh && isShown(c)) box.expandByObject(c); });
+    if (box.isEmpty()) return null;
+    const r = renderer.domElement.getBoundingClientRect(), v = new THREE.Vector3();
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (let i = 0; i < 8; i++) {
+      v.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).project(camera);
+      const x = r.left + (v.x + 1) / 2 * r.width, y = r.top + (1 - v.y) / 2 * r.height;
+      x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+    }
+    return { left: x0, top: y0, right: x1, bottom: y1 };
+  }
+};
 
 // ══════════════════════════════════════════════════════════════════════════════
 // TIER 5 — ITEM 5: Loading overlay

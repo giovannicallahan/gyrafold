@@ -3,7 +3,8 @@
 
 Run:  timeout 900 python3 scripts/tests/test_neuron.py
 Serves viewer/public with python3 -m http.server on a free port, drives system Chrome
-(headless, SwiftShader WebGL) at 1280x800 and 390x844, plus a reduced-motion run.
+(headless, SwiftShader WebGL) at 1280x800 and 390x844, plus a reduced-motion run, and the
+Tier 9 phone panel sizes (Read / Split / Model) at 390x844 and 360x740 with a 1366x800 desktop check.
 Screenshots go to /home/claude/stage/shots6/neuron-*.png. Exit code 1 if any check fails.
 """
 import json
@@ -126,7 +127,8 @@ def run_viewport(browser, base, w, h, tag):
     page.click('#btn-reset')
     page.wait_for_timeout(1500)
     pos = page.evaluate("window.__neuron.screenOf('soma')")
-    page.mouse.click(pos['x'] - 10, pos['y'] - 40)
+    small = page.viewport_size['width'] <= 760        # the model is smaller in the phone's split view
+    page.mouse.click(pos['x'] - (4 if small else 10), pos['y'] - (10 if small else 40))
     page.wait_for_timeout(400)
     picked = page.inner_text('#focus-name') if page.query_selector('#focus-name') else ''
     check(f'[{tag}] clicking the model selects a part', picked != '', picked)
@@ -332,6 +334,173 @@ def run_extras(browser, base):
     ctx.close()
 
 
+# ── Tier 9: phone panel sizes (Read / Split / Model) ─────────────────────────
+SHEET_JS = """() => {
+  const r = s => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect();
+    return { top: b.top, bottom: b.bottom, left: b.left, right: b.right, height: b.height, width: b.width }; };
+  const hit = s => { const e = document.querySelector(s); if (!e) return false; const b = e.getBoundingClientRect();
+    if (b.height < 1 || b.bottom <= 0 || b.top >= innerHeight) return false;
+    const t = document.elementFromPoint(b.left + b.width / 2, b.top + Math.min(b.height / 2, 20)); return !!t && (t === e || e.contains(t)); };
+  const panel = r('#panel'), tabs = r('#tabs');
+  return { size: document.body.dataset.sheet || 'split', vh: innerHeight,
+    pressed: [...document.querySelectorAll('#sheet-bar [data-size]')].filter(b => b.getAttribute('aria-pressed') === 'true').map(b => b.dataset.size),
+    panel, tabs, bar: r('#sheet-bar'), stage: r('#stage'),
+    reading: Math.min(panel.bottom, innerHeight) - tabs.bottom,
+    barHit: hit('#sheet-bar .sheet-title'), tabsHit: hit('#tab-explore') && hit('#tab-quiz'),
+    homeHit: hit('nav.modes a[href="./index.html"]'),
+    hudHit: hit('#btn-reset') && hit('#btn-labels') && hit('#btn-inside'),
+    sidesHit: hit('#stage .sides a[href="./artificial.html"]'),
+    hscroll: document.documentElement.scrollWidth > innerWidth };
+}"""
+
+DESKTOP_BEFORE = {  # 1366x800 boxes measured before Tier 9 (x, y, w, h)
+    '#topbar': [0, 0, 1366, 56], '#stage': [0, 56, 966, 744], '#panel': [966, 56, 400, 744],
+    '#panel-top': [967, 56, 399, 58], '#tabs': [967, 114, 399, 45], '#panel-foot': [967, 757, 399, 43],
+    '#hud': [12, 68, 266.1, 36], '.sides': [767, 64, 187, 46], '#pane-explore': [967, 159, 399, 598],
+    '#search': [1138.2, 68, 213.8, 38], '#c': [0, 56, 966, 744]}
+
+
+def sheet_size(page, size, wait=900):
+    page.click(f'#sheet-bar [data-size="{size}"]')
+    page.wait_for_timeout(wait)
+    return page.evaluate(SHEET_JS)
+
+
+def run_sheet(browser, base, w, h):
+    tag = f'sheet {w}x{h}'
+    ctx = browser.new_context(viewport={'width': w, 'height': h}, device_scale_factor=1, is_mobile=True, has_touch=True)
+    ctx.add_init_script("try{localStorage.setItem('neuroapp.neuron.arrived.v1','1')}catch(e){}")
+    page = ctx.new_page()
+    page.set_default_timeout(60000)
+    watch = Watch(page, urlparse(base).netloc)
+    page.goto(base + '/neuron.html')
+    ready(page)
+    page.wait_for_timeout(600)
+    m = page.evaluate(SHEET_JS)
+    shot(page, f'sheet-{w}-split')
+    check(f'[{tag}] default size is Split (aria-pressed)', m['size'] == 'split' and m['pressed'] == ['split'], (m['size'], m['pressed']))
+    check(f'[{tag}] Split: reading area >= 55% of the height', m['reading'] / m['vh'] >= 0.55, round(m['reading'] / m['vh'], 3))
+    sizes = {'split': m}
+    mr = page.evaluate('window.__neuron.modelRect()')
+    st = m['stage']
+    inside = mr['left'] >= st['left'] - 1 and mr['right'] <= st['right'] + 1 and mr['top'] >= st['top'] - 1 and mr['bottom'] <= st['bottom'] + 1
+    check(f'[{tag}] Split: model box inside the visible stage', inside, (mr, st))
+    over = page.evaluate("""(m) => ['#hud', '#stage .sides'].filter(sel => { const r = document.querySelector(sel).getBoundingClientRect();
+        return Math.min(r.right, m.right) - Math.max(r.left, m.left) > 2 && Math.min(r.bottom, m.bottom) - Math.max(r.top, m.top) > 2; })""", mr)
+    check(f'[{tag}] Split: model box clear of the stage buttons', not over, (over, mr))
+
+    m = sheet_size(page, 'read')
+    sizes['read'] = m
+    shot(page, f'sheet-{w}-read')
+    check(f'[{tag}] Read: reading area >= 80% of the height', m['reading'] / m['vh'] >= 0.80, round(m['reading'] / m['vh'], 3))
+    check(f'[{tag}] Read: aria-pressed follows', m['pressed'] == ['read'], m['pressed'])
+    # the whole panel scrolls to its last element, the footer, on every tab
+    bad = []
+    for t in ['explore', 'how', 'compare', 'quiz']:
+        page.click(f'#tab-{t}')
+        page.wait_for_timeout(300)
+        page.evaluate("const p = document.getElementById('panel'); p.scrollTop = p.scrollHeight")
+        page.wait_for_timeout(200)
+        f = page.evaluate("""(() => { const f = document.getElementById('panel-foot').getBoundingClientRect(), p = document.getElementById('panel').getBoundingClientRect(),
+            t = document.getElementById('tabs').getBoundingClientRect(); return { ok: f.bottom <= p.bottom + 1 && f.top >= t.bottom - 1, f: [f.top, f.bottom], p: p.bottom } })()""")
+        if not f['ok'] or 'Educational use only; not medical advice.' not in page.inner_text('#panel-foot'):
+            bad.append((t, f))
+    check(f'[{tag}] panel scrolls to its last element (footer) on every tab', not bad, bad)
+    page.click('#tab-explore')
+    page.wait_for_timeout(300)
+    css = page.evaluate("(() => { const c = getComputedStyle(document.getElementById('panel')); return [c.overflowY, c.overscrollBehaviorY] })()")
+    check(f'[{tag}] panel scrolls with overscroll-behavior: contain', css == ['auto', 'contain'], css)
+
+    m = sheet_size(page, 'model', 1500)
+    sizes['model'] = m
+    shot(page, f'sheet-{w}-model')
+    check(f'[{tag}] Model: 3D view >= 60% of the height', m['stage']['height'] / m['vh'] >= 0.60, round(m['stage']['height'] / m['vh'], 3))
+    check(f'[{tag}] Model: Reset view / Labels / Look inside and Biological/Artificial uncovered', m['hudHit'] and m['sidesHit'], (m['hudHit'], m['sidesHit']))
+    for k, v in sizes.items():
+        check(f'[{tag}] {k}: size row and tabs >= 44 px and visible', v['bar']['height'] >= 44 and v['tabs']['height'] >= 44 and v['barHit'] and v['tabsHit'],
+              (v['bar']['height'], v['tabs']['height'], v['barHit'], v['tabsHit']))
+        check(f'[{tag}] {k}: Home reachable, no horizontal scroll', v['homeHit'] and not v['hscroll'], (v['homeHit'], v['hscroll']))
+    check(f'[{tag}] Split: stage buttons uncovered', sizes['split']['hudHit'] and sizes['split']['sidesHit'])
+
+    # tapping the model in Model size brings the panel back to Split with the explanation
+    page.click('#btn-reset')
+    page.wait_for_timeout(1500)
+    # find a screen point on the soma or axon (anchors are not always on the surface), then tap it
+    pos = page.evaluate("""(() => { const s = window.__neuron.screenOf('soma');
+      for (let r = 0; r < 60; r += 4) for (let a = 0; a < 6.28; a += 0.5) { const x = s.x + r * Math.cos(a), y = s.y + r * Math.sin(a);
+        if (['soma', 'axon_hillock', 'myelin_sheath', 'axon'].includes(window.__neuron.partAt(x, y))) return { x, y }; }
+      return s; })()""")
+    page.touchscreen.tap(pos['x'], pos['y'])
+    page.wait_for_timeout(1200)
+    m = page.evaluate(SHEET_JS)
+    name = page.inner_text('#focus-name') if page.query_selector('#focus-name') else ''
+    check(f'[{tag}] tapping the model in Model returns to Split and shows the part', m['size'] == 'split' and name != '', (m['size'], name))
+    shot(page, f'sheet-{w}-tapped')
+    page.click('#pane-explore .back')
+    page.wait_for_timeout(1300)
+    mr = page.evaluate('window.__neuron.modelRect()')
+    st = page.evaluate(SHEET_JS)['stage']
+    check(f'[{tag}] Split after Model: model re-framed inside the stage',
+          mr['left'] >= st['left'] - 1 and mr['right'] <= st['right'] + 1 and mr['top'] >= st['top'] - 1 and mr['bottom'] <= st['bottom'] + 1, (mr, st))
+
+    # quiz starts in Model size (opens to Split); a find-the-part question works from Read
+    sheet_size(page, 'model', 1200)
+    page.click('#tab-quiz')
+    page.wait_for_timeout(1200)
+    m = page.evaluate(SHEET_JS)
+    check(f'[{tag}] Quiz tab from Model opens Split and shows the question', m['size'] == 'split' and page.is_visible('#pane-quiz .qtext'), m['size'])
+    sheet_size(page, 'read')
+    for _ in range(4):
+        if page.evaluate("/Find the part/.test(document.querySelector('#pane-quiz .qtext').textContent)"):
+            break
+        page.click('#pane-quiz .qopt >> nth=0')
+        page.wait_for_timeout(200)
+        page.click('#q-next')
+        page.wait_for_timeout(600)
+    is_find = page.evaluate("/Find the part/.test(document.querySelector('#pane-quiz .qtext').textContent)")
+    m = page.evaluate(SHEET_JS)
+    check(f'[{tag}] find-the-part question brings the model back (Split)', is_find and m['size'] == 'split', (is_find, m['size']))
+    page.click('#tab-explore')
+
+    # remembered for the session; neuroapp.* localStorage keys untouched
+    sheet_size(page, 'read')
+    page.reload()
+    ready(page)
+    m = page.evaluate(SHEET_JS)
+    check(f'[{tag}] size remembered for the session', m['size'] == 'read' and m['pressed'] == ['read'], (m['size'], m['pressed']))
+    keys = page.evaluate("Object.keys(localStorage).filter(k => !k.startsWith('neuroapp.'))")
+    check(f'[{tag}] no new localStorage keys', not keys, keys)
+
+    # dragging the size row (bonus): drag up from Split snaps to Read, down to Model
+    sheet_size(page, 'split', 1200)
+    b = page.evaluate(SHEET_JS)['bar']
+    x, y = b['left'] + 60, b['top'] + 22
+    page.mouse.move(x, y); page.mouse.down(); page.mouse.move(x, y - 120, steps=6); page.mouse.move(x, 60, steps=6); page.mouse.up()
+    page.wait_for_timeout(900)
+    up = page.evaluate(SHEET_JS)['size']
+    b = page.evaluate(SHEET_JS)['bar']
+    x, y = b['left'] + 60, b['top'] + 22
+    page.mouse.move(x, y); page.mouse.down(); page.mouse.move(x, y + 120, steps=6); page.mouse.move(x, h - 40, steps=6); page.mouse.up()
+    page.wait_for_timeout(900)
+    down = page.evaluate(SHEET_JS)['size']
+    check(f'[{tag}] dragging the size row snaps to Read and to Model', up == 'read' and down == 'model', (up, down))
+    check(f'[{tag}] no console errors', not watch.errors, watch.errors[:5])
+    ctx.close()
+
+
+def run_desktop_same(browser, base):
+    ctx, page, watch = new_page(browser, 1366, 800, base)
+    page.goto(base + '/neuron.html')
+    ready(page)
+    got = page.evaluate("""(sels) => Object.fromEntries(sels.map(s => { const b = document.querySelector(s).getBoundingClientRect();
+        return [s, [b.x, b.y, b.width, b.height].map(v => Math.round(v * 10) / 10)]; }))""", list(DESKTOP_BEFORE))
+    diff = {k: (DESKTOP_BEFORE[k], got[k]) for k in DESKTOP_BEFORE if any(abs(a - b) > 1 for a, b in zip(DESKTOP_BEFORE[k], got[k]))}
+    check('[desktop 1366] key element boxes unchanged by Tier 9', not diff, diff)
+    check('[desktop 1366] size row hidden on desktop', not page.is_visible('#sheet-bar'))
+    check('[desktop 1366] no console errors', not watch.errors, watch.errors[:5])
+    ctx.close()
+
+
 def main():
     os.makedirs(SHOTS, exist_ok=True)
     port = free_port()
@@ -349,6 +518,10 @@ def main():
                 run_viewport(browser, base, 390, 844, 'phone')
             if only in ('all', 'extras'):
                 run_extras(browser, base)
+            if only in ('all', 'sheet'):
+                run_desktop_same(browser, base)
+                run_sheet(browser, base, 390, 844)
+                run_sheet(browser, base, 360, 740)
             browser.close()
     finally:
         srv.terminate()
