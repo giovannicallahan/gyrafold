@@ -15,14 +15,34 @@ no external requests, no analytics.
 
 ## Team
 
-- The main Claude Code session leads and makes the final decision.
-- Opus builds; Sonnet and Haiku take the smaller pieces. A separate agent reviews before shipping.
-- IBM Bob joins on large projects: a new Bob chat at 13 coins, his edits approved one at a time.
+It works like a small dev team:
+
+- **Lead:** the main Claude Code session. It runs the show, writes the briefs, and makes the
+  final decision.
+- **Opus** assists the lead: it builds and reasons through the hard parts.
+- **Sonnet and Haiku** assist Opus with the smaller, bounded pieces. A separate agent reviews
+  before shipping.
+- **Codex (OpenAI) and Gemini (Google)** assist all of them. Any Claude agent may call either:
+  Codex through the `/codex:*` commands, Gemini through `/gemini`.
+- **IBM Bob** joins on large projects: a new Bob chat at 13 coins, his edits approved one at a time.
 - A single agent is enough when the task is menial. The goal is efficiency, not waste.
 
-## AI collaboration rules (Codex / Astra)
+Who to ask for what:
 
-When a task is complicated, use Codex for a second opinion.
+| Need | Ask |
+| --- | --- |
+| Review of a code change | Codex: `/codex:review` |
+| A plan challenged before building | Codex: `/codex:adversarial-review` |
+| A bounded task handed off | Codex: `/codex:rescue` |
+| The whole project or a long document read at once | Gemini: `/gemini` |
+| A plan or a piece of research cross-checked | Gemini: `/gemini` |
+
+Outside models give opinions. The lead checks what they report against the code or the source
+before acting on it. Their usage is limited, so call them for specific jobs, not for every task.
+
+## AI collaboration rules (Codex and Gemini)
+
+When a task is complicated, use Codex or Gemini for a second opinion.
 
 For important technical decisions:
 
@@ -34,9 +54,9 @@ For important technical decisions:
 6. Fix valid problems found by the review.
 7. Run the tests before finishing.
 
-Do not use Codex for every small task. Hand it bounded work with exact files and a stopping
-point. The main Claude Code session remains responsible for the final decision, and checks
-anything Codex reports before acting on it.
+Do not use Codex or Gemini for every small task. Hand them bounded work with exact files and a
+stopping point. The main Claude Code session remains responsible for the final decision, and
+checks anything they report before acting on it.
 
 ## Tests and deploy
 
