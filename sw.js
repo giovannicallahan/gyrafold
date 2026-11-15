@@ -9,7 +9,7 @@
  *
  * Same-origin GET requests only. Nothing here talks to any other host.
  */
-const VERSION = "2026-11-14.1";
+const VERSION = "2026-11-14.2";
 const SHELL_CACHE = "gyrafold-shell-" + VERSION;
 const RUNTIME_CACHE = "gyrafold-runtime-" + VERSION;
 const MODELS_CACHE = "gyrafold-models-v1"; // also named in atlas-viewer.html
@@ -106,7 +106,7 @@ self.addEventListener("fetch", event => {
   } else if (url.pathname.endsWith(".glb")) {
     event.respondWith(cacheFirst(event, MODELS_CACHE));
   } else if (url.pathname.endsWith(".json") || url.pathname.endsWith(".webmanifest")) {
-    event.respondWith(staleWhileRevalidate(event));
+    event.respondWith(networkFirst(event, true));
   } else {
     event.respondWith(cacheFirst(event, RUNTIME_CACHE));
   }
@@ -114,7 +114,10 @@ self.addEventListener("fetch", event => {
 
 // Pages: try the network for up to NAV_TIMEOUT_MS so deploys show up at once;
 // fall back to the cached page (query strings ignored), then to index.html.
-async function networkFirst(event) {
+// Lesson JSON and the manifest use the same strategy (isData), so a freshly
+// deployed page never runs against the previous deploy's lesson content. Data
+// requests never fall back to index.html.
+async function networkFirst(event, isData) {
   const req = event.request;
   // The fresh page is returned at once; saving a copy happens on the side and
   // can never fail the page load.
@@ -134,13 +137,21 @@ async function networkFirst(event) {
     timer = setTimeout(() => reject(new Error("timeout")), NAV_TIMEOUT_MS);
   });
   try {
-    return await Promise.race([network, timeout]);
+    const res = await Promise.race([network, timeout]);
+    if (isData && !res.ok) {            // server error: a saved copy beats an error page
+      const saved = await caches.match(req, { ignoreSearch: true });
+      if (saved) return saved;
+    }
+    return res;
   } catch (e) {
     const cached = await caches.match(req, { ignoreSearch: true });
     if (cached) return cached;
     try {
       return await network; // slow but alive: keep waiting
     } catch (e2) {
+      if (isData) {
+        return Response.error();        // the page's own fetch error handling takes over
+      }
       const home = await caches.match("./index.html");
       if (home) return home;
       return new Response("Gyrafold is offline and this page is not saved yet.", {
@@ -166,24 +177,4 @@ async function cacheFirst(event, cacheName) {
     event.waitUntil(caches.open(cacheName).then(c => c.put(req, copy)).catch(() => {}));
   }
   return res;
-}
-
-// Lesson JSON and the manifest: answer from cache at once, refresh in the
-// background for next time.
-async function staleWhileRevalidate(event) {
-  const req = event.request;
-  const key = noSearch(req.url);
-  const cached = await caches.match(key);
-  const network = fetch(req).then(res => {
-    if (cacheable(res)) {
-      const copy = res.clone();
-      event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.put(key, copy)).catch(() => {}));
-    }
-    return res;
-  });
-  if (cached) {
-    event.waitUntil(network.catch(() => {}));
-    return cached;
-  }
-  return network;
 }
