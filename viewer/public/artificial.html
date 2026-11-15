@@ -1329,13 +1329,14 @@ function setupTabs(cfg) {
   measure();
   go(resolve(location.hash) || { view: first });
   return {
-    refresh() { go(resolve(location.hash) || cur || { view: first }); },
+    refresh() { go(resolve(location.hash) || (location.hash.length > 1 ? { view: first } : cur) || { view: first }); },
     show(s, o) { go(s, o); },
     current() { return cur; },
     off() {
       on = false;
       root.classList.remove('tabs-on');
       for (const p of panels.values()) p.querySelector(':scope > .pager').remove();
+      for (const p of panels.values()) { p.removeAttribute('role'); p.removeAttribute('aria-labelledby'); p.removeAttribute('tabindex'); }
       if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
     }
   };
