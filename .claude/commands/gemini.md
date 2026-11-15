@@ -19,6 +19,8 @@ Steps:
    serious first, under 300 words"). Do not paste secrets or anything from outside this project.
 3. Run it read-only from the project root, in plan mode so it cannot edit files:
    `agy -p "<your prompt>" --mode plan`
+   Plan mode also denies shell commands, and a run that tries one fails. So end every prompt
+   with: "Use only your file-reading and search tools. Do not run shell commands."
 4. If it reports that the quota is reached or that sign-in is required, say so plainly and carry
    on without Gemini. Do not retry in a loop.
 5. Treat the reply as a colleague's opinion, not as fact. Check each claim against the code or
