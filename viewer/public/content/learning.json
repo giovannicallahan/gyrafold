@@ -87,6 +87,221 @@
    "citation": "Betts, J. G., Young, K. A., Wise, J. A., Johnson, E., Poe, B., Kruse, D. H., Korol, O., Johnson, J. E., Womble, M., & DeSaix, P. (2022). Central processing (Section 14.2). In Anatomy and physiology (2nd ed.). OpenStax.",
    "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/14-2-central-processing",
    "license": "CC BY 4.0"
+  },
+  "pmc_lehman2020": {
+   "citation": "Lehman, V. T., Black, D. F., DeLone, D. R., Blezek, D. J., Kaufmann, T. J., Brinjikji, W., & Welker, K. M. (2020). Current concepts of cross-sectional and functional anatomy of the cerebellum: A pictorial review and atlas. British Journal of Radiology, 93(1106), Article 20190467. https://doi.org/10.1259/bjr.20190467",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7055440/",
+   "license": "Open access via PubMed Central (exact reuse licence not confirmed; content paraphrased)"
+  },
+  "pmc_stoodley2010": {
+   "citation": "Stoodley, C. J., & Schmahmann, J. D. (2010). Evidence for topographic organization in the cerebellum of motor control versus cognitive and affective processing. Cortex, 46(7), 831-844. https://doi.org/10.1016/j.cortex.2009.11.008",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2873095/",
+   "license": "PubMed Central author manuscript (exact reuse licence not confirmed; content paraphrased)"
+  },
+  "sp_pituitary": {
+   "citation": "Ganapathy, M. K., & Tadi, P. (2023). Anatomy, head and neck, pituitary gland. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK551529/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_red_nucleus": {
+   "citation": "Vadhan, J., & Das, J. M. (2023). Neuroanatomy, red nucleus. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK551628/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_brainstem": {
+   "citation": "Basinger, H., & Hogg, J. P. (2023). Neuroanatomy, brainstem. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK544297/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_inferior_colliculus": {
+   "citation": "Driscoll, M. E., & Tadi, P. (2023). Neuroanatomy, inferior colliculus. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK554468/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_visual_pathway": {
+   "citation": "Gupta, M., Ireland, A. C., Omole, A. E., & Bordoni, B. (2026). Neuroanatomy, visual pathway. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK553189/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_insula": {
+   "citation": "Kortz, M. W., & Lillehei, K. O. (2023). Insular cortex. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK570606/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "pmc_mathur_claustrum": {
+   "citation": "Mathur, B. N. (2014). The claustrum in review. Frontiers in Systems Neuroscience, 8, Article 48. https://doi.org/10.3389/fnsys.2014.00048",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3983483/",
+   "license": "CC BY 4.0"
+  },
+  "pmc_ac_ghulamjelani": {
+   "citation": "Ghulam-Jelani, Z., Barrios-Martinez, J., Eguiluz-Melendez, A., Gomez, R., Anania, Y., & Yeh, F.-C. (2021). Redundancy circuits of the commissural pathways in human and rhesus macaque brains. Human Brain Mapping, 42(7), 2250-2261. https://doi.org/10.1002/hbm.25363",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8046059/",
+   "license": "CC BY 4.0"
+  },
+  "sp_occipital": {
+   "citation": "Rehman, A., & Al Khalili, Y. (2023). Neuroanatomy, occipital lobe. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK544320/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_temporal": {
+   "citation": "Patel, A., Biso, G. M. N. R., & Fowler, J. B. (2023). Neuroanatomy, temporal lobe. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK519512/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_auditory": {
+   "citation": "Peterson, D. C., Reddy, V., Mayes, D. A., & Hamel, R. N. (2025). Neuroanatomy, auditory pathway. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK532311/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_cingulate": {
+   "citation": "Jumah, F. R., & Dossani, R. H. (2022). Neuroanatomy, cingulate cortex. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK537077/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_precentral": {
+   "citation": "Banker, L., & Tadi, P. (2023). Neuroanatomy, precentral gyrus. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK544218/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_ventricular": {
+   "citation": "Shenoy, S. S., & Lui, F. (2023). Neuroanatomy, ventricular system. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK532932/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_csf": {
+   "citation": "Margetis, K., & Baker, S. (2025). Physiology, cerebral spinal fluid. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK519007/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "purves_ventricular": {
+   "citation": "Williams, S. M. (2001). The ventricular system. In D. Purves, G. J. Augustine, D. Fitzpatrick, L. C. Katz, A.-S. LaMantia, J. O. McNamara, & S. M. Williams (Eds.), Neuroscience (2nd ed.). Sinauer Associates.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK11083/",
+   "license": "Not confirmed (cite only, do not adapt)"
+  },
+  "sp_eye_muscles": {
+   "citation": "Shumway, C. L., Motlagh, M., & Wade, M. (2022). Anatomy, head and neck, eye extraocular muscles. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK519565/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_eye": {
+   "citation": "Rehman, I., Hazhirkarzar, B., & Patel, B. C. (2023). Anatomy, head and neck, eye. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK482428/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_mastication": {
+   "citation": "Basit, H., Tariq, M. A., & Siccardi, M. A. (2023). Anatomy, head and neck, mastication muscles. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK541027/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_masseter": {
+   "citation": "Corcoran, N. M., & Goldman, E. M. (2023). Anatomy, head and neck, masseter muscle. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK539869/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_facial_muscles": {
+   "citation": "Fakoya, A. O., Hohman, M. H., Westbrook, K. E., & Varacallo, M. A. (2024). Anatomy, head and neck: Facial muscles. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK493209/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_suprahyoid": {
+   "citation": "Khan, Y. S., Fakoya, A. O., & Bordoni, B. (2025). Anatomy, head and neck: Suprahyoid muscle. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK546710/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_tongue": {
+   "citation": "Dotiwala, A. K., & Samra, N. S. (2023). Anatomy, head and neck, tongue. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK507782/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_skin": {
+   "citation": "Lopez-Ojeda, W., Pandey, A., Alhajj, M., & Oakley, A. M. (2022). Anatomy, skin (integument). In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK441980/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_scm": {
+   "citation": "Bordoni, B., Jozsa, F., & Varacallo, M. A. (2026). Anatomy, head and neck: Sternocleidomastoid muscle. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK532881/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_trapezius": {
+   "citation": "Ourieff, J., Scheckel, B., & Agarwal, A. (2023). Anatomy, back, trapezius. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK518994/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_scalenus": {
+   "citation": "Bordoni, B., Jozsa, F., & Varacallo, M. A. (2025). Anatomy, head and neck, scalenus muscle. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK519058/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_prevertebral": {
+   "citation": "McDavid, L. J., & Khan, Y. S. (2023). Anatomy, head and neck, prevertebral muscles. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK560569/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_suboccipital": {
+   "citation": "George, T., & Tadi, P. (2023). Anatomy, head and neck, suboccipital muscles. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK567762/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_back_muscles": {
+   "citation": "Henson, B., Kadiyala, B., & Edens, M. A. (2023). Anatomy, back, muscles. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK537074/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_neck_movements": {
+   "citation": "Jung, B., Black, A. C., & Bhutta, B. S. (2023). Anatomy, head and neck, neck movements. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK557555/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_palate": {
+   "citation": "Helwany, M., & Rathee, M. (2023). Anatomy, head and neck, palate. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK557817/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_pharynx": {
+   "citation": "Albahout, K. S., & Lopez, R. A. (2023). Anatomy, head and neck, pharynx. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK544271/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_stylopharyngeus": {
+   "citation": "Jain, P., & Rathee, M. (2023). Anatomy, head and neck, stylopharyngeus muscles. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK547719/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "sp_cerebral_hemisphere": {
+   "citation": "Bui, T., & Das, J. M. (2023). Neuroanatomy, cerebral hemisphere. In StatPearls. StatPearls Publishing.",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK549789/",
+   "license": "CC BY-NC-ND 4.0"
+  },
+  "pmc_bruner2014": {
+   "citation": "Bruner, E., Rangel de Lázaro, G., de la Cuétara, J. M., Martín-Loeches, M., Colom, R., & Jacobs, H. I. L. (2014). Midsagittal brain variation and MRI shape analysis of the precuneus in adult individuals. Journal of Anatomy, 224(4), 367-376. https://doi.org/10.1111/joa.12155",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4489922",
+   "license": "Not stated on page (cite only; do not adapt)"
+  },
+  "pmc_baker2018": {
+   "citation": "Baker, C. M., Burks, J. D., Briggs, R. G., Conner, A. K., Glenn, C. A., Manohar, K., Milton, C. K., Sali, G., McCoy, T. M., Battiste, J. D., O'Donoghue, D. L., & Sughrue, M. E. (2018). A connectomic atlas of the human cerebrum: Chapter 8. The posterior cingulate cortex, medial parietal lobe, and parieto-occipital sulcus. Operative Neurosurgery, 15(Suppl 1), S350-S371. https://doi.org/10.1093/ons/opy262",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6887737",
+   "license": "Not a Creative Commons licence (Oxford University Press standard model; cite only)"
+  },
+  "pmc_vingerhoets2014": {
+   "citation": "Vingerhoets, G. (2014). Contribution of the posterior parietal cortex in reaching, grasping, and using objects and tools. Frontiers in Psychology, 5, Article 151.",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3942635",
+   "license": "CC BY"
+  },
+  "pmc_wojtasik2020": {
+   "citation": "Wojtasik, M., Bludau, S., Eickhoff, S. B., Mohlberg, H., Gerboga, F., Caspers, S., & Amunts, K. (2020). Cytoarchitectonic characterization and functional decoding of four new areas in the human lateral orbitofrontal cortex. Frontiers in Neuroanatomy, 14, Article 2.",
+   "url": "https://www.frontiersin.org/journals/neuroanatomy/articles/10.3389/fnana.2020.00002/pdf",
+   "license": "CC BY"
+  },
+  "pmc_raslau2015": {
+   "citation": "Raslau, F. D., Mark, I. T., Klein, A. P., Ulmer, J. L., Mathews, V., & Mark, L. P. (2015). Memory part 2: The role of the medial temporal lobe. American Journal of Neuroradiology, 36(5), 846-849. https://doi.org/10.3174/ajnr.A4169",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7990589",
+   "license": "Not stated on page (cite only; do not adapt)"
+  },
+  "pmc_insausti2019": {
+   "citation": "Insausti, R., Córcoles-Parada, M., Ubero, M. M., Rodado, A., Insausti, A. M., & Muñoz-López, M. (2019). Cytoarchitectonic areas of the gyrus ambiens in the human brain. Frontiers in Neuroanatomy, 13, Article 21. https://doi.org/10.3389/fnana.2019.00021",
+   "url": "https://www.frontiersin.org/journals/neuroanatomy/articles/10.3389/fnana.2019.00021/full",
+   "license": "Not stated on fetched page (cite only; do not adapt)"
   }
  },
  "glossary": [
@@ -3891,6 +4106,5436 @@
    ],
    "clinical": [],
    "checks": []
+  },
+  {
+   "id": "cerebellum-anterior-lobe",
+   "title": "Anterior lobe (lobules I-V)",
+   "applies_to": {
+    "atlas_ids": [
+     "left-I_II-v",
+     "left-III-m",
+     "left-III-v",
+     "left-IV-m",
+     "left-IV-v",
+     "left-V-l",
+     "left-V-m",
+     "left-V-v",
+     "right-I_II-v",
+     "right-III-m",
+     "right-III-v",
+     "right-IV-m",
+     "right-IV-v",
+     "right-V-l",
+     "right-V-m",
+     "right-V-v"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Lobules I to V form the front part of the cerebellum, which is mainly about movement.",
+     "points": [
+      {
+       "text": "Lobules I to V together make up the cerebellum's anterior lobe.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Body parts are mapped in order: toes toward the front, fingers mid-lobe, tongue near the primary fissure.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "A key motor area of the cerebellar cortex sits in the middle (medial) part of this lobe.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The anterior lobe, with lobule VIII, holds the sensorimotor cerebellum.",
+     "points": [
+      {
+       "text": "Authors place the sensorimotor cerebellum in the anterior lobe and lobule VIII.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      },
+      {
+       "text": "The anterior-lobe vermis is built into the hemispheres, not truly separate from them.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can contribute to motor problems such as ataxia, dysmetria and dysarthria, when it involves the anterior lobe and part of lobule VI.",
+     "cite": [
+      "pmc_stoodley2010"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which lobules make up the cerebellar anterior lobe?",
+     "options": [
+      "I to V",
+      "VI to IX",
+      "X only"
+     ],
+     "answer": 0,
+     "explain": "The primary fissure separates the anterior lobe (I-V) from the posterior lobe (VI-IX).",
+     "cite": [
+      "pmc_lehman2020"
+     ]
+    }
+   ],
+   "short": "Motor front lobe"
+  },
+  {
+   "id": "cerebellum-lobule-vi",
+   "title": "Lobule VI",
+   "applies_to": {
+    "atlas_ids": [
+     "left-VI-l",
+     "left-VI-m",
+     "left-VI-v",
+     "right-VI-l",
+     "right-VI-m",
+     "right-VI-v"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Lobule VI is the first lobule behind the primary fissure and links movement with thinking tasks.",
+     "points": [
+      {
+       "text": "Lobule VI belongs to the posterior lobe, which is made of lobules VI to IX.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Working-memory and executive tasks engage lobule VI, Crus I and lobule VIIB.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      },
+      {
+       "text": "Lesions of lobule VI change eyeblink conditioning, a simple learned response.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Lobule VI shares a white matter stem with VIIA and VIIB and is counted in the cognitive cerebellum.",
+     "points": [
+      {
+       "text": "Lobules VI, VIIA and VIIB share a dorsally directed white matter stem; they are the only lobules to do so in the vermis.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Lobules VI and VII are described as the cognitive cerebellum.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can cause dysarthria, and lesions across lobules IV to VI can cause upper-limb ataxia.",
+     "cite": [
+      "pmc_lehman2020"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which pair is described as the 'cognitive cerebellum' in the posterior lobe?",
+     "options": [
+      "Lobules VI and VII",
+      "Lobules I and II",
+      "Lobule X only"
+     ],
+     "answer": 0,
+     "explain": "Stoodley and Schmahmann describe lobules VI and VII of the posterior lobe as the cognitive cerebellum.",
+     "cite": [
+      "pmc_stoodley2010"
+     ]
+    }
+   ],
+   "short": "Posterior lobe start"
+  },
+  {
+   "id": "cerebellum-crus-i-ii",
+   "title": "Crus I and Crus II",
+   "applies_to": {
+    "atlas_ids": [
+     "left-VIIA_crusI-l1",
+     "left-VIIA_crusI-l2",
+     "left-VIIA_crusI-m",
+     "left-VIIA_crusII-l1",
+     "left-VIIA_crusII-l2",
+     "left-VIIA_crusII-m",
+     "right-VIIA_crusI-l1",
+     "right-VIIA_crusI-l2",
+     "right-VIIA_crusI-m",
+     "right-VIIA_crusII-l1",
+     "right-VIIA_crusII-l2",
+     "right-VIIA_crusII-m"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Crus I and Crus II are large outer lobules of the cerebellum that link to thinking areas of the cortex.",
+     "points": [
+      {
+       "text": "Crus I and Crus II make up most of the outer rear edge of each cerebellar hemisphere.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "They connect with association cortex, including prefrontal, posterior parietal and temporal areas.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      },
+      {
+       "text": "In right-handed people, language tasks activate the right rear-side cerebellum; spatial tasks tend to favor the left.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Crus I and II have distinctive white matter signs on imaging and a cognitive profile.",
+     "points": [
+      {
+       "text": "Crus I sits between two fissures (the 'bowtie sign'); the white matter stems of both crura join medially (the 'horseshoe sign').",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Eyeblink conditioning maps to Crus I.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage to the posterior lobe, but not the anterior lobe, can cause cerebellar cognitive affective syndrome (executive, spatial, language and emotional changes).",
+     "cite": [
+      "pmc_stoodley2010"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which cortical regions do Crus I and II connect with?",
+     "options": [
+      "Association cortex",
+      "Only primary visual cortex",
+      "Only the spinal cord"
+     ],
+     "answer": 0,
+     "explain": "Crus I/II and lobule VII link to prefrontal, posterior parietal and temporal association cortex.",
+     "cite": [
+      "pmc_stoodley2010"
+     ]
+    }
+   ],
+   "short": "Thinking lobules"
+  },
+  {
+   "id": "cerebellum-lobule-viib",
+   "title": "Lobule VIIB",
+   "applies_to": {
+    "atlas_ids": [
+     "left-VIIB-l",
+     "left-VIIB-m",
+     "left-VIIB-v",
+     "right-VIIB-l",
+     "right-VIIB-m",
+     "right-VIIB-v"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Lobule VIIB is a smaller outer lobule beside the crura, involved in thinking tasks.",
+     "points": [
+      {
+       "text": "Lobule VIIB adds a smaller share to the outer rear edge of the hemispheres than the crura do.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Working-memory and executive tasks engage lobule VIIB, along with lobule VI and Crus I.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      },
+      {
+       "text": "The fissures separating lobules VI, VIIA and VIIB are the last to form.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "VIIB is part of the VI-VIIA-VIIB group with a shared white matter stem.",
+     "points": [
+      {
+       "text": "Lobules VI, VIIA and VIIB share one dorsally directed white matter stem in the vermis.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Lobules VI and VII are described as the cognitive cerebellum.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which tasks engage lobule VIIB, along with VI and Crus I?",
+     "options": [
+      "Working memory and executive tasks",
+      "Eyeblink reflex only",
+      "Hearing pure tones"
+     ],
+     "answer": 0,
+     "explain": "Stoodley and Schmahmann note working-memory and executive tasks engage these lobules.",
+     "cite": [
+      "pmc_stoodley2010"
+     ]
+    }
+   ],
+   "short": "Cognitive lobule"
+  },
+  {
+   "id": "cerebellum-lobule-viii",
+   "title": "Lobule VIII (VIIIA and VIIIB)",
+   "applies_to": {
+    "atlas_ids": [
+     "left-VIIIA-l",
+     "left-VIIIA-m",
+     "left-VIIIA-v",
+     "right-VIIIA-l",
+     "right-VIIIA-m",
+     "right-VIIIA-v",
+     "left-VIIIB-l",
+     "left-VIIIB-m",
+     "left-VIIIB-v",
+     "right-VIIIB-l",
+     "right-VIIIB-m",
+     "right-VIIIB-v"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Lobule VIII is a lower cerebellar lobule that adds to movement control.",
+     "points": [
+      {
+       "text": "Lobule VIII helps with motor function; movement activity shows up in the anterior lobe and in lobule VIII.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Body-movement areas of the cortex show connectivity to the anterior lobe and lobule VIII.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Together with the anterior lobe, it is thought to hold the cerebellum's sensorimotor map.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "VIIIA and VIIIB each have their own white matter stem.",
+     "points": [
+      {
+       "text": "VIIIA and VIIIB have separate white matter stems on T2 imaging.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "The anterior lobe and lobule VIII contain the sensorimotor cerebellum.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Lobule VIII is best linked with which function?",
+     "options": [
+      "Movement control",
+      "Smell",
+      "Vision in primary cortex"
+     ],
+     "answer": 0,
+     "explain": "Lehman et al. report motor activity in the anterior lobe, ventral cerebellum (especially VIII) and deep nuclei.",
+     "cite": [
+      "pmc_lehman2020"
+     ]
+    }
+   ],
+   "short": "Motor lobule"
+  },
+  {
+   "id": "cerebellum-lobule-ix",
+   "title": "Lobule IX (tonsil)",
+   "applies_to": {
+    "atlas_ids": [
+     "left-IX-m",
+     "left-IX-v",
+     "right-IX-m",
+     "right-IX-v"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Lobule IX is a lower cerebellar lobule that helps with eye-guided movement.",
+     "points": [
+      {
+       "text": "The tonsils, lobule IX, extend downward and toward the middle.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "Lobule IX is considered essential for movement guided by vision.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      },
+      {
+       "text": "Connectivity data suggest it contributes to the default mode network, though its cognitive role is unclear.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Lobule IX has a marked white matter stem and a possible small additional body map.",
+     "points": [
+      {
+       "text": "An 'anterior diamond' of white matter marks the stem to lobule IX.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      },
+      {
+       "text": "There is evidence of a small tertiary body map near lobule IX.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Lobule IX is considered essential for which kind of movement?",
+     "options": [
+      "Visually guided movement",
+      "Chewing",
+      "Breathing"
+     ],
+     "answer": 0,
+     "explain": "Stoodley and Schmahmann consider lobule IX essential for visually guided movement.",
+     "cite": [
+      "pmc_stoodley2010"
+     ]
+    }
+   ],
+   "short": "Tonsil lobule"
+  },
+  {
+   "id": "cerebellum-lobule-x",
+   "title": "Lobule X (flocculonodular lobe)",
+   "applies_to": {
+    "atlas_ids": [
+     "left-X-v",
+     "right-X-v"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Lobule X is the small bottom part of the cerebellum tied to balance.",
+     "points": [
+      {
+       "text": "Lobule X is the flocculonodular lobe, separated from the posterior lobe by the posterolateral fissure.",
+       "cite": [
+        "pmc_lehman2020",
+        "sp_cerebellum"
+       ]
+      },
+      {
+       "text": "It is long thought to be the vestibulocerebellum, working with the balance system.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      },
+      {
+       "text": "Its nodulus presses on the fourth ventricle, and the flocculus can be seen from below.",
+       "cite": [
+        "pmc_lehman2020"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Lobule X remains an essential node of the vestibular system.",
+     "points": [
+      {
+       "text": "Lobule X is regarded as an essential node in the vestibular system.",
+       "cite": [
+        "pmc_stoodley2010"
+       ]
+      },
+      {
+       "text": "The cerebellum receives balance information from the vestibular nuclei.",
+       "cite": [
+        "sp_cerebellum"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Lobule X is traditionally called the...",
+     "options": [
+      "Vestibulocerebellum",
+      "Motor strip",
+      "Limbic lobe"
+     ],
+     "answer": 0,
+     "explain": "Lobule X has long been considered the vestibulocerebellum.",
+     "cite": [
+      "pmc_stoodley2010"
+     ]
+    }
+   ],
+   "short": "Balance lobule"
+  },
+  {
+   "id": "cerebellum-white-matter",
+   "title": "Cerebellar white matter and deep nuclei",
+   "applies_to": {
+    "atlas_ids": [
+     "white_matter_of_left_hemisphere_of_cerebellum",
+     "white_matter_of_right_hemisphere_of_cerebellum"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Under the cerebellar cortex lies white matter that carries signals and holds deep nuclei.",
+     "points": [
+      {
+       "text": "The white matter beneath the cortex is called the arbor vitae, Latin for 'tree of life'.",
+       "cite": [
+        "sp_cerebellum"
+       ]
+      },
+      {
+       "text": "Three pairs of deep nuclei sit inside it: fastigial, interposed and dentate.",
+       "cite": [
+        "sp_cerebellum"
+       ]
+      },
+      {
+       "text": "Each cerebellar hemisphere controls the same side of the body.",
+       "cite": [
+        "sp_cerebellum"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Deep nuclei and peduncles route cerebellar input and output.",
+     "points": [
+      {
+       "text": "From medial to lateral the nuclei are fastigial, interposed (globose and emboliform), then dentate, the largest.",
+       "cite": [
+        "sp_cerebellum"
+       ]
+      },
+      {
+       "text": "The superior peduncle carries fibers from dentate, emboliform and globose; the inferior from fastigial; the middle connects the cerebral cortex with the cerebellum.",
+       "cite": [
+        "sp_cerebellum"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Cerebellar dysfunction can cause ataxia, intention tremor, nystagmus and dysarthria.",
+     "cite": [
+      "sp_cerebellum"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What is the cerebellar white matter called?",
+     "options": [
+      "Arbor vitae",
+      "Corpus callosum",
+      "Fornix"
+     ],
+     "answer": 0,
+     "explain": "The cerebellar white matter is called the arbor vitae, 'tree of life'.",
+     "cite": [
+      "sp_cerebellum"
+     ]
+    }
+   ],
+   "short": "Arbor vitae"
+  },
+  {
+   "id": "pituitary-gland",
+   "title": "Pituitary gland: front lobe, back lobe and stalk",
+   "applies_to": {
+    "atlas_ids": [
+     "adenohypophysis",
+     "neurohypophysis__0",
+     "infundibulum_of_neurohypophysis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The pituitary is a small gland under the brain with a front lobe, a back lobe and a stalk.",
+     "points": [
+      {
+       "text": "The pituitary sits in a bony hollow of the sphenoid bone called the sella turcica.",
+       "cite": [
+        "sp_pituitary"
+       ]
+      },
+      {
+       "text": "The front lobe (adenohypophysis) and back lobe (neurohypophysis) do different jobs.",
+       "cite": [
+        "sp_pituitary"
+       ]
+      },
+      {
+       "text": "The stalk, called the infundibulum, links the gland to the hypothalamus.",
+       "cite": [
+        "sp_pituitary"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Hypothalamic signals reach the anterior lobe through a portal system, while posterior hormones travel down axons.",
+     "points": [
+      {
+       "text": "Anterior lobe hormones include ACTH, prolactin, LH, FSH, growth hormone and TSH.",
+       "cite": [
+        "sp_pituitary"
+       ]
+      },
+      {
+       "text": "Oxytocin and vasopressin come from neurons in the paraventricular and supraoptic nuclei and are stored in the posterior lobe.",
+       "cite": [
+        "sp_pituitary"
+       ]
+      },
+      {
+       "text": "The infundibulum arises from the tuber cinereum and median eminence of the hypothalamus.",
+       "cite": [
+        "sp_pituitary"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which part of the pituitary stores oxytocin and vasopressin?",
+     "options": [
+      "Front lobe",
+      "Back lobe",
+      "Stalk only"
+     ],
+     "answer": 1,
+     "explain": "The back lobe stores hormones made in hypothalamic neurons.",
+     "cite": [
+      "sp_pituitary"
+     ]
+    }
+   ],
+   "short": "Pituitary lobes"
+  },
+  {
+   "id": "red-nucleus",
+   "title": "Red nucleus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_red_nucleus",
+     "right_red_nucleus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The red nucleus is a midbrain structure that helps link the cerebellum with movement pathways.",
+     "points": [
+      {
+       "text": "It lies in the ventral midbrain.",
+       "cite": [
+        "sp_red_nucleus"
+       ]
+      },
+      {
+       "text": "In humans it has a larger front part (parvocellular) and a smaller back part (magnocellular).",
+       "cite": [
+        "sp_red_nucleus"
+       ]
+      },
+      {
+       "text": "In humans the front part makes up most of the nucleus.",
+       "cite": [
+        "sp_red_nucleus"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The magnocellular part gives rise to the rubrospinal tract; the parvocellular part projects to the ipsilateral inferior olive.",
+     "points": [
+      {
+       "text": "The magnocellular part receives input from the opposite interposed cerebellar nuclei and gives rise to the rubrospinal tract.",
+       "cite": [
+        "sp_red_nucleus"
+       ]
+      },
+      {
+       "text": "The parvocellular part sends output to the same-side inferior olivary nucleus.",
+       "cite": [
+        "sp_red_nucleus"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can involve nearby oculomotor fibers and contribute to Benedikt syndrome, with third nerve palsy on one side and ataxia with tremor on the other.",
+     "cite": [
+      "sp_red_nucleus"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Where is the red nucleus?",
+     "options": [
+      "Ventral midbrain",
+      "Spinal cord",
+      "Occipital lobe"
+     ],
+     "answer": 0,
+     "explain": "The source places it in the ventral midbrain.",
+     "cite": [
+      "sp_red_nucleus"
+     ]
+    }
+   ],
+   "short": "Midbrain motor relay"
+  },
+  {
+   "id": "brachia-of-colliculi",
+   "title": "Brachia of the colliculi",
+   "applies_to": {
+    "atlas_ids": [
+     "brachia_of_left_inferior_colliculus",
+     "brachia_of_left_superior_colliculus",
+     "brachia_of_right_inferior_colliculus",
+     "brachia_of_right_superior_colliculus__0",
+     "brachia_of_right_superior_colliculus__1"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The brachia are fiber bundles that link the colliculi to the thalamus.",
+     "points": [
+      {
+       "text": "The superior brachium links each superior colliculus to the lateral geniculate body and optic tract.",
+       "cite": [
+        "sp_brainstem"
+       ]
+      },
+      {
+       "text": "The inferior brachium links each inferior colliculus to the medial geniculate nucleus.",
+       "cite": [
+        "sp_brainstem"
+       ]
+      },
+      {
+       "text": "The superior colliculus is involved in visual reflexes such as saccadic eye movements.",
+       "cite": [
+        "sp_brainstem"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The inferior colliculus main output runs through its brachium to excite the medial geniculate nucleus.",
+     "points": [
+      {
+       "text": "The inferior colliculus main output runs in its brachium to excite the thalamic medial geniculate nucleus.",
+       "cite": [
+        "sp_inferior_colliculus"
+       ]
+      },
+      {
+       "text": "The inferior colliculus relays sound information from the inner ear toward auditory cortex.",
+       "cite": [
+        "sp_inferior_colliculus"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which structure does the inferior brachium connect to?",
+     "options": [
+      "Lateral geniculate body",
+      "Medial geniculate nucleus",
+      "Pituitary"
+     ],
+     "answer": 1,
+     "explain": "The inferior brachium links the inferior colliculus to the medial geniculate nucleus.",
+     "cite": [
+      "sp_brainstem"
+     ]
+    }
+   ],
+   "short": "Colliculus bundles"
+  },
+  {
+   "id": "optic-nerve-chiasm-tract",
+   "title": "Optic nerve, chiasm and tract",
+   "applies_to": {
+    "atlas_ids": [
+     "left_optic_nerve",
+     "right_optic_nerve",
+     "optic_chiasm",
+     "left_optic_tract",
+     "right_optic_tract"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Visual signals leave each eye in the optic nerve, partly cross at the chiasm, and continue in the optic tracts.",
+     "points": [
+      {
+       "text": "The optic nerve is cranial nerve II and carries axons of retinal ganglion cells.",
+       "cite": [
+        "sp_visual_pathway"
+       ]
+      },
+      {
+       "text": "The optic chiasm lies above the pituitary gland and below the hypothalamus.",
+       "cite": [
+        "sp_visual_pathway"
+       ]
+      },
+      {
+       "text": "At the chiasm, nasal retinal fibers cross while temporal fibers stay on the same side.",
+       "cite": [
+        "sp_visual_pathway"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Each optic tract carries the contralateral visual field from both eyes, mostly to the lateral geniculate nucleus.",
+     "points": [
+      {
+       "text": "The optic nerve has four segments: intraocular, intraorbital, intracanalicular and intracranial.",
+       "cite": [
+        "sp_visual_pathway"
+       ]
+      },
+      {
+       "text": "The optic tract begins behind the chiasm; collateral fibers go to the superior colliculus, pretectal nuclei and suprachiasmatic nucleus.",
+       "cite": [
+        "sp_visual_pathway"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can cause vision loss: optic nerve lesions affect one eye, pressure below the chiasm often causes bitemporal hemianopia, and tract lesions cause contralateral homonymous hemianopia.",
+     "cite": [
+      "sp_visual_pathway"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which retinal fibers cross at the optic chiasm?",
+     "options": [
+      "Nasal fibers",
+      "Temporal fibers",
+      "None"
+     ],
+     "answer": 0,
+     "explain": "Nasal retinal fibers cross; temporal fibers stay on the same side.",
+     "cite": [
+      "sp_visual_pathway"
+     ]
+    }
+   ],
+   "short": "Visual cable"
+  },
+  {
+   "id": "insula-limen",
+   "title": "Insula and limen insulae",
+   "applies_to": {
+    "atlas_ids": [
+     "left_insula__1",
+     "right_insula__1",
+     "left_limen_insulae",
+     "right_limen_insulae"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The insula is a hidden fold of cortex deep in the lateral sulcus.",
+     "points": [
+      {
+       "text": "The insula forms the floor of the lateral sulcus, covered by parts of the frontal, parietal and temporal lobes.",
+       "cite": [
+        "sp_insula"
+       ]
+      },
+      {
+       "text": "It is involved in taste, pain, autonomic control, and risk-reward behavior.",
+       "cite": [
+        "sp_insula"
+       ]
+      },
+      {
+       "text": "The limen insulae is at its front-lower tip, where the middle cerebral artery generally divides.",
+       "cite": [
+        "sp_insula"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The insula connects with neocortex, limbic structures and basal ganglia, with anterior and posterior regions serving different roles.",
+     "points": [
+      {
+       "text": "It connects with frontal, parietal and temporal cortex, olfactory bulb, anterior cingulate, amygdala, hippocampus, thalamus and basal ganglia.",
+       "cite": [
+        "sp_insula"
+       ]
+      },
+      {
+       "text": "fMRI shows three functional subdivisions; anterior regions relate to emotional integration and posterior regions to cognition.",
+       "cite": [
+        "sp_insula"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can cause paresis, speech deficits or dizziness in rare insular-only strokes.",
+     "cite": [
+      "sp_insula"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Why is the insula not visible from the brain surface?",
+     "options": [
+      "It is covered by the operculum",
+      "It is inside the cerebellum",
+      "It is very small"
+     ],
+     "answer": 0,
+     "explain": "Frontal, parietal and temporal lobes cover it.",
+     "cite": [
+      "sp_insula"
+     ]
+    }
+   ],
+   "short": "Hidden cortex"
+  },
+  {
+   "id": "claustrum",
+   "title": "Claustrum",
+   "applies_to": {
+    "atlas_ids": [
+     "left_claustrum",
+     "right_claustrum"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The claustrum is a thin sheet of gray matter whose function is still debated.",
+     "points": [
+      {
+       "text": "It is classically described as lying between the striatum and the insular cortex.",
+       "cite": [
+        "pmc_mathur_claustrum"
+       ]
+      },
+      {
+       "text": "It is a long, band-like sheet that follows the shape of the insula.",
+       "cite": [
+        "pmc_mathur_claustrum"
+       ]
+      },
+      {
+       "text": "Ideas about its job include multisensory integration and filtering important signals; the evidence is limited and mixed.",
+       "cite": [
+        "pmc_mathur_claustrum"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It is reciprocally connected with cortex and has no layered organization.",
+     "points": [
+      {
+       "text": "About 85% of its neurons are excitatory projection cells and about 15% are interneurons.",
+       "cite": [
+        "pmc_mathur_claustrum"
+       ]
+      },
+      {
+       "text": "It receives cortical input mainly from layer VI and projects most densely to layers IV and VI.",
+       "cite": [
+        "pmc_mathur_claustrum"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What is the claustrum's shape?",
+     "options": [
+      "A thin band-like sheet",
+      "A round ball",
+      "A long tube"
+     ],
+     "answer": 0,
+     "explain": "The review describes a long band-like sheet.",
+     "cite": [
+      "pmc_mathur_claustrum"
+     ]
+    }
+   ],
+   "short": "Thin sheet"
+  },
+  {
+   "id": "anterior-commissure",
+   "title": "Anterior commissure",
+   "applies_to": {
+    "atlas_ids": [
+     "anterior_commissure"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The anterior commissure is a small bundle of fibers connecting the two hemispheres.",
+     "points": [
+      {
+       "text": "It crosses the midline below and behind the rostrum of the corpus callosum.",
+       "cite": [
+        "pmc_ac_ghulamjelani"
+       ]
+      },
+      {
+       "text": "It links the two hemispheres and parts of the limbic system on both sides.",
+       "cite": [
+        "pmc_ac_ghulamjelani"
+       ]
+      },
+      {
+       "text": "It has about 3.5 million fibers, compared with about 200 million in the corpus callosum.",
+       "cite": [
+        "pmc_ac_ghulamjelani"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It may act as a backup for the corpus callosum.",
+     "points": [
+      {
+       "text": "Its posterior limb reaches temporal cortex, amygdala and temporal pole; its anterior limb links to the olfactory bulbs.",
+       "cite": [
+        "pmc_ac_ghulamjelani"
+       ]
+      },
+      {
+       "text": "In some cases of callosal agenesis it is enlarged and may partly substitute for interhemispheric transfer.",
+       "cite": [
+        "pmc_ac_ghulamjelani"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the anterior commissure connect?",
+     "options": [
+      "The two hemispheres",
+      "Brain and spinal cord",
+      "Eye and thalamus"
+     ],
+     "answer": 0,
+     "explain": "It links the two cerebral hemispheres across the midline.",
+     "cite": [
+      "pmc_ac_ghulamjelani"
+     ]
+    }
+   ],
+   "short": "Midline bridge"
+  },
+  {
+   "id": "calcarine-sulcus",
+   "title": "Calcarine sulcus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_calcarine_sulcus",
+     "right_calcarine_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A groove on the inner face of the occipital lobe that holds the brain's first visual cortex.",
+     "points": [
+      {
+       "text": "It lies on the inner (medial) surface and runs from the parieto-occipital sulcus back to the occipital pole.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "Its upper and lower banks contain the primary visual cortex.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "It splits the inner surface into the cuneus above and the lingual gyrus below.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The calcarine sulcus houses V1 (Brodmann area 17) and separates the cuneus from the lingual gyrus.",
+     "points": [
+      {
+       "text": "V1 (Brodmann area 17) receives visual input from the retina by way of the thalamus.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "The calcarine artery supplies the sulcus and most of the cuneus.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which cortex sits in the banks of the calcarine sulcus?",
+     "options": [
+      "Primary visual cortex",
+      "Primary motor cortex",
+      "Primary auditory cortex"
+     ],
+     "answer": 0,
+     "explain": "The upper and lower banks of the calcarine sulcus contain the primary visual cortex.",
+     "cite": [
+      "sp_occipital"
+     ]
+    }
+   ],
+   "short": "Home of V1"
+  },
+  {
+   "id": "cuneus",
+   "title": "Cuneus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_cuneus",
+     "right_cuneus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The cuneus is the gyrus on the inner surface of the occipital lobe, just above the calcarine sulcus.",
+     "points": [
+      {
+       "text": "It is the upper gyrus on the inner surface of the occipital lobe, bounded by the calcarine sulcus.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "The occipital lobe, which contains it, mainly handles visual processing.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The cuneus is the superior medial occipital gyrus, supplied mostly by the calcarine artery.",
+     "points": [
+      {
+       "text": "The calcarine artery supplies most of the cuneus, and the parieto-occipital artery supplies part of it.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Where is the cuneus relative to the calcarine sulcus?",
+     "options": [
+      "Above it",
+      "Below it",
+      "In front of the central sulcus"
+     ],
+     "answer": 0,
+     "explain": "The cuneus is the superior medial gyrus, bounded by the calcarine sulcus.",
+     "cite": [
+      "sp_occipital"
+     ]
+    }
+   ],
+   "short": "Upper visual gyrus"
+  },
+  {
+   "id": "lingual-gyrus",
+   "title": "Lingual gyrus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_lingual_gyrus",
+     "right_lingual_gyrus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The lingual gyrus is the lower gyrus on the inner surface of the occipital lobe, below the calcarine sulcus.",
+     "points": [
+      {
+       "text": "It sits below the calcarine sulcus on the inner surface of the occipital lobe.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "The fusiform gyrus lies below it and stretches in from the temporal lobe.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The lingual gyrus is the inferior medial occipital gyrus with its own artery.",
+     "points": [
+      {
+       "text": "The lingual gyrus artery and the posterior-temporal artery supply it.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which gyrus lies directly below the lingual gyrus?",
+     "options": [
+      "Fusiform gyrus",
+      "Cuneus",
+      "Precentral gyrus"
+     ],
+     "answer": 0,
+     "explain": "The fusiform gyrus lies below the lingual gyrus and extends from the temporal lobe.",
+     "cite": [
+      "sp_occipital"
+     ]
+    }
+   ],
+   "short": "Lower visual gyrus"
+  },
+  {
+   "id": "parieto-occipital-sulcus",
+   "title": "Parieto-occipital sulcus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_parieto-occipital_sulcus",
+     "right_parieto-occipital_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "This groove marks the border between the occipital and parietal lobes on the inner surface.",
+     "points": [
+      {
+       "text": "On the inner surface, it separates the occipital lobe from the parietal lobe.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "The calcarine sulcus starts from it and runs back toward the occipital pole.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It is the medial occipito-parietal boundary and has a landmark role on the lateral surface too.",
+     "points": [
+      {
+       "text": "On the outer surface, the occipital border is an imaginary line from this sulcus to the preoccipital notch.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "The parieto-occipital artery supplies the sulcus.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which two lobes does the parieto-occipital sulcus separate on the inner surface?",
+     "options": [
+      "Occipital and parietal",
+      "Frontal and temporal",
+      "Frontal and parietal"
+     ],
+     "answer": 0,
+     "explain": "On the medial surface it separates the occipital lobe from the parietal lobe.",
+     "cite": [
+      "sp_occipital"
+     ]
+    }
+   ],
+   "short": "Occipital-parietal border"
+  },
+  {
+   "id": "fusiform-gyrus",
+   "title": "Fusiform gyrus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_fusiform_gyrus",
+     "right_fusiform_gyrus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The fusiform gyrus is on the underside of the temporal lobe and is linked to recognising what we see.",
+     "points": [
+      {
+       "text": "It is linked to reading, recognising objects and recognising faces.",
+       "cite": [
+        "sp_temporal"
+       ]
+      },
+      {
+       "text": "It extends from the temporal lobe and lies below the lingual gyrus.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Beyond recognition, the anterior fusiform region may help hold information in working memory.",
+     "points": [
+      {
+       "text": "Area TF lies on the occipitotemporal sulcus and anterior fusiform gyrus; studies suggest it supports keeping information in working memory.",
+       "cite": [
+        "sp_temporal"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which ability is linked to the fusiform gyrus?",
+     "options": [
+      "Face recognition",
+      "Moving the foot",
+      "Hearing sound frequency"
+     ],
+     "answer": 0,
+     "explain": "The fusiform gyrus is linked to reading, object recognition and face recognition.",
+     "cite": [
+      "sp_temporal"
+     ]
+    }
+   ],
+   "short": "Faces and words"
+  },
+  {
+   "id": "superior-temporal-sulcus",
+   "title": "Superior temporal sulcus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_superior_temporal_sulcus",
+     "right_superior_temporal_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A groove in the temporal lobe that supports speech, faces, motion and understanding other people.",
+     "points": [
+      {
+       "text": "It is involved in motion, speech and face processing, and understanding language.",
+       "cite": [
+        "sp_temporal"
+       ]
+      },
+      {
+       "text": "It also helps combine sight and sound, and is involved in theory of mind (thinking about what others think).",
+       "cite": [
+        "sp_temporal"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The sulcus has four functionally distinct parts with different cortical and white matter connections.",
+     "points": [
+      {
+       "text": "It has four parts (dorsal and ventral, anterior and posterior), each linked to different regions across the four lobes.",
+       "cite": [
+        "sp_temporal"
+       ]
+      },
+      {
+       "text": "Its white matter links include the arcuate/superior longitudinal fasciculus, occipitotemporal U fibres and the middle longitudinal fasciculus.",
+       "cite": [
+        "sp_temporal"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which of these is the superior temporal sulcus involved in?",
+     "options": [
+      "Audiovisual integration",
+      "Controlling the leg",
+      "Producing CSF"
+     ],
+     "answer": 0,
+     "explain": "The sulcus is involved in motion, speech and face processing, language comprehension, audiovisual integration and theory of mind.",
+     "cite": [
+      "sp_temporal"
+     ]
+    }
+   ],
+   "short": "Speech, faces, minds"
+  },
+  {
+   "id": "temporal-pole",
+   "title": "Temporal pole",
+   "applies_to": {
+    "atlas_ids": [
+     "left_temporal_pole",
+     "right_temporal_pole"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The temporal pole is the front tip of the temporal lobe and supports language and social and emotional processing.",
+     "points": [
+      {
+       "text": "It supports language, reading social cues, emotional processing and recognising faces.",
+       "cite": [
+        "sp_temporal"
+       ]
+      },
+      {
+       "text": "It also supports theory of mind, which is thinking about what other people believe or feel.",
+       "cite": [
+        "sp_temporal"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It has dorsal (TGd) and ventral (TGv) parts that are functionally connected but respond differently to motor tasks.",
+     "points": [
+      {
+       "text": "TGd (dorsal) and TGv (ventral) temporal gyrus areas are connected to each other; TGd deactivates during motor tasks while TGv activates.",
+       "cite": [
+        "sp_temporal"
+       ]
+      },
+      {
+       "text": "The temporopolar artery, a branch of the middle cerebral artery, supplies it.",
+       "cite": [
+        "sp_temporal"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can affect meaning and word skills, social and emotional behaviour, face recognition, and control of eating and sexual behaviour.",
+     "cite": [
+      "sp_temporal"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "expert",
+     "q": "Which artery supplies the temporal pole?",
+     "options": [
+      "Temporopolar artery",
+      "Calcarine artery",
+      "Lingual gyrus artery"
+     ],
+     "answer": 0,
+     "explain": "The temporopolar artery, a branch of the middle cerebral artery, supplies the temporal pole.",
+     "cite": [
+      "sp_temporal"
+     ]
+    }
+   ],
+   "short": "Front tip, social brain"
+  },
+  {
+   "id": "transverse-temporal-gyrus",
+   "title": "Transverse temporal gyrus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_transverse_temporal_gyrus",
+     "right_transverse_temporal_gyrus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "This gyrus is the auditory region where the hearing pathway ends in the cortex.",
+     "points": [
+      {
+       "text": "It is the last cortical stop of the ascending hearing pathway, where sound is perceived.",
+       "cite": [
+        "sp_auditory"
+       ]
+      },
+      {
+       "text": "It receives input from both sides of the brain.",
+       "cite": [
+        "sp_auditory"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The auditory cortex is organised by sound frequency and is tuned by higher-order regions.",
+     "points": [
+      {
+       "text": "The auditory pathway is tonotopically organised: each auditory nucleus is arranged by sound frequency.",
+       "cite": [
+        "sp_auditory"
+       ]
+      },
+      {
+       "text": "Prefrontal and limbic regions send signals back that adjust processing by attention and how relevant the sound is.",
+       "cite": [
+        "sp_auditory"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Tinnitus is linked to overactivity in one frequency-specific region of the auditory cortex.",
+     "cite": [
+      "sp_auditory"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the transverse temporal gyrus mainly do?",
+     "options": [
+      "It is the auditory region of the cortex",
+      "It controls the foot",
+      "It separates the two lateral ventricles"
+     ],
+     "answer": 0,
+     "explain": "The page describes it as the auditory region, the final cortical stop of the hearing pathway.",
+     "cite": [
+      "sp_auditory"
+     ]
+    }
+   ],
+   "short": "Hearing cortex"
+  },
+  {
+   "id": "frontal-sulci-superior-inferior",
+   "title": "Superior and inferior frontal sulci",
+   "applies_to": {
+    "atlas_ids": [
+     "left_superior_frontal_sulcus",
+     "right_superior_frontal_sulcus",
+     "left_inferior_frontal_sulcus",
+     "right_inferior_frontal_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "These two grooves divide the side of the frontal lobe into three horizontal gyri.",
+     "points": [
+      {
+       "text": "Together they divide the outer frontal surface into the superior, middle and inferior frontal gyri.",
+       "cite": [
+        "sp_frontal"
+       ]
+      },
+      {
+       "text": "The superior frontal sulcus separates the superior frontal gyrus from the middle frontal gyrus below it.",
+       "cite": [
+        "sp_frontal"
+       ]
+      },
+      {
+       "text": "The inferior frontal sulcus separates the middle frontal gyrus from the inferior frontal gyrus, the lowest one.",
+       "cite": [
+        "sp_frontal"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Both sulci run forward and downward from the precentral sulcus.",
+     "points": [
+      {
+       "text": "The superior and inferior frontal sulci extend forward and downward from the precentral sulcus.",
+       "cite": [
+        "sp_frontal"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which gyrus lies between the superior and inferior frontal sulci?",
+     "options": [
+      "Middle frontal gyrus",
+      "Superior frontal gyrus",
+      "Postcentral gyrus"
+     ],
+     "answer": 0,
+     "explain": "The superior sulcus lies above the middle frontal gyrus and the inferior sulcus lies below it.",
+     "cite": [
+      "sp_frontal"
+     ]
+    }
+   ],
+   "short": "Frontal gyri dividers"
+  },
+  {
+   "id": "precentral-sulcus",
+   "title": "Precentral sulcus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_precentral_sulcus",
+     "right_precentral_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A groove in the frontal lobe that runs just in front of the precentral gyrus.",
+     "points": [
+      {
+       "text": "It runs parallel to the central sulcus, just in front of the precentral gyrus.",
+       "cite": [
+        "sp_frontal"
+       ]
+      },
+      {
+       "text": "The precentral gyrus, behind it, contains the primary motor cortex.",
+       "cite": [
+        "sp_cortex",
+        "sp_frontal"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The precentral sulcus is the starting point of the superior and inferior frontal sulci.",
+     "points": [
+      {
+       "text": "The superior and inferior frontal sulci run forward and downward from it.",
+       "cite": [
+        "sp_frontal"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Where does the precentral sulcus run?",
+     "options": [
+      "Parallel to the central sulcus, in front of the precentral gyrus",
+      "Between the two hemispheres",
+      "Along the floor of the calcarine region"
+     ],
+     "answer": 0,
+     "explain": "It runs parallel to the central sulcus, just rostral to the precentral gyrus.",
+     "cite": [
+      "sp_frontal"
+     ]
+    }
+   ],
+   "short": "Frontal motor groove"
+  },
+  {
+   "id": "central-sulcus",
+   "title": "Central sulcus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_central_sulcus",
+     "right_central_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The central sulcus is the groove that divides the frontal lobe from the parietal lobe.",
+     "points": [
+      {
+       "text": "It separates the frontal lobe from the parietal lobe.",
+       "cite": [
+        "sp_cortex"
+       ]
+      },
+      {
+       "text": "The precentral gyrus in front of it holds the primary motor cortex.",
+       "cite": [
+        "sp_cortex"
+       ]
+      },
+      {
+       "text": "The postcentral gyrus behind it holds the primary somatosensory cortex.",
+       "cite": [
+        "sp_cortex"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It sits between the primary motor cortex (frontal) and primary somatosensory cortex (parietal).",
+     "points": [
+      {
+       "text": "The postcentral gyrus receives sensory information from the opposite (contralateral) side of the body.",
+       "cite": [
+        "sp_cortex"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which two lobes does the central sulcus separate?",
+     "options": [
+      "Frontal and parietal",
+      "Temporal and occipital",
+      "Parietal and occipital"
+     ],
+     "answer": 0,
+     "explain": "The central sulcus separates the frontal and parietal lobes.",
+     "cite": [
+      "sp_cortex"
+     ]
+    }
+   ],
+   "short": "Motor-sensory divide"
+  },
+  {
+   "id": "cingulate-sulcus",
+   "title": "Cingulate sulcus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_cingulate_sulcus",
+     "right_cingulate_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The cingulate sulcus is a groove on the inner surface that sits above the cingulate gyrus.",
+     "points": [
+      {
+       "text": "It separates the cingulate gyrus from the superior frontal gyrus above it.",
+       "cite": [
+        "sp_cingulate"
+       ]
+      },
+      {
+       "text": "The cingulate gyrus wraps around the corpus callosum like a belt.",
+       "cite": [
+        "sp_cingulate"
+       ]
+      },
+      {
+       "text": "Cingulate motor areas lie within the sulcus and turn internal and external signals into motor commands.",
+       "cite": [
+        "sp_cingulate"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The cingulate cortex includes the gyrus plus cortex lining the sulcus, and has four regions.",
+     "points": [
+      {
+       "text": "Cingulate cortex = the gyrus plus the grey matter lining the upper and lower borders of the cingulate sulcus.",
+       "cite": [
+        "sp_cingulate"
+       ]
+      },
+      {
+       "text": "Its four regions are anterior, midcingulate, posterior and retrosplenial cortex.",
+       "cite": [
+        "sp_cingulate"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the cingulate sulcus separate the cingulate gyrus from?",
+     "options": [
+      "The superior frontal gyrus",
+      "The cuneus",
+      "The temporal pole"
+     ],
+     "answer": 0,
+     "explain": "The gyrus is separated from the superior frontal gyrus above by the cingulate sulcus.",
+     "cite": [
+      "sp_cingulate"
+     ]
+    }
+   ],
+   "short": "Above the cingulate"
+  },
+  {
+   "id": "paracentral-lobule",
+   "title": "Paracentral lobule",
+   "applies_to": {
+    "atlas_ids": [
+     "left_paracentral_lobule",
+     "right_paracentral_lobule"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Part of this lobule controls movement of the lower limb.",
+     "points": [
+      {
+       "text": "The medial (inner) part of the paracentral lobule contains motor control for the foot, leg and thigh.",
+       "cite": [
+        "sp_precentral"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The medial paracentral lobule carries lower-limb motor control.",
+     "points": [
+      {
+       "text": "Its medial part contains the motor representation of the foot, leg and thigh.",
+       "cite": [
+        "sp_precentral"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which body part's movement is controlled by the medial paracentral lobule?",
+     "options": [
+      "Foot, leg and thigh",
+      "Face and tongue",
+      "Hand and fingers"
+     ],
+     "answer": 0,
+     "explain": "The medial part of the paracentral lobule contains motor control of the foot, leg and thigh.",
+     "cite": [
+      "sp_precentral"
+     ]
+    }
+   ],
+   "short": "Leg motor area"
+  },
+  {
+   "id": "lateral-ventricles",
+   "title": "Lateral ventricles",
+   "applies_to": {
+    "atlas_ids": [
+     "left_lateral_ventricle__1",
+     "right_lateral_ventricle__0"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The lateral ventricles are the two C-shaped fluid-filled spaces, one in each hemisphere.",
+     "points": [
+      {
+       "text": "Each is a C-shaped cavity inside a cerebral hemisphere, lined by ependyma, holding about 7 to 10 ml.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      },
+      {
+       "text": "They are the largest of the ventricular spaces.",
+       "cite": [
+        "purves_ventricular"
+       ]
+      },
+      {
+       "text": "Each connects to the third ventricle through the interventricular foramen.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Each lateral ventricle has a body and three horns, spread across four lobes.",
+     "points": [
+      {
+       "text": "The body lies in the parietal lobe, from the interventricular foramen to the splenium of the corpus callosum.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      },
+      {
+       "text": "The anterior horn is in the frontal lobe, the posterior in the occipital lobe and the inferior in the temporal lobe.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      },
+      {
+       "text": "The ventral surface is usually defined by the basal ganglia and the dorsal surface by the corpus callosum.",
+       "cite": [
+        "purves_ventricular"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What shape is each lateral ventricle?",
+     "options": [
+      "C-shaped",
+      "A straight tube",
+      "A flat disc"
+     ],
+     "answer": 0,
+     "explain": "Each lateral ventricle is a C-shaped cavity within a cerebral hemisphere.",
+     "cite": [
+      "sp_ventricular"
+     ]
+    }
+   ],
+   "short": "C-shaped fluid spaces"
+  },
+  {
+   "id": "temporal-horn",
+   "title": "Temporal horn of the lateral ventricle",
+   "applies_to": {
+    "atlas_ids": [
+     "temporal_horn_of_left_lateral_ventricle",
+     "temporal_horn_of_right_lateral_ventricle"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The temporal horn is the part of the lateral ventricle that reaches into the temporal lobe.",
+     "points": [
+      {
+       "text": "It is the inferior horn of the lateral ventricle, lying in the temporal lobe.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      },
+      {
+       "text": "It is the largest and longest of the lateral ventricle's three horns.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The inferior (temporal) horn is one of three horns of the C-shaped lateral ventricle.",
+     "points": [
+      {
+       "text": "The other horns are the anterior (frontal) horn and the posterior (occipital) horn.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "In which lobe does the temporal horn lie?",
+     "options": [
+      "Temporal lobe",
+      "Occipital lobe",
+      "Frontal lobe"
+     ],
+     "answer": 0,
+     "explain": "The inferior (temporal) horn lies in the temporal lobe.",
+     "cite": [
+      "sp_ventricular"
+     ]
+    }
+   ],
+   "short": "Ventricle in temporal lobe"
+  },
+  {
+   "id": "cerebral-aqueduct",
+   "title": "Cerebral aqueduct",
+   "applies_to": {
+    "atlas_ids": [
+     "aqueduct"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The aqueduct is a narrow channel that lets fluid pass from the third to the fourth ventricle.",
+     "points": [
+      {
+       "text": "It links the third ventricle to the fourth ventricle.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      },
+      {
+       "text": "It runs through the midbrain.",
+       "cite": [
+        "purves_ventricular"
+       ]
+      },
+      {
+       "text": "It is the narrowest part of the ventricular system.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Also called the Sylvian aqueduct, it is a middle step in the CSF route and a common blockage site.",
+     "points": [
+      {
+       "text": "It is about 18 mm long and is the most common site of obstruction in the ventricular system.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      },
+      {
+       "text": "CSF flows from the lateral ventricles through the interventricular foramina and third ventricle, then the aqueduct, into the fourth ventricle.",
+       "cite": [
+        "sp_csf"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Narrowing (stenosis) of the aqueduct is a frequent cause of obstructive hydrocephalus, enlarging both lateral ventricles and the third ventricle.",
+     "cite": [
+      "sp_csf"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which two ventricles does the cerebral aqueduct connect?",
+     "options": [
+      "Third and fourth",
+      "Left and right lateral",
+      "Lateral and third"
+     ],
+     "answer": 0,
+     "explain": "The aqueduct links the third and fourth ventricles.",
+     "cite": [
+      "sp_ventricular"
+     ]
+    }
+   ],
+   "short": "Narrow CSF channel"
+  },
+  {
+   "id": "septum-pellucidum",
+   "title": "Septum pellucidum",
+   "applies_to": {
+    "atlas_ids": [
+     "pellucid_septum"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A thin sheet that divides the two lateral ventricles.",
+     "points": [
+      {
+       "text": "It is a thin vertical sheet of nervous tissue separating the two lateral ventricles.",
+       "cite": [
+        "sp_ventricular"
+       ]
+      },
+      {
+       "text": "It forms the inner (medial) wall of each lateral ventricle.",
+       "cite": [
+        "purves_ventricular"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Ependyma covers both faces of the septum pellucidum.",
+     "points": [
+      {
+       "text": "Ependyma lines both surfaces of the septum, which is part of the midline sagittal surface of the hemispheres.",
+       "cite": [
+        "sp_ventricular",
+        "purves_ventricular"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the septum pellucidum separate?",
+     "options": [
+      "The two lateral ventricles",
+      "The frontal and parietal lobes",
+      "The third and fourth ventricles"
+     ],
+     "answer": 0,
+     "explain": "It is a thin vertical sheet that separates the two lateral ventricles.",
+     "cite": [
+      "sp_ventricular"
+     ]
+    }
+   ],
+   "short": "Ventricle divider"
+  },
+  {
+   "id": "levator-palpebrae-superioris",
+   "title": "Levator palpebrae superioris",
+   "applies_to": {
+    "atlas_ids": [
+     "left_levator_palpebrae_superioris",
+     "right_levator_palpebrae_superioris"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "This small muscle lifts your upper eyelid.",
+     "points": [
+      {
+       "text": "Its main job is raising the eyelid.",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      },
+      {
+       "text": "It does not touch the eyeball directly.",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      },
+      {
+       "text": "It is supplied by the upper division of the oculomotor nerve (cranial nerve III).",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Levator palpebrae superioris elevates the lid and is supplied by the superior division of CN III.",
+     "points": [
+      {
+       "text": "It arises from the lesser wing of the sphenoid and attaches to the eyelid through its aponeurosis and the superior tarsal muscle.",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What is the main job of the levator palpebrae superioris?",
+     "options": [
+      "Raising the upper eyelid",
+      "Turning the eye outward",
+      "Closing the jaw"
+     ],
+     "answer": 0,
+     "explain": "The source says it is mainly responsible for lifting the eyelid.",
+     "cite": [
+      "sp_eye_muscles"
+     ]
+    }
+   ],
+   "short": "Lifts eyelid"
+  },
+  {
+   "id": "rectus-muscles",
+   "title": "Rectus eye muscles",
+   "applies_to": {
+    "atlas_ids": [
+     "left_superior_rectus",
+     "right_superior_rectus",
+     "left_inferior_rectus",
+     "right_inferior_rectus",
+     "left_medial_rectus",
+     "right_medial_rectus",
+     "left_lateral_rectus",
+     "right_lateral_rectus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Four straight muscles on each eye help point your gaze in different directions.",
+     "points": [
+      {
+       "text": "The rectus and oblique muscles work together to move the eye into different gaze positions.",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      },
+      {
+       "text": "Three of the four rectus muscles are supplied by the oculomotor nerve (cranial nerve III).",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      },
+      {
+       "text": "The lateral rectus is the exception. It is supplied by the abducens nerve (cranial nerve VI).",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "All four recti arise at the annulus of Zinn; the superior rectus uses the upper division of CN III and the inferior and medial use the lower.",
+     "points": [
+      {
+       "text": "Each rectus starts at the annulus of Zinn and inserts on the eyeball about 5.5 to 7.7 mm from the limbus.",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      },
+      {
+       "text": "Superior rectus uses the upper division of CN III. Inferior and medial rectus use the lower division.",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Weakness, injury or paralysis of the inferior rectus can cause strabismus.",
+     "cite": [
+      "sp_eye_muscles"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve supplies the lateral rectus?",
+     "options": [
+      "Oculomotor (III)",
+      "Trochlear (IV)",
+      "Abducens (VI)"
+     ],
+     "answer": 2,
+     "explain": "The lateral rectus is supplied by cranial nerve VI, the abducens nerve.",
+     "cite": [
+      "sp_eye_muscles"
+     ]
+    }
+   ],
+   "short": "Eye movers"
+  },
+  {
+   "id": "superior-oblique",
+   "title": "Superior oblique",
+   "applies_to": {
+    "atlas_ids": [
+     "left_superior_oblique",
+     "right_superior_oblique"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "This eye muscle loops through a small pulley and helps move the eye.",
+     "points": [
+      {
+       "text": "It is one of the oblique muscles that help the eye reach different gaze positions.",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      },
+      {
+       "text": "It is supplied by the trochlear nerve (cranial nerve IV).",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Superior oblique passes through the trochlea and is the muscle supplied by CN IV.",
+     "points": [
+      {
+       "text": "It starts medial to the optic foramen, passes through the trochlea, and inserts just behind the superior rectus insertion.",
+       "cite": [
+        "sp_eye_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which cranial nerve supplies the superior oblique?",
+     "options": [
+      "Trochlear (IV)",
+      "Abducens (VI)",
+      "Facial (VII)"
+     ],
+     "answer": 0,
+     "explain": "The superior oblique is supplied by the trochlear nerve.",
+     "cite": [
+      "sp_eye_muscles"
+     ]
+    }
+   ],
+   "short": "Pulley muscle"
+  },
+  {
+   "id": "eyeball",
+   "title": "Eyeball",
+   "applies_to": {
+    "atlas_ids": [
+     "left_eyeball",
+     "right_eyeball"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The eyeball is a small sphere with three layers that catches light and sends the image to the brain.",
+     "points": [
+      {
+       "text": "An adult eyeball is about 2.5 cm across, and only about one-sixth of it is exposed.",
+       "cite": [
+        "sp_eye"
+       ]
+      },
+      {
+       "text": "Its wall has three layers: the outer fibrous layer, the middle vascular layer, and the inner retina.",
+       "cite": [
+        "sp_eye"
+       ]
+      },
+      {
+       "text": "The retina holds rods for dim light and cones for color vision.",
+       "cite": [
+        "sp_eye"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The globe has fibrous (cornea, sclera), vascular (uvea) and neural (retina) tunics, with the fovea giving sharpest vision.",
+     "points": [
+      {
+       "text": "The vascular tunic includes the choroid, ciliary body and iris; the lens is held by zonular fibers from the ciliary muscles.",
+       "cite": [
+        "sp_eye"
+       ]
+      },
+      {
+       "text": "The fovea centralis has only cones and gives the sharpest vision. The optic disc has no photoreceptors and is the blind spot.",
+       "cite": [
+        "sp_eye"
+       ]
+      },
+      {
+       "text": "Aqueous humor is made by the ciliary body and drains through Schlemm's canal.",
+       "cite": [
+        "sp_eye"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can include retinal detachment, where fluid collects between retinal layers and distorts vision.",
+     "cite": [
+      "sp_eye"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which part of the retina gives the sharpest vision?",
+     "options": [
+      "Optic disc",
+      "Fovea centralis",
+      "Sclera"
+     ],
+     "answer": 1,
+     "explain": "The fovea centralis has only cones and gives the sharpest vision.",
+     "cite": [
+      "sp_eye"
+     ]
+    }
+   ],
+   "short": "Light-catching globe"
+  },
+  {
+   "id": "masseter",
+   "title": "Masseter",
+   "applies_to": {
+    "atlas_ids": [
+     "left_masseter",
+     "right_masseter"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The masseter is a strong cheek muscle that closes your jaw when you chew.",
+     "points": [
+      {
+       "text": "It is a powerful muscle that lifts the jaw to close the mouth.",
+       "cite": [
+        "sp_masseter"
+       ]
+      },
+      {
+       "text": "It also helps push the lower jaw forward.",
+       "cite": [
+        "sp_masseter"
+       ]
+      },
+      {
+       "text": "Its motor nerve is the masseteric nerve, from the trigeminal nerve.",
+       "cite": [
+        "sp_masseter"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Masseter has superficial and deep heads from the zygomatic arch to the mandibular ramus and angle, supplied by V3.",
+     "points": [
+      {
+       "text": "The superficial head arises from the zygomatic bone and the front of the zygomatic arch; the deep head from the whole arch.",
+       "cite": [
+        "sp_masseter"
+       ]
+      },
+      {
+       "text": "Its blood supply is mainly the masseteric artery, a branch of the maxillary artery.",
+       "cite": [
+        "sp_masseter"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can show up as trismus: in tetanus, rigid masseter and temporalis muscles cause it.",
+     "cite": [
+      "sp_masseter"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What is the masseter's main action?",
+     "options": [
+      "Opening the eye",
+      "Lifting the jaw closed",
+      "Moving the tongue"
+     ],
+     "answer": 1,
+     "explain": "It is a powerful elevator that closes the jaw.",
+     "cite": [
+      "sp_masseter"
+     ]
+    }
+   ],
+   "short": "Jaw closer"
+  },
+  {
+   "id": "temporalis",
+   "title": "Temporalis",
+   "applies_to": {
+    "atlas_ids": [
+     "left_temporalis",
+     "right_temporalis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The temporalis is a fan-shaped muscle on the side of the head that helps chew.",
+     "points": [
+      {
+       "text": "Its front and middle fibers lift the jaw.",
+       "cite": [
+        "sp_mastication"
+       ]
+      },
+      {
+       "text": "Its back fibers pull the jaw backward.",
+       "cite": [
+        "sp_mastication"
+       ]
+      },
+      {
+       "text": "It is supplied by deep temporal branches of the mandibular nerve (V3).",
+       "cite": [
+        "sp_mastication"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Temporalis runs from the temporal fossa to the coronoid process and elevates and retracts the mandible.",
+     "points": [
+      {
+       "text": "It arises from the temporal fossa and inferior temporal line and inserts on the coronoid process of the mandible.",
+       "cite": [
+        "sp_mastication"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Where does the temporalis attach on the mandible?",
+     "options": [
+      "Coronoid process",
+      "Hyoid bone",
+      "Zygomatic arch"
+     ],
+     "answer": 0,
+     "explain": "It inserts on the coronoid process of the mandible.",
+     "cite": [
+      "sp_mastication"
+     ]
+    }
+   ],
+   "short": "Side-head chewer"
+  },
+  {
+   "id": "medial-pterygoid",
+   "title": "Medial pterygoid",
+   "applies_to": {
+    "atlas_ids": [
+     "left_medial_pterygoid",
+     "right_medial_pterygoid"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The medial pterygoid sits inside the jaw and helps lift and move it.",
+     "points": [
+      {
+       "text": "It helps raise and push forward the lower jaw.",
+       "cite": [
+        "sp_mastication"
+       ]
+      },
+      {
+       "text": "Working with the lateral pterygoid, it helps move the jaw side to side.",
+       "cite": [
+        "sp_mastication"
+       ]
+      },
+      {
+       "text": "Its nerve is a branch of the mandibular nerve.",
+       "cite": [
+        "sp_mastication"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Medial pterygoid has superficial and deep heads and inserts on the medial mandibular ramus.",
+     "points": [
+      {
+       "text": "The superficial head arises from the maxillary tuberosity; the deep head from the medial surface of the lateral pterygoid plate.",
+       "cite": [
+        "sp_mastication"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve division supplies the medial pterygoid?",
+     "options": [
+      "Mandibular nerve",
+      "Facial nerve",
+      "Hypoglossal nerve"
+     ],
+     "answer": 0,
+     "explain": "The medial pterygoid nerve is a division of the mandibular nerve.",
+     "cite": [
+      "sp_mastication"
+     ]
+    }
+   ],
+   "short": "Inner jaw muscle"
+  },
+  {
+   "id": "lateral-pterygoid",
+   "title": "Lateral pterygoid",
+   "applies_to": {
+    "atlas_ids": [
+     "left_lateral_pterygoid",
+     "right_lateral_pterygoid"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The lateral pterygoid helps open the jaw and slide it forward or side to side.",
+     "points": [
+      {
+       "text": "It helps lower the jaw, though the source says gravity does much of this.",
+       "cite": [
+        "sp_mastication"
+       ]
+      },
+      {
+       "text": "It also helps push the jaw forward and move it side to side.",
+       "cite": [
+        "sp_mastication"
+       ]
+      },
+      {
+       "text": "It is supplied by lateral pterygoid nerves from the mandibular nerve.",
+       "cite": [
+        "sp_mastication"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Lateral pterygoid has two heads and inserts on the condylar neck, articular disc and joint capsule of the TMJ.",
+     "points": [
+      {
+       "text": "The upper head arises from the greater wing of the sphenoid; the lower head from the lateral pterygoid plate.",
+       "cite": [
+        "sp_mastication"
+       ]
+      },
+      {
+       "text": "It inserts on the pterygoid fovea of the condylar neck and on the disc and capsule of the temporomandibular joint.",
+       "cite": [
+        "sp_mastication"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which movement does the lateral pterygoid help with?",
+     "options": [
+      "Pushing the jaw forward",
+      "Raising the eyelid",
+      "Retracting the tongue"
+     ],
+     "answer": 0,
+     "explain": "It assists with protrusion and side-to-side movement.",
+     "cite": [
+      "sp_mastication"
+     ]
+    }
+   ],
+   "short": "Jaw opener"
+  },
+  {
+   "id": "buccinator",
+   "title": "Buccinator",
+   "applies_to": {
+    "atlas_ids": [
+     "left_buccinator",
+     "right_buccinator"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The buccinator is a deep cheek muscle that keeps food from pooling in the cheek.",
+     "points": [
+      {
+       "text": "It tightens the cheek so food does not pocket there while chewing.",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      },
+      {
+       "text": "It is supplied by the facial nerve (cranial nerve VII).",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Buccinator is a deep cheek muscle innervated by CN VII on its superficial surface.",
+     "points": [
+      {
+       "text": "Because it lies deep, it receives its facial nerve supply on its superficial surface.",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the buccinator do while you chew?",
+     "options": [
+      "Tightens the cheek",
+      "Lifts the eyelid",
+      "Retracts the jaw"
+     ],
+     "answer": 0,
+     "explain": "It tightens the cheek to keep food from pocketing.",
+     "cite": [
+      "sp_facial_muscles"
+     ]
+    }
+   ],
+   "short": "Cheek tightener"
+  },
+  {
+   "id": "zygomaticus-major",
+   "title": "Zygomaticus major",
+   "applies_to": {
+    "atlas_ids": [
+     "left_zygomaticus_major",
+     "right_zygomaticus_major"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The zygomaticus major is the main smiling muscle.",
+     "points": [
+      {
+       "text": "It pulls the corner of the mouth up and outward when you smile.",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      },
+      {
+       "text": "It is supplied by the facial nerve (cranial nerve VII).",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Zygomaticus major inserts on the modiolus and receives zygomatic and buccal branches of CN VII.",
+     "points": [
+      {
+       "text": "It inserts on the modiolus at the corner of the mouth, and surgeons use it as a landmark for the modiolus.",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      },
+      {
+       "text": "It is the muscle most often replaced in facial reanimation surgery.",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What happens when the zygomaticus major contracts?",
+     "options": [
+      "The mouth corner moves up and out",
+      "The jaw closes",
+      "The tongue retracts"
+     ],
+     "answer": 0,
+     "explain": "It lifts the mouth corner upward and outward in a smile.",
+     "cite": [
+      "sp_facial_muscles"
+     ]
+    }
+   ],
+   "short": "Smile muscle"
+  },
+  {
+   "id": "levator-labii-superioris",
+   "title": "Levator labii superioris",
+   "applies_to": {
+    "atlas_ids": [
+     "left_levator_labii_superioris",
+     "right_levator_labii_superioris"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "This muscle lifts the upper lip.",
+     "points": [
+      {
+       "text": "Its job is to raise the upper lip.",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      },
+      {
+       "text": "It is supplied by the facial nerve (cranial nerve VII).",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Levator labii superioris belongs to the lip elevator group and is also called quadratus labii.",
+     "points": [
+      {
+       "text": "It lies between levator labii superioris alaeque nasi (medial) and levator anguli oris (lateral and deeper).",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve supplies the levator labii superioris?",
+     "options": [
+      "Facial nerve (VII)",
+      "Trigeminal nerve (V)",
+      "Hypoglossal nerve (XII)"
+     ],
+     "answer": 0,
+     "explain": "Facial expression muscles like this one are supplied by the facial nerve.",
+     "cite": [
+      "sp_facial_muscles"
+     ]
+    }
+   ],
+   "short": "Upper-lip lifter"
+  },
+  {
+   "id": "nasalis",
+   "title": "Nasalis",
+   "applies_to": {
+    "atlas_ids": [
+     "left_nasalis",
+     "right_nasalis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The nasalis is a small nose muscle used when you scrunch your nose.",
+     "points": [
+      {
+       "text": "When you snarl, it creates vertical 'bunny lines' on the sides of the nose.",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      },
+      {
+       "text": "It is supplied by the facial nerve (cranial nerve VII).",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Nasalis is grouped with depressor septi and dilator naris; overuse is linked to bunny-line wrinkles.",
+     "points": [
+      {
+       "text": "The nasal muscles include nasalis, depressor septi and dilator naris.",
+       "cite": [
+        "sp_facial_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve supplies the nasalis?",
+     "options": [
+      "Facial nerve (VII)",
+      "Oculomotor nerve (III)",
+      "Abducens nerve (VI)"
+     ],
+     "answer": 0,
+     "explain": "The source lists the facial nerve as its supply.",
+     "cite": [
+      "sp_facial_muscles"
+     ]
+    }
+   ],
+   "short": "Nose scrunch"
+  },
+  {
+   "id": "tongue",
+   "title": "Tongue",
+   "applies_to": {
+    "atlas_ids": [
+     "tongue"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The tongue is a muscular organ that helps with taste and moving food.",
+     "points": [
+      {
+       "text": "It has four intrinsic muscles that change its shape and four extrinsic muscles that attach it to nearby bones.",
+       "cite": [
+        "sp_tongue"
+       ]
+      },
+      {
+       "text": "Taste comes in five categories: sweet, salty, sour, bitter and umami.",
+       "cite": [
+        "sp_tongue"
+       ]
+      },
+      {
+       "text": "The hypoglossal nerve (CN XII) moves all its muscles except the palatoglossus.",
+       "cite": [
+        "sp_tongue"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Tongue muscles are split into intrinsic and extrinsic groups, with taste and sensation carried by CN VII, V, IX and X.",
+     "points": [
+      {
+       "text": "Taste from the front two-thirds travels in the chorda tympani (CN VII); general sensation travels in the lingual nerve (V).",
+       "cite": [
+        "sp_tongue"
+       ]
+      },
+      {
+       "text": "The back third sends taste and sensation through the glossopharyngeal nerve (CN IX).",
+       "cite": [
+        "sp_tongue"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can include hypoglossal injury, which makes the tongue deviate toward the injured side.",
+     "cite": [
+      "sp_tongue"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve moves most tongue muscles?",
+     "options": [
+      "Hypoglossal (XII)",
+      "Facial (VII)",
+      "Vagus (X)"
+     ],
+     "answer": 0,
+     "explain": "The hypoglossal nerve supplies all tongue muscles except the palatoglossus.",
+     "cite": [
+      "sp_tongue"
+     ]
+    }
+   ],
+   "short": "Taste and speech muscle"
+  },
+  {
+   "id": "hyoglossus",
+   "title": "Hyoglossus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_hyoglossus",
+     "right_hyoglossus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The hyoglossus pulls the tongue back and flattens its sides.",
+     "points": [
+      {
+       "text": "It pulls the tongue backward and lowers its side edges.",
+       "cite": [
+        "sp_tongue"
+       ]
+      },
+      {
+       "text": "It is one of the four extrinsic tongue muscles.",
+       "cite": [
+        "sp_tongue"
+       ]
+      },
+      {
+       "text": "It is supplied by the hypoglossal nerve (CN XII).",
+       "cite": [
+        "sp_tongue"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Hyoglossus is an extrinsic tongue muscle arising from the hyoid body and supplied by CN XII.",
+     "points": [
+      {
+       "text": "It arises from the lateral part of the anterior body of the hyoid bone.",
+       "cite": [
+        "sp_tongue"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the hyoglossus do to the tongue?",
+     "options": [
+      "Retracts it",
+      "Pushes the jaw forward",
+      "Lifts the eyelid"
+     ],
+     "answer": 0,
+     "explain": "It retracts the tongue and depresses its lateral margins.",
+     "cite": [
+      "sp_tongue"
+     ]
+    }
+   ],
+   "short": "Tongue retractor"
+  },
+  {
+   "id": "skin",
+   "title": "Skin",
+   "applies_to": {
+    "atlas_ids": [
+     "skin"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Skin covers the body and acts as its first barrier against the outside world.",
+     "points": [
+      {
+       "text": "It has three layers: epidermis, dermis, and the deeper hypodermis.",
+       "cite": [
+        "sp_skin"
+       ]
+      },
+      {
+       "text": "It protects against microbes, drying out, UV light and mechanical injury.",
+       "cite": [
+        "sp_skin"
+       ]
+      },
+      {
+       "text": "It also senses touch, pressure, pain and temperature and helps regulate temperature.",
+       "cite": [
+        "sp_skin"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Skin comprises epidermis, dermis (papillary and reticular) and subcutaneous tissue, with keratinocytes, melanocytes, Langerhans and Merkel cells.",
+     "points": [
+      {
+       "text": "Melanocytes make pigment and Merkel cells act as tactile pressure receptors.",
+       "cite": [
+        "sp_skin"
+       ]
+      },
+      {
+       "text": "Skin is thickest on the palms and soles and thinnest on the eyelids.",
+       "cite": [
+        "sp_skin"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can include skin cancers; the three most common are basal cell carcinoma, squamous cell carcinoma and melanoma.",
+     "cite": [
+      "sp_skin"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which is the outermost layer of skin?",
+     "options": [
+      "Epidermis",
+      "Dermis",
+      "Hypodermis"
+     ],
+     "answer": 0,
+     "explain": "The epidermis is the outermost layer.",
+     "cite": [
+      "sp_skin"
+     ]
+    }
+   ],
+   "short": "Body barrier"
+  },
+  {
+   "id": "digastric",
+   "title": "Digastric",
+   "applies_to": {
+    "atlas_ids": [
+     "left_digastric",
+     "right_digastric"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The digastric has two bellies under the jaw and helps open the mouth and swallow.",
+     "points": [
+      {
+       "text": "It pulls the chin down and back to help open the mouth.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      },
+      {
+       "text": "It also lifts the hyoid bone during swallowing.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      },
+      {
+       "text": "The back belly is supplied by the facial nerve; the front belly by a branch of the mandibular nerve.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Digastric has anterior and posterior bellies joined by an intermediate tendon held to the hyoid by a fascial sling.",
+     "points": [
+      {
+       "text": "The posterior belly arises from the mastoid notch; the anterior belly from the digastric fossa of the mandible.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      },
+      {
+       "text": "The posterior belly is a surgical landmark, as the hypoglossal, accessory and vagus nerves pass deep to it.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "How many bellies does the digastric have?",
+     "options": [
+      "One",
+      "Two",
+      "Three"
+     ],
+     "answer": 1,
+     "explain": "Digastric means two bellies, joined by a tendon.",
+     "cite": [
+      "sp_suprahyoid"
+     ]
+    }
+   ],
+   "short": "Two-belly jaw muscle"
+  },
+  {
+   "id": "stylohyoid",
+   "title": "Stylohyoid",
+   "applies_to": {
+    "atlas_ids": [
+     "left_stylohyoid",
+     "right_stylohyoid"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The stylohyoid pulls the hyoid bone up and back during swallowing.",
+     "points": [
+      {
+       "text": "It pulls the hyoid backward and upward.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      },
+      {
+       "text": "This lifts the tongue and lengthens the floor of the mouth to help swallowing.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      },
+      {
+       "text": "It is supplied by the facial nerve.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Stylohyoid arises from the styloid process and inserts on the hyoid at the junction of body and greater horn.",
+     "points": [
+      {
+       "text": "It arises from the middle of the styloid process and inserts on the hyoid above the omohyoid.",
+       "cite": [
+        "sp_suprahyoid"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can include Eagle syndrome from partial ossification of the stylohyoid ligament, with throat pain or trouble swallowing.",
+     "cite": [
+      "sp_suprahyoid"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve supplies the stylohyoid?",
+     "options": [
+      "Facial nerve",
+      "Hypoglossal nerve",
+      "Abducens nerve"
+     ],
+     "answer": 0,
+     "explain": "The source lists the facial nerve.",
+     "cite": [
+      "sp_suprahyoid"
+     ]
+    }
+   ],
+   "short": "Hyoid lifter"
+  },
+  {
+   "id": "sternocleidomastoid",
+   "title": "Sternocleidomastoid",
+   "applies_to": {
+    "atlas_ids": [
+     "left_sternocleidomastoid",
+     "right_sternocleidomastoid"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A strong neck muscle that runs from the breastbone and collarbone up to the skull behind the ear.",
+     "points": [
+      {
+       "text": "It starts at the top of the breastbone and the inner part of the collarbone.",
+       "cite": [
+        "sp_scm"
+       ]
+      },
+      {
+       "text": "It attaches to the mastoid process, the bony bump behind the ear.",
+       "cite": [
+        "sp_scm"
+       ]
+      },
+      {
+       "text": "Working on one side, it tilts the head toward that side and turns the face to the other side.",
+       "cite": [
+        "sp_scm"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Two heads merge into one belly that inserts on the mastoid process and superior nuchal line, mainly supplied by cranial nerve XI.",
+     "points": [
+      {
+       "text": "It inserts on the mastoid process and the front part of the superior nuchal line of the skull.",
+       "cite": [
+        "sp_scm"
+       ]
+      },
+      {
+       "text": "Its motor supply is mainly the accessory nerve (CN XI); cervical plexus fibers carry proprioception.",
+       "cite": [
+        "sp_scm"
+       ]
+      },
+      {
+       "text": "Branches of the external carotid artery, including the occipital and superior thyroid arteries, supply it.",
+       "cite": [
+        "sp_scm"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can weaken the muscle and cause torticollis, a head tilt, if the accessory nerve is injured.",
+     "cite": [
+      "sp_scm"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which bony landmark does the sternocleidomastoid attach to on the skull?",
+     "options": [
+      "Mastoid process",
+      "Chin",
+      "Eye socket"
+     ],
+     "answer": 0,
+     "explain": "The muscle inserts on the mastoid process of the temporal bone.",
+     "cite": [
+      "sp_scm"
+     ]
+    }
+   ],
+   "short": "Head turner"
+  },
+  {
+   "id": "trapezius",
+   "title": "Trapezius",
+   "applies_to": {
+    "atlas_ids": [
+     "left_trapezius",
+     "right_trapezius"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A broad muscle of the upper back and neck that moves the shoulder blade and helps hold posture.",
+     "points": [
+      {
+       "text": "It begins on the skull base, the ligament at the back of the neck, and the spine from C7 to T12.",
+       "cite": [
+        "sp_trapezius"
+       ]
+      },
+      {
+       "text": "It attaches to the shoulder blade and the outer part of the collarbone.",
+       "cite": [
+        "sp_trapezius"
+       ]
+      },
+      {
+       "text": "It is mainly a posture muscle, and it also helps with shoulder and head movement.",
+       "cite": [
+        "sp_trapezius"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Upper, middle and lower fibers have different actions on the scapula; motor supply comes from CN XI.",
+     "points": [
+      {
+       "text": "Upper fibers extend the head and neck and raise the scapula; middle fibers pull the scapulae together; lower fibers depress it.",
+       "cite": [
+        "sp_trapezius"
+       ]
+      },
+      {
+       "text": "Motor supply is the spinal accessory nerve; pain and proprioception travel in the ventral rami of C3 and C4.",
+       "cite": [
+        "sp_trapezius"
+       ]
+      },
+      {
+       "text": "The transverse cervical artery is most often the main blood source.",
+       "cite": [
+        "sp_trapezius"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can weaken the trapezius if the spinal accessory nerve is injured.",
+     "cite": [
+      "sp_trapezius"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve controls the trapezius muscle?",
+     "options": [
+      "Spinal accessory nerve (CN XI)",
+      "Optic nerve",
+      "Facial nerve"
+     ],
+     "answer": 0,
+     "explain": "Motor supply to the trapezius is the spinal accessory nerve.",
+     "cite": [
+      "sp_trapezius"
+     ]
+    }
+   ],
+   "short": "Shoulder lifter"
+  },
+  {
+   "id": "middle-scalene",
+   "title": "Middle scalene",
+   "applies_to": {
+    "atlas_ids": [
+     "left_middle_scalenus",
+     "right_middle_scalenus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A deep side-neck muscle that links the neck vertebrae to the first rib.",
+     "points": [
+      {
+       "text": "It starts on the sides of the lower six neck vertebrae.",
+       "cite": [
+        "sp_scalenus"
+       ]
+      },
+      {
+       "text": "It attaches to the top of the first rib.",
+       "cite": [
+        "sp_scalenus"
+       ]
+      },
+      {
+       "text": "The scalene muscles help with deep breathing and with bending the neck sideways.",
+       "cite": [
+        "sp_scalenus"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It attaches from C2-C7 transverse processes to rib 1 and, with the anterior scalene, bounds the gap that the brachial plexus passes through.",
+     "points": [
+      {
+       "text": "Origin is the transverse processes of the last six cervical vertebrae; insertion is the first rib behind the subclavian artery groove.",
+       "cite": [
+        "sp_scalenus"
+       ]
+      },
+      {
+       "text": "The anterior and middle scalenes bound the interscalene gap through which the brachial plexus passes.",
+       "cite": [
+        "sp_scalenus"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "A tight middle scalene may involve the suprascapular nerve, which can weaken the supraspinatus and infraspinatus.",
+     "cite": [
+      "sp_scalenus"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Where does the middle scalene insert?",
+     "options": [
+      "First rib",
+      "Skull",
+      "Collarbone tip"
+     ],
+     "answer": 0,
+     "explain": "It inserts on the upper surface of the first rib.",
+     "cite": [
+      "sp_scalenus"
+     ]
+    }
+   ],
+   "short": "Rib-1 neck muscle"
+  },
+  {
+   "id": "longus-capitis",
+   "title": "Longus capitis",
+   "applies_to": {
+    "atlas_ids": [
+     "left_longus_capitis",
+     "right_longus_capitis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A muscle in front of the neck vertebrae that bends the head forward.",
+     "points": [
+      {
+       "text": "It lies in front of the neck spine, roughly from C1 to C6.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "It attaches to the base of the skull, on the occipital bone.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "It flexes the head at the joint between skull and spine.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It arises from the C3-C6 anterior tubercles and transverse processes and inserts on the basilar occipital bone.",
+     "points": [
+      {
+       "text": "Origin is the anterior tubercles and transverse processes of C3 to C6; insertion is the basilar part of the occipital bone.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "It receives branches from the ventromedial parts of the C1 to C3 ventral rami.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What movement does the longus capitis perform?",
+     "options": [
+      "Flexes the head",
+      "Raises the shoulder",
+      "Closes the jaw"
+     ],
+     "answer": 0,
+     "explain": "It flexes the head at the craniocervical junction.",
+     "cite": [
+      "sp_prevertebral"
+     ]
+    }
+   ],
+   "short": "Head flexor"
+  },
+  {
+   "id": "longus-colli",
+   "title": "Longus colli",
+   "applies_to": {
+    "atlas_ids": [
+     "left_longus_colli",
+     "right_longus_colli"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A long, flat muscle on the front of the neck spine that helps bend the head forward.",
+     "points": [
+      {
+       "text": "It lies on the front surface of the spine.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "It has three parts: superior oblique, inferior oblique, and vertical.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "Both sides together flex the head; one side tilts it.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Its superior oblique part runs C3-C5 up to C1 and its inferior oblique part T1-T3 up to C5-C6, supplied by C2-C6 ventral rami.",
+     "points": [
+      {
+       "text": "Superior oblique part: C3-C5 up to C1. Inferior oblique part: T1-T3 up to C5 and C6.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "Ventromedial branches of the C2 to C6 ventral rami supply it.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can include tendonitis, which can contribute to neck pain.",
+     "cite": [
+      "sp_prevertebral"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Where is the longus colli located?",
+     "options": [
+      "On the front of the spine",
+      "On the back of the skull",
+      "Inside the jaw"
+     ],
+     "answer": 0,
+     "explain": "It lies on the anterior surface of the spine.",
+     "cite": [
+      "sp_prevertebral"
+     ]
+    }
+   ],
+   "short": "Front-spine muscle"
+  },
+  {
+   "id": "anterior-rectus-capitis",
+   "title": "Rectus capitis anterior",
+   "applies_to": {
+    "atlas_ids": [
+     "left_anterior_rectus_capitis",
+     "right_anterior_rectus_capitis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A small muscle just under the skull that nods the head.",
+     "points": [
+      {
+       "text": "It lies in front of the upper neck spine, behind the prevertebral fascia.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "It runs from the first neck vertebra (C1) to the skull base.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "With both sides acting it flexes the head; one side bends the head sideways.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It runs from the C1 transverse process to the jugular process of the occipital bone, supplied by the anterior ramus of C1.",
+     "points": [
+      {
+       "text": "Origin is the transverse process of C1; insertion is the jugular process of the occipital bone.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      },
+      {
+       "text": "The ascending pharyngeal artery supplies it.",
+       "cite": [
+        "sp_prevertebral"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which vertebra does the rectus capitis anterior start from?",
+     "options": [
+      "C1",
+      "T1",
+      "L1"
+     ],
+     "answer": 0,
+     "explain": "It arises from the transverse process of C1.",
+     "cite": [
+      "sp_prevertebral"
+     ]
+    }
+   ],
+   "short": "Small head nodder"
+  },
+  {
+   "id": "rectus-capitis-posterior",
+   "title": "Rectus capitis posterior major and minor",
+   "applies_to": {
+    "atlas_ids": [
+     "left_rectus_capitis_posterior_major",
+     "right_rectus_capitis_posterior_major",
+     "left_rectus_capitis_posterior_minor",
+     "right_rectus_capitis_posterior_minor"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Two small suboccipital muscles at the back of the neck that extend the head.",
+     "points": [
+      {
+       "text": "Both attach to the lower ridge (inferior nuchal line) of the skull.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      },
+      {
+       "text": "The major starts on the C2 spinous process; the minor starts on the back of C1.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      },
+      {
+       "text": "They extend the neck and turn the head to the same side.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Both insert on the inferior nuchal line and, like all suboccipital muscles, are supplied by the suboccipital nerve (C1 dorsal ramus).",
+     "points": [
+      {
+       "text": "Major arises from the C2 spinous process; minor arises from the posterior tubercle of C1.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      },
+      {
+       "text": "The suboccipital nerve, the dorsal ramus of C1, supplies all four suboccipital muscles.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      },
+      {
+       "text": "Rectus capitis posterior major forms the superomedial border of the suboccipital triangle.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can occur as strain or spasm in whiplash-type injuries.",
+     "cite": [
+      "sp_suboccipital"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve supplies the suboccipital muscles?",
+     "options": [
+      "Suboccipital nerve",
+      "Vagus nerve",
+      "Optic nerve"
+     ],
+     "answer": 0,
+     "explain": "All four suboccipital muscles are supplied by the suboccipital nerve.",
+     "cite": [
+      "sp_suboccipital"
+     ]
+    }
+   ],
+   "short": "Suboccipital extensors"
+  },
+  {
+   "id": "oblique-capitis",
+   "title": "Obliquus capitis superior and inferior",
+   "applies_to": {
+    "atlas_ids": [
+     "left_superior_oblique_capitis",
+     "right_superior_oblique_capitis",
+     "left_inferior_oblique_capitis",
+     "right_inferior_oblique_capitis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "Two small muscles at the top of the neck, not related to the eye, that help turn and tilt the head.",
+     "points": [
+      {
+       "text": "The superior one runs from the side of C1 to the skull; the inferior one runs from C2 to C1.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      },
+      {
+       "text": "The inferior oblique turns the head to the same side.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      },
+      {
+       "text": "The superior oblique helps extend and bend the head sideways.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Obliquus capitis superior and inferior form the lateral borders of the suboccipital triangle, which holds the vertebral artery and suboccipital nerve.",
+     "points": [
+      {
+       "text": "Superior arises from the C1 transverse process and inserts on the occipital bone between the nuchal lines.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      },
+      {
+       "text": "Inferior arises from the C2 spinous process and inserts on the C1 transverse process.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      },
+      {
+       "text": "The suboccipital triangle contains the suboccipital nerve, the third part of the vertebral artery, and a venous plexus.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which vertebra does the obliquus capitis inferior start from?",
+     "options": [
+      "C2",
+      "C7",
+      "T5"
+     ],
+     "answer": 0,
+     "explain": "It arises from the spinous process of C2.",
+     "cite": [
+      "sp_suboccipital"
+     ]
+    }
+   ],
+   "short": "Atlas turners"
+  },
+  {
+   "id": "splenius-capitis",
+   "title": "Splenius capitis",
+   "applies_to": {
+    "atlas_ids": [
+     "left_splenius_capitis",
+     "right_splenius_capitis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A superficial back-of-neck muscle that turns and lifts the head.",
+     "points": [
+      {
+       "text": "It starts on the spine from C7 to the upper thoracic vertebrae.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      },
+      {
+       "text": "It attaches to the mastoid process and the outer part of the superior nuchal line.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      },
+      {
+       "text": "One side turns the head to the same side; both sides extend the head.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "A splenius group muscle of the superficial back layer, supplied by lateral branches of the C2-C3 dorsal rami.",
+     "points": [
+      {
+       "text": "Origin is the spinous processes of C7 and T1-T3 (or T4) and the supraspinous ligaments.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      },
+      {
+       "text": "Lateral branches of the C2-C3 dorsal rami supply it.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the splenius capitis do when both sides contract?",
+     "options": [
+      "Extends the head",
+      "Closes the eyes",
+      "Raises the ribs"
+     ],
+     "answer": 0,
+     "explain": "Bilateral contraction extends the head.",
+     "cite": [
+      "sp_back_muscles"
+     ]
+    }
+   ],
+   "short": "Head extender"
+  },
+  {
+   "id": "longissimus-capitis",
+   "title": "Longissimus capitis",
+   "applies_to": {
+    "atlas_ids": [
+     "left_longissimus_capitis",
+     "right_longissimus_capitis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The top part of the erector spinae, a deep back muscle group, reaching the skull behind the ear.",
+     "points": [
+      {
+       "text": "It belongs to the erector spinae group of deep back muscles.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      },
+      {
+       "text": "It starts on the transverse processes of C4 to T4.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      },
+      {
+       "text": "It attaches to the back edge of the mastoid process.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It is the capitis part of the longissimus group of the erector spinae, running from C4-T4 transverse processes to the mastoid process.",
+     "points": [
+      {
+       "text": "The source states origin on C4-T4 transverse processes and insertion on the posterior mastoid process.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      },
+      {
+       "text": "The same source says the actions of the cervical and capitis erector spinae parts are unknown.",
+       "cite": [
+        "sp_back_muscles"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which muscle group does the longissimus capitis belong to?",
+     "options": [
+      "Erector spinae",
+      "Muscles of chewing",
+      "Eye muscles"
+     ],
+     "answer": 0,
+     "explain": "It is part of the longissimus group of the erector spinae.",
+     "cite": [
+      "sp_back_muscles"
+     ]
+    }
+   ],
+   "short": "Erector spinae top"
+  },
+  {
+   "id": "semispinalis-capitis",
+   "title": "Semispinalis capitis",
+   "applies_to": {
+    "atlas_ids": [
+     "left_semispinalis_capitis",
+     "right_semispinalis_capitis"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A posterior neck muscle that extends the head and bends or rotates it.",
+     "points": [
+      {
+       "text": "It is one of the posterior neck muscles in the transversospinalis group.",
+       "cite": [
+        "sp_neck_movements"
+       ]
+      },
+      {
+       "text": "When both sides contract, they extend the head and neck.",
+       "cite": [
+        "sp_neck_movements"
+       ]
+      },
+      {
+       "text": "One side bends the head to its own side and rotates it to the opposite side.",
+       "cite": [
+        "sp_neck_movements"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It forms the roof of the suboccipital triangle and, in the transversospinalis group, extends the head bilaterally.",
+     "points": [
+      {
+       "text": "Unilateral contraction gives ipsilateral lateral flexion and contralateral rotation.",
+       "cite": [
+        "sp_neck_movements"
+       ]
+      },
+      {
+       "text": "It forms the roof of the suboccipital triangle.",
+       "cite": [
+        "sp_suboccipital"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which muscle forms the roof of the suboccipital triangle?",
+     "options": [
+      "Semispinalis capitis",
+      "Trapezius",
+      "Masseter"
+     ],
+     "answer": 0,
+     "explain": "The suboccipital triangle roof is semispinalis capitis.",
+     "cite": [
+      "sp_suboccipital"
+     ]
+    }
+   ],
+   "short": "Deep head extender"
+  },
+  {
+   "id": "levator-veli-palatini",
+   "title": "Levator veli palatini",
+   "applies_to": {
+    "atlas_ids": [
+     "left_levator_veli_palatini",
+     "right_levator_veli_palatini"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A muscle that lifts the soft palate when you swallow.",
+     "points": [
+      {
+       "text": "It begins near the eustachian tube and temporal bone and attaches to the palate's tendon sheet.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "It raises the soft palate, closing off the nasal part of the throat during swallowing.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "Branches of the vagus nerve supply it.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It contributes about 40% of soft palate length and sets the alpha angle, linked to airway shape in sleep apnea.",
+     "points": [
+      {
+       "text": "It arises from the eustachian tube and petrous temporal bone and inserts into the palatine aponeurosis.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "It makes up about 40% of the length of the soft palate.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "Its supply is the pharyngeal plexus (vagus, CN X).",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the levator veli palatini do during swallowing?",
+     "options": [
+      "Lifts the soft palate",
+      "Moves the eyeball",
+      "Closes the eyelid"
+     ],
+     "answer": 0,
+     "explain": "It elevates the soft palate and closes off the nasopharynx.",
+     "cite": [
+      "sp_palate"
+     ]
+    }
+   ],
+   "short": "Palate lifter"
+  },
+  {
+   "id": "tensor-veli-palatini",
+   "title": "Tensor veli palatini",
+   "applies_to": {
+    "atlas_ids": [
+     "left_tensor_veli_palatini",
+     "right_tensor_veli_palatini"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A muscle that tightens the soft palate when you swallow.",
+     "points": [
+      {
+       "text": "It starts at the medial pterygoid plate of the sphenoid bone.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "It tenses the soft palate, helping keep food out of the nose side of the throat.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "It is the only palate muscle not supplied by the vagus nerve.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It runs from the medial pterygoid plate to the palatine aponeurosis, supplied by the trigeminal medial pterygoid nerve.",
+     "points": [
+      {
+       "text": "It arises at the medial pterygoid plate and attaches to the palatine aponeurosis.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "The medial pterygoid nerve, a trigeminal branch, supplies it.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which palate muscle is NOT supplied by the vagus nerve?",
+     "options": [
+      "Tensor veli palatini",
+      "Levator veli palatini",
+      "Palatoglossus"
+     ],
+     "answer": 0,
+     "explain": "The tensor veli palatini is supplied by a branch of the trigeminal nerve.",
+     "cite": [
+      "sp_palate"
+     ]
+    }
+   ],
+   "short": "Palate tightener"
+  },
+  {
+   "id": "palatoglossus",
+   "title": "Palatoglossus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_palatoglossus",
+     "right_palatoglossus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A thin muscle linking the soft palate to the side of the tongue.",
+     "points": [
+      {
+       "text": "It starts at the palate's tendon sheet and ends in the side of the tongue.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "It pulls the soft palate toward the tongue and helps start swallowing.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "Two arches bind the soft palate to the tongue and pharynx, and the tonsils lie between them.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Arising from the palatine aponeurosis to the tongue side, it forms the palatoglossal arch and is supplied by the pharyngeal plexus.",
+     "points": [
+      {
+       "text": "It runs down, forward and out from the palatine aponeurosis to the lateral tongue.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "The pharyngeal plexus (vagus) supplies it.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which structure does the palatoglossus connect the soft palate to?",
+     "options": [
+      "The tongue",
+      "The ear",
+      "The eye"
+     ],
+     "answer": 0,
+     "explain": "It inserts into the side of the tongue.",
+     "cite": [
+      "sp_palate"
+     ]
+    }
+   ],
+   "short": "Palate-tongue link"
+  },
+  {
+   "id": "palatopharyngeus",
+   "title": "Palatopharyngeus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_palatopharyngeus",
+     "right_palatopharyngeus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A muscle running from the palate down the throat wall that helps with swallowing.",
+     "points": [
+      {
+       "text": "It begins at the hard palate and palatine aponeurosis and attaches to the thyroid cartilage.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "It pulls the pharynx up and forward during swallowing and helps close the airway.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "The vagus nerve supplies it.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Arising from the hard palate and aponeurosis to the thyroid cartilage's upper border, it is supplied via the pharyngeal plexus.",
+     "points": [
+      {
+       "text": "It inserts on the superior border of the thyroid cartilage.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "The source describes its role as tensing the soft palate and closing the laryngeal airway; its introduction wording differs.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "A distal palatal segment longer than 15 mm is linked to higher sleep apnea risk and poorer surgical outcomes.",
+     "cite": [
+      "sp_palate"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the palatopharyngeus help close during swallowing?",
+     "options": [
+      "The airway",
+      "The eyelids",
+      "The jaw"
+     ],
+     "answer": 0,
+     "explain": "It closes the laryngeal airway to help prevent aspiration.",
+     "cite": [
+      "sp_palate"
+     ]
+    }
+   ],
+   "short": "Swallow helper"
+  },
+  {
+   "id": "uvula",
+   "title": "Uvula",
+   "applies_to": {
+    "atlas_ids": [
+     "uvula"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The small dangling tip of the soft palate, moved by a small muscle.",
+     "points": [
+      {
+       "text": "Its muscle, the musculus uvulae, comes from the palate's tendon sheet and the posterior nasal spine.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "It attaches to the lining of the uvula and shortens it.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "The vagus nerve supplies it.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Musculus uvulae shortens the uvula, with one-sided contraction raising that side, supplied by the pharyngeal plexus.",
+     "points": [
+      {
+       "text": "It originates from the palatine aponeurosis and posterior nasal spine and inserts into uvular mucosa.",
+       "cite": [
+        "sp_palate"
+       ]
+      },
+      {
+       "text": "Ipsilateral contraction draws the uvula up on the same side.",
+       "cite": [
+        "sp_palate"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "UPPP, the most common surgery for obstructive sleep apnea, repositions or removes soft palate and uvula tissue.",
+     "cite": [
+      "sp_palate"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the musculus uvulae do?",
+     "options": [
+      "Shortens the uvula",
+      "Moves the tongue tip",
+      "Opens the jaw"
+     ],
+     "answer": 0,
+     "explain": "It shortens the uvula.",
+     "cite": [
+      "sp_palate"
+     ]
+    }
+   ],
+   "short": "Uvula muscle"
+  },
+  {
+   "id": "middle-constrictor",
+   "title": "Middle pharyngeal constrictor",
+   "applies_to": {
+    "atlas_ids": [
+     "middle_constrictor"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A throat muscle that squeezes food downward during swallowing.",
+     "points": [
+      {
+       "text": "It starts at the hyoid bone and the lower part of the stylohyoid ligament.",
+       "cite": [
+        "sp_pharynx"
+       ]
+      },
+      {
+       "text": "Its fibers meet at the pharyngeal raphe in the midline.",
+       "cite": [
+        "sp_pharynx"
+       ]
+      },
+      {
+       "text": "It pushes the swallowed bolus downward.",
+       "cite": [
+        "sp_pharynx"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "It arises from the hyoid cornua and stylohyoid ligament, inserts on the pharyngeal raphe, and is vagus-supplied.",
+     "points": [
+      {
+       "text": "Origin is the lower stylohyoid ligament and both hyoid cornua; insertion is the pharyngeal raphe.",
+       "cite": [
+        "sp_pharynx"
+       ]
+      },
+      {
+       "text": "The vagus nerve supplies all pharyngeal muscles except stylopharyngeus, so it supplies this muscle.",
+       "cite": [
+        "sp_pharynx"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What does the middle constrictor do during swallowing?",
+     "options": [
+      "Pushes the bolus down",
+      "Lifts the eyebrow",
+      "Chews food"
+     ],
+     "answer": 0,
+     "explain": "It propels the bolus downward.",
+     "cite": [
+      "sp_pharynx"
+     ]
+    }
+   ],
+   "short": "Swallow squeezer"
+  },
+  {
+   "id": "stylopharyngeus",
+   "title": "Stylopharyngeus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_stylopharyngeus",
+     "right_stylopharyngeus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "A slim throat muscle that lifts the pharynx and voice box during swallowing.",
+     "points": [
+      {
+       "text": "It starts at the styloid process, a bony spike below the ear.",
+       "cite": [
+        "sp_stylopharyngeus"
+       ]
+      },
+      {
+       "text": "It lifts the larynx and pharynx and widens the pharynx to move food.",
+       "cite": [
+        "sp_stylopharyngeus"
+       ]
+      },
+      {
+       "text": "It is supplied by the glossopharyngeal nerve (CN IX).",
+       "cite": [
+        "sp_stylopharyngeus"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The only pharyngeal muscle arising outside the pharyngeal wall and supplied by CN IX, it inserts mainly on the thyroid cartilage.",
+     "points": [
+      {
+       "text": "It is the only pharyngeal muscle originating outside the pharyngeal wall.",
+       "cite": [
+        "sp_stylopharyngeus"
+       ]
+      },
+      {
+       "text": "Some fibers join palatopharyngeus to insert on the posterior border of the thyroid lamina.",
+       "cite": [
+        "sp_stylopharyngeus"
+       ]
+      },
+      {
+       "text": "The pharyngeal branch of the ascending pharyngeal artery supplies it.",
+       "cite": [
+        "sp_stylopharyngeus"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can follow bilateral glossopharyngeal nerve anesthesia, which can impair this muscle and collapse the nasopharyngeal back wall.",
+     "cite": [
+      "sp_stylopharyngeus"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which nerve supplies the stylopharyngeus?",
+     "options": [
+      "Glossopharyngeal nerve (CN IX)",
+      "Vagus nerve (CN X)",
+      "Facial nerve"
+     ],
+     "answer": 0,
+     "explain": "It is supplied by CN IX, unlike other pharyngeal muscles.",
+     "cite": [
+      "sp_stylopharyngeus"
+     ]
+    }
+   ],
+   "short": "Pharynx lifter"
+  },
+  {
+   "id": "precuneus",
+   "title": "Precuneus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_precuneus",
+     "right_precuneus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The precuneus is a part of the inner parietal lobe that brain imaging links to space, memory and self.",
+     "points": [
+      {
+       "text": "Brain-imaging studies link the precuneus to visual-spatial perception, memory retrieval, self-related thinking and consciousness.",
+       "cite": [
+        "pmc_baker2018"
+       ]
+      },
+      {
+       "text": "One paper calls it one of the brain's main centres of integration.",
+       "cite": [
+        "pmc_bruner2014"
+       ]
+      },
+      {
+       "text": "Its rear part sits just in front of the parieto-occipital sulcus; its front part sits just behind the cingulate sulcus's marginal branch.",
+       "cite": [
+        "pmc_baker2018"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Its parts connect to the cingulum and, through the splenium, to the opposite hemisphere.",
+     "points": [
+      {
+       "text": "The rear part (7m) has white-matter links to the cingulum; both parts link to the opposite hemisphere.",
+       "cite": [
+        "pmc_baker2018"
+       ]
+      },
+      {
+       "text": "Within the parietal lobe it connects mostly to the intraparietal sulcus and angular gyrus.",
+       "cite": [
+        "pmc_bruner2014"
+       ]
+      },
+      {
+       "text": "Differences in its length are a major source of variation in adult midline brain shape.",
+       "cite": [
+        "pmc_bruner2014"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which groove lies just behind the rear part of the precuneus?",
+     "options": [
+      "Parieto-occipital sulcus",
+      "Central sulcus",
+      "Collateral sulcus"
+     ],
+     "answer": 0,
+     "explain": "The chapter places the rear precuneus just in front of the parieto-occipital sulcus.",
+     "cite": [
+      "pmc_baker2018"
+     ]
+    }
+   ],
+   "short": "Memory and space hub"
+  },
+  {
+   "id": "intraparietal-postcentral-sulci",
+   "title": "Intraparietal and postcentral sulci",
+   "applies_to": {
+    "atlas_ids": [
+     "left_intraparietal_sulcus",
+     "right_intraparietal_sulcus",
+     "left_postcentral_sulcus",
+     "right_postcentral_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The intraparietal sulcus is a deep groove across the parietal lobe, and its front end begins at the postcentral sulcus.",
+     "points": [
+      {
+       "text": "The intraparietal sulcus is a deep groove that separates the superior parietal lobule from the inferior parietal lobule.",
+       "cite": [
+        "pmc_vingerhoets2014"
+       ]
+      },
+      {
+       "text": "Its front end starts at the postcentral sulcus and its back end joins the parieto-occipital sulcus.",
+       "cite": [
+        "pmc_vingerhoets2014"
+       ]
+      },
+      {
+       "text": "The front part of the sulcus is a well-established grasping region.",
+       "cite": [
+        "pmc_vingerhoets2014"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Along its length, different parts handle different steps of reaching and grasping.",
+     "points": [
+      {
+       "text": "It is about 4.5 cm long and in places deeper than 3 cm.",
+       "cite": [
+        "pmc_vingerhoets2014"
+       ]
+      },
+      {
+       "text": "Middle part: turns what you see into motor programs for reaching, and is active in eye movements guided by vision.",
+       "cite": [
+        "pmc_vingerhoets2014"
+       ]
+      },
+      {
+       "text": "Back part: is believed to help analyse object features such as texture and orientation for grasping.",
+       "cite": [
+        "pmc_vingerhoets2014"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage to the outer bank of the front part can impair how the hand shapes to grasp.",
+     "cite": [
+      "pmc_vingerhoets2014"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which part of the intraparietal sulcus is a well-established grasping region?",
+     "options": [
+      "The front part",
+      "The middle part",
+      "The back part"
+     ],
+     "answer": 0,
+     "explain": "The review identifies the anterior (front) intraparietal sulcus as a well-established grasping region.",
+     "cite": [
+      "pmc_vingerhoets2014"
+     ]
+    }
+   ],
+   "short": "Grasping groove"
+  },
+  {
+   "id": "cerebral-white-matter",
+   "title": "White matter of the cerebral hemispheres",
+   "applies_to": {
+    "atlas_ids": [
+     "white_matter_of_left_cerebral_hemisphere",
+     "white_matter_of_right_cerebral_hemisphere"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "White matter is the myelinated wiring under the cortex that lets brain regions talk to each other.",
+     "points": [
+      {
+       "text": "White matter lies beneath the cortex, the outer gray layer of the cerebrum.",
+       "cite": [
+        "sp_cerebral_hemisphere"
+       ]
+      },
+      {
+       "text": "Its axons are wrapped in myelin, which gives the tissue its white look.",
+       "cite": [
+        "sp_cerebral_hemisphere"
+       ]
+      },
+      {
+       "text": "This myelinated wiring lets different brain regions communicate quickly.",
+       "cite": [
+        "sp_cerebral_hemisphere"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Oligodendrocytes make up most of its cells, and the corpus callosum links the two hemispheres.",
+     "points": [
+      {
+       "text": "Oligodendrocytes are the most prominent cell type in white matter.",
+       "cite": [
+        "sp_cortex"
+       ]
+      },
+      {
+       "text": "The corpus callosum keeps the left and right hemispheres in contact.",
+       "cite": [
+        "sp_cerebral_hemisphere"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Demyelinating disease such as multiple sclerosis can show up as plaques beside the ventricles on MRI.",
+     "cite": [
+      "sp_cerebral_hemisphere"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What gives white matter its pale color?",
+     "options": [
+      "Myelin around axons",
+      "Many cell bodies",
+      "Extra blood vessels"
+     ],
+     "answer": 0,
+     "explain": "Myelinated axons look white; unmyelinated tissue looks gray.",
+     "cite": [
+      "sp_cerebral_hemisphere"
+     ]
+    }
+   ],
+   "short": "Myelinated wiring"
+  },
+  {
+   "id": "lateral-orbital-gyrus",
+   "title": "Lateral orbital gyrus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_lateral_orbital_gyrus",
+     "right_lateral_orbital_gyrus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The lateral orbital gyrus is part of the lateral orbitofrontal cortex on the underside of the frontal lobe.",
+     "points": [
+      {
+       "text": "Brodmann's area 47 spans this gyrus and reaches into the nearby lower frontal cortex.",
+       "cite": [
+        "pmc_wojtasik2020"
+       ]
+      },
+      {
+       "text": "Two mapped areas, Fo6 and Fo7, lie in this region; Fo7 sits mainly in the lateral orbital sulcus and inner half of the gyrus.",
+       "cite": [
+        "pmc_wojtasik2020"
+       ]
+      },
+      {
+       "text": "The orbital surface commonly shows an H-shaped pattern of grooves.",
+       "cite": [
+        "pmc_wojtasik2020"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Cell-structure mapping divides the region into areas such as Fo6 and Fo7, and groove patterns vary between people.",
+     "points": [
+      {
+       "text": "Fo6 occupies the gyrus and part of the lateral orbital sulcus; a branch of the horizontal fissure marks its border with area 46.",
+       "cite": [
+        "pmc_wojtasik2020"
+       ]
+      },
+      {
+       "text": "In 52 hemispheres, the authors found four types of orbital groove pattern, with H-shaped the most common on the left.",
+       "cite": [
+        "pmc_wojtasik2020"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which Brodmann area spans the lateral orbital gyrus?",
+     "options": [
+      "Area 47",
+      "Area 17",
+      "Area 4"
+     ],
+     "answer": 0,
+     "explain": "The study says area 47 spans this gyrus and extends into nearby lower frontal cortex.",
+     "cite": [
+      "pmc_wojtasik2020"
+     ]
+    }
+   ],
+   "short": "Orbitofrontal side"
+  },
+  {
+   "id": "collateral-sulcus",
+   "title": "Collateral sulcus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_collateral_sulcus",
+     "right_collateral_sulcus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The collateral sulcus is a groove on the underside of the temporal lobe beside the parahippocampal gyrus.",
+     "points": [
+      {
+       "text": "It forms the lateral border of the parahippocampal gyrus on the temporal lobe's underside.",
+       "cite": [
+        "pmc_raslau2015"
+       ]
+      },
+      {
+       "text": "Its lateral border forms the lateral edge of the parahippocampal gyrus.",
+       "cite": [
+        "pmc_raslau2015"
+       ]
+      },
+      {
+       "text": "Its medial bank is the perirhinal cortex.",
+       "cite": [
+        "pmc_raslau2015"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Different parts of the sulcus mark the borders of the perirhinal cortex.",
+     "points": [
+      {
+       "text": "The top of the sulcus marks the outer edge of the perirhinal cortex.",
+       "cite": [
+        "pmc_raslau2015"
+       ]
+      },
+      {
+       "text": "Its lower part marks the border between perirhinal and entorhinal cortex.",
+       "cite": [
+        "pmc_raslau2015"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which gyrus has its lateral edge formed by the collateral sulcus?",
+     "options": [
+      "Parahippocampal gyrus",
+      "Postcentral gyrus",
+      "Straight gyrus"
+     ],
+     "answer": 0,
+     "explain": "The review says the sulcus's lateral border forms the lateral edge of the parahippocampal gyrus.",
+     "cite": [
+      "pmc_raslau2015"
+     ]
+    }
+   ],
+   "short": "Temporal groove"
+  },
+  {
+   "id": "ambiens-gyrus",
+   "title": "Ambiens gyrus",
+   "applies_to": {
+    "atlas_ids": [
+     "left_ambiens_gyrus",
+     "right_ambiens_gyrus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The ambiens gyrus is a bump on the inner side of the front temporal lobe, mostly entorhinal cortex.",
+     "points": [
+      {
+       "text": "It is a prominence on the medial side of the anterior medial temporal lobe.",
+       "cite": [
+        "pmc_insausti2019"
+       ]
+      },
+      {
+       "text": "The authors describe it as a medial extension of the parahippocampal gyrus.",
+       "cite": [
+        "pmc_insausti2019"
+       ]
+      },
+      {
+       "text": "A groove called the sulcus semianularis bounds it above, and the intrarhinal sulcus bounds it below.",
+       "cite": [
+        "pmc_insausti2019"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Its cortex matches an entorhinal subfield, so Brodmann area 34 is treated as part of entorhinal cortex.",
+     "points": [
+      {
+       "text": "It is largely formed by the medial intermediate entorhinal subfield (EMI), and its cortex is periallocortex.",
+       "cite": [
+        "pmc_insausti2019"
+       ]
+      },
+      {
+       "text": "Older work assigned it to the olfactory system; the authors instead group it with entorhinal cortex (area 28).",
+       "cite": [
+        "pmc_insausti2019"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "The ambiens gyrus is described as an extension of which gyrus?",
+     "options": [
+      "Parahippocampal gyrus",
+      "Cingulate gyrus",
+      "Angular gyrus"
+     ],
+     "answer": 0,
+     "explain": "The authors describe it as a medial extension of the parahippocampal gyrus.",
+     "cite": [
+      "pmc_insausti2019"
+     ]
+    }
+   ],
+   "short": "Entorhinal bump"
   }
  ],
  "tours": [
