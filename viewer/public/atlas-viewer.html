@@ -73,6 +73,23 @@ canvas{display:block;width:100%!important;height:100%!important}
 .clip-flip{font-size:10px;color:#8b949e;background:#161b22;border:1px solid #30363d;
   border-radius:3px;padding:1px 4px;cursor:pointer;flex-shrink:0}
 .clip-flip:hover{color:#c9d1d9}
+#clip-extra[hidden],#btn-section-view[hidden],#orient-marks[hidden]{display:none!important}
+#clip-extra{margin-top:4px}
+#btn-section-view{display:block;width:100%;margin:2px 0 6px;padding:6px 10px;font:inherit;font-size:11px;
+  color:#c9d1d9;background:#161b22;border:1px solid #30363d;border-radius:6px;cursor:pointer}
+#btn-section-view:hover{background:#21262d}
+#btn-section-view[aria-pressed="true"]{border-color:#388bfd;color:#e6edf3}
+#btn-section-view:focus-visible,.clip-flip:focus-visible{outline:2px solid #58a6ff;outline-offset:1px}
+#clip-hint{font-size:11px;color:#8b949e;line-height:1.4}
+/* L / R / A / P / S / I at the edges of the 3D view while a cutting plane is on */
+#orient-marks{position:fixed;z-index:5;pointer-events:none}
+#orient-marks span{position:absolute;font:600 12px/1 system-ui,sans-serif;color:#8b949e;
+  background:rgba(13,17,23,.6);border-radius:4px;padding:3px 5px}
+#orient-marks span:empty{display:none}
+#orient-marks [data-edge="top"]{top:6px;left:50%;transform:translateX(-50%)}
+#orient-marks [data-edge="bottom"]{bottom:6px;left:50%;transform:translateX(-50%)}
+#orient-marks [data-edge="left"]{left:6px;top:50%;transform:translateY(-50%)}
+#orient-marks [data-edge="right"]{right:6px;top:50%;transform:translateY(-50%)}
 
 /* context opacity */
 #ctx-section{padding:6px 12px 6px;border-bottom:1px solid #21262d;display:flex;
@@ -714,7 +731,9 @@ body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.tou
   #focus-back-btn{font-size:13px;padding:2px 0 8px}
   #custom-quiz-toggle{padding:12px 0}
   .clip-row{margin-bottom:10px}
-  .clip-flip{padding:6px 10px;font-size:12px}
+  .clip-flip{padding:6px 10px;font-size:12px;min-height:44px}
+  #btn-section-view{min-height:44px;font-size:13px}
+  #clip-hint{font-size:12.5px}
   /* 16px text stops iOS Safari from zooming in when a field is focused */
   #search,.qs-sel,#group-filter,#learner-level-sel,select,input[type=text]{font-size:16px}
   #search{padding:10px 12px}
@@ -1069,6 +1088,10 @@ body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.tou
           <input type="range" id="clip-axi-sl" min="0" max="100" value="50">
           <button class="clip-flip" data-plane="axi">flip</button>
         </div>
+        <div id="clip-extra" hidden>
+          <button id="btn-section-view" type="button" hidden aria-pressed="false">Section view</button>
+          <p id="clip-hint">Tap any coloured area on the cut to name it.</p>
+        </div>
       </div>
 
       <div id="ctx-section" style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #21262d;display:flex;align-items:center;gap:6px;font-size:11px;color:#8b949e">
@@ -1101,6 +1124,7 @@ body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.tou
 
 <!-- gizmo canvas -->
 <div id="gizmo"><canvas id="gizmo-c" width="80" height="80"></canvas></div>
+<div id="orient-marks" hidden aria-hidden="true"><span data-edge="top"></span><span data-edge="bottom"></span><span data-edge="left"></span><span data-edge="right"></span></div>
 
 <!-- shortcuts overlay -->
 <div id="shortcuts-overlay">
@@ -1264,7 +1288,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // ── renderer ─────────────────────────────────────────────────────────────────
 const canvas   = document.getElementById('c');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, stencil: true });  // stencil: solid cut faces
 renderer.localClippingEnabled = true;
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -1310,12 +1334,15 @@ const GIZMO_LABELS = [
 // ── hover state — declared here so tickHover() in animate() is never in TDZ ─
 let hoverMouse   = null;
 let hoverPending = false;
+// Solid cut faces: helper objects live under capRoot only while a cutting plane is on
+let capRoot = null;
 
 // ── resize ──────────────────────────────────────────────────────────────────
 const PANEL_W = 270;  // must match #panel width in CSS (desktop)
 const MOBILE_QUERY = window.matchMedia('(max-width: 760px)');
 function isMobile() { return MOBILE_QUERY.matches; }
 
+let viewBand = null;   // phones: the free band of the canvas between the top buttons and the sheet
 function onResize() {
   const w = window.innerWidth - (isMobile() ? 0 : PANEL_W), h = window.innerHeight;
   renderer.setSize(w, h, false);
@@ -1337,6 +1364,7 @@ function onResize() {
     const top = nav.height > 0 && nav.bottom < h / 2 ? nav.bottom + 6 : 0;
     if (bottom - 6 - top >= 80) free = { y: top, h: bottom - 6 - top };
   }
+  viewBand = free;
   if (free) camera.setViewOffset(w, free.h, 0, -free.y, w, h);   // sets camera.aspect to w / free.h
   else camera.clearViewOffset();
   camera.updateProjectionMatrix();
@@ -1348,8 +1376,10 @@ onResize();
 (function animate() {
   requestAnimationFrame(animate);
   controls.update();
+  if (capRoot) syncCaps();
   renderer.render(scene, camera);
   updateGizmo();
+  if (capRoot) updateOrientMarks();
   tickHover();
 })();
 
@@ -1770,7 +1800,7 @@ const PRESET_RAS = {
 
 let presetAnim = null;
 
-function animateToPreset(presetName) {
+function animateToPreset(presetName, flat = false) {
   const preset = PRESET_RAS[presetName];
   if (!preset) return;
 
@@ -1786,20 +1816,33 @@ function animateToPreset(presetName) {
   else sphere.center.copy(controls.target);
 
   // Distance to fit the bounding sphere fully in view
-  const dist = (sphere.radius / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2))) * 1.5;
+  let dist = (sphere.radius / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2))) * 1.5;
+  if (flat && !box.isEmpty()) {
+    // Section view: fill the view with the brain's extent across the screen, not its whole sphere
+    const right = new THREE.Vector3().crossVectors(worldUp, worldDir).normalize();
+    const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), d = new THREE.Vector3();
+    let hw = 0, hh = 0, hd = 0;
+    for (let i = 0; i < 8; i++) {
+      d.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).sub(sphere.center);
+      hw = Math.max(hw, Math.abs(d.dot(right))); hh = Math.max(hh, Math.abs(d.dot(worldUp))); hd = Math.max(hd, Math.abs(d.dot(worldDir)));
+    }
+    dist = hd + Math.max(hh / tan, hw / (tan * camera.aspect)) * 1.08;
+  }
 
+  animateCamera(sphere.center.clone().addScaledVector(worldDir, dist), sphere.center.clone(), worldUp);
+}
+
+function animateCamera(endPos, endTgt, worldUp) {
   const startPos = camera.position.clone();
-  const endPos   = sphere.center.clone().addScaledVector(worldDir, dist);
   const startTgt = controls.target.clone();
-  const endTgt   = sphere.center.clone();
   const startUp  = camera.up.clone();
 
-  const duration = 400;
+  const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 400;
   const t0       = performance.now();
   if (presetAnim) cancelAnimationFrame(presetAnim);
 
   function step() {
-    const t = Math.min((performance.now() - t0) / duration, 1);
+    const t = duration ? Math.min((performance.now() - t0) / duration, 1) : 1;
     const e = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;  // ease-in-out quad
     camera.position.lerpVectors(startPos, endPos, e);
     controls.target.lerpVectors(startTgt, endTgt, e);
@@ -1955,6 +1998,231 @@ function applyClipPlanes() {
     entry.mat.clippingPlanes = activePlanes.slice();
     entry.mat.needsUpdate    = true;
   });
+  updateCaps();
+  updateSectionUi();
+}
+
+// ── Solid cut faces (stencil capping) ───────────────────────────────────────
+// For every mesh that crosses an enabled plane: two invisible passes count, per pixel, how many
+// of its kept surfaces lie along the view ray (back faces +1, front faces -1); a large flat
+// "cap" on the plane then draws the mesh's own colour only where that count is non-zero, i.e.
+// where the plane lies inside the mesh. Outer (larger) meshes cap first so nested ones win.
+// Everything lives under capRoot, which exists only while a plane is on.
+let capItems = [];        // { src, axis, back, front, cap }
+let capKey   = '';        // which axes the helpers were built for
+const capBoxes = new WeakMap();   // mesh → world-space Box3 (meshes never move)
+function worldBoxOf(m) {
+  let b = capBoxes.get(m);
+  if (!b) { b = new THREE.Box3().setFromObject(m); capBoxes.set(m, b); }
+  return b;
+}
+function activeAxes() { return ['sag','cor','axi'].filter(ax => clipState[ax].enabled); }
+
+function teardownCaps() {
+  if (!capRoot) return;
+  const mats = new Set(), geos = new Set();
+  capRoot.traverse(o => { if (o.isMesh) { mats.add(o.material); if (o.userData.capGeo) geos.add(o.geometry); } });
+  mats.forEach(m => m.dispose()); geos.forEach(g => g.dispose());
+  scene.remove(capRoot);
+  capRoot = null; capItems = []; capKey = '';
+}
+
+function buildCaps(axes) {
+  teardownCaps();
+  group.updateMatrixWorld(true);
+  capRoot = new THREE.Group();
+  capRoot.name = 'cut-caps';
+  const srcs = [];
+  meshMap.forEach(entry => entry.meshes.forEach(m => srcs.push(m)));
+  const vol = m => { const s = worldBoxOf(m).getSize(new THREE.Vector3()); return s.x * s.y * s.z; };
+  srcs.sort((a, b) => vol(b) - vol(a));
+  const stencilBase = { colorWrite: false, depthWrite: false, depthTest: false, stencilWrite: true,
+    stencilFunc: THREE.AlwaysStencilFunc };
+  let order = 1;
+  axes.forEach(axis => {
+    const plane  = THREE_PLANES[axis];
+    const others = axes.filter(a => a !== axis).map(a => THREE_PLANES[a]);
+    const backMat = new THREE.MeshBasicMaterial({ ...stencilBase, side: THREE.BackSide, clippingPlanes: [plane],
+      stencilFail: THREE.IncrementWrapStencilOp, stencilZFail: THREE.IncrementWrapStencilOp, stencilZPass: THREE.IncrementWrapStencilOp });
+    const frontMat = new THREE.MeshBasicMaterial({ ...stencilBase, side: THREE.FrontSide, clippingPlanes: [plane],
+      stencilFail: THREE.DecrementWrapStencilOp, stencilZFail: THREE.DecrementWrapStencilOp, stencilZPass: THREE.DecrementWrapStencilOp });
+    const capGeo = new THREE.PlaneGeometry(1, 1);   // scaled to the brain in placeCaps()
+    srcs.forEach(src => {
+      const mk = (geo, mat) => {
+        const o = new THREE.Mesh(geo, mat);
+        o.matrixAutoUpdate = false; o.raycast = () => {};
+        capRoot.add(o); return o;
+      };
+      const back  = mk(src.geometry, backMat);  back.matrix.copy(src.matrixWorld);
+      const front = mk(src.geometry, frontMat); front.matrix.copy(src.matrixWorld);
+      back.renderOrder = front.renderOrder = order++;
+      const capMat = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, clippingPlanes: others,
+        stencilWrite: true, stencilRef: 0, stencilFunc: THREE.NotEqualStencilFunc,
+        stencilFail: THREE.ReplaceStencilOp, stencilZFail: THREE.ReplaceStencilOp, stencilZPass: THREE.ReplaceStencilOp });
+      const cap = mk(capGeo, capMat);
+      cap.userData.capGeo = true;
+      cap.renderOrder = order++;
+      // With more than one plane the cap is itself clipped, so it can leave stray counts: clear them.
+      if (others.length) cap.onAfterRender = r => r.clearStencil();
+      cap.userData.modelId = src.userData.modelId;
+      capItems.push({ src, axis, back, front, cap });
+    });
+  });
+  scene.add(capRoot);
+  capKey = axes.join(',');
+}
+
+const _capQ = new THREE.Quaternion(), _capP = new THREE.Vector3(), _capS = new THREE.Vector3();
+function placeCaps() {
+  if (!rasBounds) return;
+  const lo = new THREE.Vector3(...rasBounds.min), hi = new THREE.Vector3(...rasBounds.max);
+  const centre = lo.clone().add(hi).multiplyScalar(0.5).applyMatrix4(group.matrixWorld);
+  const size = lo.distanceTo(hi) * 1.2;
+  const mats = {};
+  activeAxes().forEach(axis => {
+    const plane = THREE_PLANES[axis];
+    plane.projectPoint(centre, _capP);
+    _capQ.setFromUnitVectors(new THREE.Vector3(0, 0, 1), plane.normal);
+    mats[axis] = new THREE.Matrix4().compose(_capP, _capQ, _capS.set(size, size, 1));
+  });
+  capItems.forEach(it => {
+    if (mats[it.axis]) it.cap.matrix.copy(mats[it.axis]);
+    it.crosses = THREE_PLANES[it.axis].intersectsBox(worldBoxOf(it.src));
+  });
+}
+
+function updateCaps() {
+  const axes = activeAxes();
+  if (!axes.length) { teardownCaps(); return; }
+  if (capKey !== axes.join(',')) buildCaps(axes);
+  placeCaps();
+}
+
+// Each frame while capping: follow the mesh's visibility, colour and highlight. Only meshes that
+// cross the plane draw anything. When a structure is selected the others fade: if the selected one
+// is cut, the rest of the section stays as a dim backdrop around its bright cut face; if it is not
+// cut, faded structures get no cap so the selected one stays visible behind the plane.
+let capDimOthers = false;
+const CAP_DIM_BG = new THREE.Color(0x0d1117);
+function isFaded(src) { return src.material.transparent && src.material.opacity < 0.5; }
+function capShown(src) { return isShown(src) && (capDimOthers || !isFaded(src)); }
+function syncCaps() {
+  capDimOthers = !!selectedModelId && capItems.some(it =>
+    it.crosses && it.src.userData.modelId === selectedModelId && isShown(it.src));
+  capItems.forEach(it => {
+    const on = it.crosses && capShown(it.src);
+    it.back.visible = it.front.visible = it.cap.visible = on;
+    if (!on) return;
+    const col = it.cap.material.color.copy(it.src.material.color);
+    if (isFaded(it.src)) col.lerp(CAP_DIM_BG, 0.85);   // linear colour: 0.85 reads as roughly 40% brightness
+    else col.add(it.src.material.emissive);
+  });
+}
+
+// Tapping a cut face: the cap is drawn where the plane lies inside a mesh, so a tap names the
+// innermost shown mesh that contains the point where the view ray meets the cut.
+const capRaycaster = new THREE.Raycaster();
+const CAP_TEST_DIRS = [new THREE.Vector3(0.013, 0.007, 0.005), new THREE.Vector3(-0.009, 0.011, -0.004), new THREE.Vector3(0.006, -0.012, 0.010)];
+function meshContains(mesh, p, normal) {
+  let votes = 0;
+  CAP_TEST_DIRS.forEach(d => {
+    capRaycaster.set(p, normal.clone().add(d).normalize());
+    if (mesh.raycast && capRaycaster.intersectObject(mesh, false).length % 2 === 1) votes++;
+  });
+  return votes >= 2;
+}
+function capHit(ray, firstDist) {
+  if (!capRoot) return null;
+  const planes = activeAxes().map(ax => THREE_PLANES[ax]);
+  let best = null;
+  planes.forEach(pl => {
+    const P = ray.intersectPlane(pl, new THREE.Vector3());
+    if (!P) return;
+    const t = ray.origin.distanceTo(P);
+    if (t >= firstDist || (best && t >= best.t)) return;
+    if (!planes.every(q => q === pl || q.distanceToPoint(P) >= 0)) return;
+    best = { P, t, plane: pl };
+  });
+  if (!best) return null;
+  let pick = null, pickVol = Infinity;
+  const sz = new THREE.Vector3();
+  group.traverse(c => {
+    if (!c.isMesh || !c.userData.modelId || !capShown(c)) return;
+    const box = worldBoxOf(c);
+    if (!box.containsPoint(best.P)) return;
+    box.getSize(sz);
+    const v = sz.x * sz.y * sz.z;
+    if (v >= pickVol || !meshContains(c, best.P, best.plane.normal)) return;
+    pick = c; pickVol = v;
+  });
+  return pick ? { distance: best.t, point: best.P, object: pick, face: null, isCap: true } : null;
+}
+
+// ── Section view: face the cut squarely, using the same presets as the view buttons ──
+// The plane's normal points to the kept half, so the cut face looks toward the removed half.
+const SECTION_PRESET = {
+  sag: f => f ? 'right' : 'left',
+  cor: f => f ? 'anterior' : 'posterior',
+  axi: f => f ? 'superior' : 'inferior',
+};
+let sectionSaved = null;   // camera to return to ("3D view"), set while in section view
+let sectionAim   = '';
+const sectionBtn = document.getElementById('btn-section-view');
+function setSectionBtn(on) {
+  sectionBtn.textContent = on ? '3D view' : 'Section view';
+  sectionBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+}
+function updateSectionUi() {
+  const axes = activeAxes();
+  document.getElementById('clip-extra').hidden = !axes.length;
+  document.getElementById('orient-marks').hidden = !axes.length;
+  sectionBtn.hidden = axes.length !== 1;
+  if (axes.length !== 1) { sectionSaved = null; sectionAim = ''; setSectionBtn(false); return; }
+  // Flipping the plane while in section view turns to the new cut face
+  const aim = SECTION_PRESET[axes[0]](clipState[axes[0]].flipped);
+  if (sectionSaved && aim !== sectionAim) { sectionAim = aim; animateToPreset(aim, true); }
+}
+sectionBtn.addEventListener('click', () => {
+  const axes = activeAxes();
+  if (axes.length !== 1) return;
+  if (sectionSaved) {
+    const s = sectionSaved;
+    sectionSaved = null; sectionAim = '';
+    animateCamera(s.pos, s.target, s.up);
+    setSectionBtn(false);
+    return;
+  }
+  sectionSaved = { pos: camera.position.clone(), target: controls.target.clone(), up: camera.up.clone() };
+  sectionAim = SECTION_PRESET[axes[0]](clipState[axes[0]].flipped);
+  animateToPreset(sectionAim, true);
+  setSectionBtn(true);
+});
+
+// ── Orientation markers at the view edges (same RAS labels as the gizmo) ──
+const orientEl = document.getElementById('orient-marks');
+const orientSpans = {};
+orientEl.querySelectorAll('span').forEach(sp => { orientSpans[sp.dataset.edge] = sp; });
+let orientBox = '';
+function updateOrientMarks() {
+  const r = document.getElementById('canvas-wrap').getBoundingClientRect();
+  const top = r.top + (viewBand ? viewBand.y : 0), h = viewBand ? viewBand.h : r.height;
+  const box = `${r.left}|${top}|${r.width}|${h}`;
+  if (box !== orientBox) {
+    orientBox = box;
+    Object.assign(orientEl.style, { left: r.left + 'px', top: top + 'px', width: r.width + 'px', height: h + 'px' });
+  }
+  const camInv = camera.quaternion.clone().invert();
+  const best = { right: ['', 0.5], left: ['', 0.5], top: ['', 0.5], bottom: ['', 0.5] };
+  GIZMO_LABELS.forEach(ax => {
+    const v = ax.rasDir.clone().transformDirection(group.matrixWorld).applyQuaternion(camInv);
+    if ( v.x > best.right[1])  best.right  = [ax.label,  v.x];
+    if (-v.x > best.left[1])   best.left   = [ax.label, -v.x];
+    if ( v.y > best.top[1])    best.top    = [ax.label,  v.y];
+    if (-v.y > best.bottom[1]) best.bottom = [ax.label, -v.y];
+  });
+  Object.keys(best).forEach(edge => {
+    if (orientSpans[edge].textContent !== best[edge][0]) orientSpans[edge].textContent = best[edge][0];
+  });
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -2038,7 +2306,10 @@ function filterClippedHits(hits) {
     .filter(ax => clipState[ax].enabled)
     .map(ax => THREE_PLANES[ax]);
   if (!planes.length) return hits;
-  return hits.filter(hit => planes.every(p => p.distanceToPoint(hit.point) >= 0));
+  const kept = hits.filter(hit => planes.every(p => p.distanceToPoint(hit.point) >= 0));
+  // A solid cut face in front of the first kept surface is what the user tapped
+  const cap = raycaster ? capHit(raycaster.ray, kept.length ? kept[0].distance : Infinity) : null;
+  return cap ? [cap, ...kept] : kept;
 }
 
 function setupRaycaster() {
@@ -5691,6 +5962,19 @@ onLayoutChange();
 // tiny read-only hook for automated tests: the screen box of the shown brain
 window.__atlas = {
   cam() { return [camera.position.x, camera.position.y, camera.position.z, controls.target.x, controls.target.y, controls.target.z].map(v => Math.round(v * 10) / 10); },
+  // cutting planes: scene object count, cap helpers, and where a model's centre lands on screen
+  section(modelId) {
+    let objects = 0; scene.traverse(() => objects++);
+    const out = { objects, caps: capItems.length, capsDrawn: capItems.filter(i => i.cap.visible).length,
+      marks: Object.fromEntries(Object.entries(orientSpans).map(([k, v]) => [k, v.textContent])), selected: selectedModelId };
+    const e = modelId && meshMap.get(modelId);
+    if (e) {
+      const c = new THREE.Box3().setFromObject(e.mesh).getCenter(new THREE.Vector3()).project(camera);
+      const r = renderer.domElement.getBoundingClientRect();
+      out.screen = { x: r.left + (c.x + 1) / 2 * r.width, y: r.top + (1 - c.y) / 2 * r.height };
+    }
+    return out;
+  },
   brainRect() {
     const box = new THREE.Box3();
     group.traverse(c => { if (c.isMesh && isShown(c)) box.expandByObject(c); });
