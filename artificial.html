@@ -91,6 +91,10 @@ section > h2{font-size:clamp(1.35rem,2.6vw,1.8rem);margin-bottom:8px}
 /* one neuron */
 .neuron-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
 .sliders{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 18px;margin-top:16px}
+.sliders[hidden]{display:none}
+.more-row{margin-top:8px}
+#more-ctl::after{content:"\25BE";content:"\25BE" / "";font-size:.8em}
+#more-ctl[aria-expanded="true"]::after{content:"\25B4";content:"\25B4" / ""}
 .sl{display:flex;flex-direction:column}
 .sl .top{display:flex;justify-content:space-between;gap:8px;font-size:.88rem}
 .sl label{color:var(--text);font-weight:600}
@@ -164,6 +168,8 @@ ol.steps p{font-size:.92rem}
 #quiz-fb .verdict.ok{color:#86efac}
 #quiz-fb .verdict.no{color:#fca5a5}
 .quiz-actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.review-line{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;margin:0 0 14px;color:var(--muted)}
+.review-line[hidden]{display:none}
 
 /* cite markers */
 .cite{position:relative;display:inline-block;margin:0 1px 0 3px;padding:1px 6px;min-width:22px;border:0;border-radius:5px;background:rgba(88,166,255,.14);color:#9ccbff;font-size:.72rem;line-height:1.5;vertical-align:super;font-weight:600}
@@ -316,6 +322,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
         <div class="seg" id="act-seg" role="group" aria-labelledby="act-lbl"></div>
       </div>
       <div class="sliders" id="sliders"></div>
+      <div class="row more-row"><button type="button" class="btn" id="more-ctl" aria-expanded="false" aria-controls="more-sliders">More controls</button></div>
+      <div class="sliders" id="more-sliders" hidden></div>
       <div class="row" style="margin-top:8px"><button type="button" class="btn" id="n-reset">Reset</button></div>
       <p class="readout" id="n-readout" aria-live="polite"></p>
       <dl class="parts" id="parts"></dl>
@@ -428,6 +436,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:18
 <div class="view" id="view-quiz">
   <section id="quiz" aria-labelledby="h-quiz">
     <h2 id="h-quiz">Check yourself</h2>
+    <p class="review-line" id="review-line" hidden><span id="review-n"></span><button type="button" class="btn" id="review-go">Review now</button></p>
     <div class="card" id="quiz-card">
       <p class="progress" id="quiz-progress"></p>
       <p class="q" id="quiz-q" tabindex="-1"></p>
@@ -744,12 +753,28 @@ let sliderRefs = [];
 function buildSliders() {
   const s = nState;
   sliderRefs = [];
-  const col = items => el('div', null, ...items.map(it => { sliderRefs.push(it); return it.node; }));
   const ins = [0, 1, 2].map(i => slider('sx' + i, 'Input x' + SUB[i], '-1', '1', () => s.x[i], v => { s.x[i] = v; }));
   const ws = [0, 1, 2].map(i => slider('sw' + i, 'Weight w' + SUB[i], '-2', '2', () => s.w[i], v => { s.w[i] = v; }));
   const b = slider('sb', 'Bias b', '-2', '2', () => s.b, v => { s.b = v; });
-  $('sliders').replaceChildren(col(ins), col(ws), col([b]));
+  sliderRefs = [...ins, ...ws, b];   // the order Reset uses: x1-x3, w1-w3, b
+  // The lesson introduces inputs, then weights, then the bias: show one of each first.
+  // The other two inputs and their weights wait behind "More controls".
+  $('sliders').replaceChildren(...[ins[0], ws[0], b].map(it => el('div', null, it.node)));
+  $('more-sliders').replaceChildren(el('div', null, ins[1].node, ins[2].node), el('div', null, ws[1].node, ws[2].node));
+  setMoreControls(moreControlsSaved());
 }
+// "More controls" is remembered for this browser session only
+const MORE_KEY = 'neuroapp.artificial.moreControls';
+function moreControlsSaved() { try { return sessionStorage.getItem(MORE_KEY) === '1'; } catch (e) { return false; } }
+function setMoreControls(open) {
+  $('more-ctl').setAttribute('aria-expanded', String(open));
+  $('more-sliders').hidden = !open;
+}
+$('more-ctl').addEventListener('click', () => {
+  const open = $('more-ctl').getAttribute('aria-expanded') !== 'true';
+  setMoreControls(open);
+  try { sessionStorage.setItem(MORE_KEY, open ? '1' : '0'); } catch (e) { /* not remembered */ }
+});
 $('n-reset').addEventListener('click', () => {
   nState.x = [...N_DEFAULT.x]; nState.w = [...N_DEFAULT.w]; nState.b = N_DEFAULT.b; nState.act = N_DEFAULT.act;
   const vals = [...nState.x, ...nState.w, nState.b];
@@ -1110,33 +1135,94 @@ function renderTrainText() {
 }
 
 // ═════════════ 6. Quiz ═════════════
-let qi = 0, score = 0;
+// ── Spaced review of missed questions ──
+// The same Leitner boxes and intervals as the brain page (atlas-viewer.html, neuroapp.srs.v1):
+// box 1 = same day, 2 = 1 day, 3 = 3 days, 4 = 7 days, 5 = 21 days. A missed question goes to
+// box 1; a right answer moves it up one box. Box 1 comes back after a short pause, not at once.
+// Only questions missed at least once are stored. Ids come from the question text in the content
+// file, so reordering the file does not move anyone's progress.
+const REVIEW_KEY = 'neuroapp.review.artificial.v1';
+const REVIEW_DAYS = [0, 0, 1, 3, 7, 21];
+const REVIEW_SOON_MS = 10 * 60 * 1000;
+function reviewLoad() {
+  let o = null;
+  try { o = JSON.parse(localStorage.getItem(REVIEW_KEY) || '{}'); } catch (e) { o = null; }
+  const out = {};
+  if (o && typeof o === 'object' && !Array.isArray(o)) {
+    for (const [id, r] of Object.entries(o)) {
+      if (r && Number.isInteger(r.box) && r.box >= 1 && r.box <= 5 && Number.isFinite(r.due)) out[id] = { box: r.box, due: r.due };
+    }
+  }
+  return out;
+}
+const reviewData = reviewLoad();
+function reviewSave() {
+  try { localStorage.setItem(REVIEW_KEY, JSON.stringify(reviewData)); } catch (e) { /* storage unavailable: kept for this visit only */ }
+}
+function reviewRecord(id, ok) {
+  const r = reviewData[id];
+  if (ok && !r) return;
+  const box = ok ? Math.min(r.box + 1, 5) : 1;
+  let due;
+  if (box === 1) due = Date.now() + REVIEW_SOON_MS;
+  else { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + REVIEW_DAYS[box]); due = d.getTime(); }
+  reviewData[id] = { box, due };
+  reviewSave();
+}
+function reviewIsDue(id) { const r = reviewData[id]; return !!r && r.due <= Date.now(); }
+function reviewCountText(n) { return n === 1 ? '1 question to review' : n + ' questions to review'; }
+const REVIEW_LATER = 'We will bring these back later.';
+function questionId(text) {
+  let h = 0x811c9dc5;
+  for (const ch of String(text)) { h ^= ch.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
+  return 'q-' + h.toString(36);
+}
+let qi = 0, score = 0, missed = 0;
+let qset = null;            // null: the whole quiz; an array: a review session of due questions
+function quizQs() { return qset || data.quiz; }
 function shuffled(n) {
   const a = Array.from({ length: n }, (_, i) => i);
   for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
 }
+function refreshReview() {
+  const due = qset ? [] : data.quiz.filter(q => reviewIsDue(questionId(q.q)));
+  $('review-line').hidden = !due.length;
+  $('review-n').textContent = reviewCountText(due.length);
+}
+function startQuizSet(set) {
+  qset = set; qi = 0; score = 0; missed = 0;
+  renderQuiz(); $('quiz-q').focus();
+}
+$('review-go').addEventListener('click', () => {
+  const due = data.quiz.filter(q => reviewIsDue(questionId(q.q)));
+  if (due.length) startQuizSet(due);
+});
 function renderQuiz() {
-  const Q = data.quiz, q = Q[qi];
+  const Q = quizQs(), q = Q[qi];
   const fb = $('quiz-fb'); fb.replaceChildren();
   $('quiz-next').hidden = true;
   if (!q) {
     $('quiz-progress').textContent = 'Finished';
     $('quiz-q').textContent = 'You got ' + score + ' of ' + Q.length + ' right.';
-    const again = el('button', { type: 'button', class: 'btn primary', text: 'Try again', onclick: () => { qi = 0; score = 0; renderQuiz(); $('quiz-q').focus(); } });
+    const again = el('button', { type: 'button', class: 'btn primary', text: 'Try again', onclick: () => startQuizSet(null) });
     $('quiz-opts').replaceChildren(again);
-    fb.textContent = 'Score: ' + score + ' of ' + Q.length + '.';
+    fb.replaceChildren(el('p', { text: 'Score: ' + score + ' of ' + Q.length + '.' }), missed ? el('p', { text: REVIEW_LATER }) : null);
+    qset = null;
+    refreshReview();
     return;
   }
-  $('quiz-progress').textContent = 'Question ' + (qi + 1) + ' of ' + Q.length + ' · score ' + score;
+  refreshReview();
+  $('quiz-progress').textContent = (qset ? 'Review · question ' : 'Question ') + (qi + 1) + ' of ' + Q.length + ' · score ' + score;
   const qp = $('quiz-q'); qp.textContent = q.q; qp.setAttribute('tabindex', '-1');
   $('quiz-opts').replaceChildren(...shuffled(q.options.length).map(i =>
     el('button', { type: 'button', 'data-opt': String(i), onclick: () => answer(i) }, el('span', { text: q.options[i] }))));
 }
 function answer(i) {
-  const q = data.quiz[qi];
+  const Q = quizQs(), q = Q[qi];
   const ok = i === q.answer;
-  if (ok) score++;
+  if (ok) score++; else missed++;
+  reviewRecord(questionId(q.q), ok);
   document.querySelectorAll('#quiz-opts button').forEach(b => {
     b.disabled = true;
     const o = +b.dataset.opt;
@@ -1147,7 +1233,7 @@ function answer(i) {
     el('p', null, el('span', { class: 'verdict ' + (ok ? 'ok' : 'no'), text: ok ? 'Correct. ' : 'Not quite. The right answer is: ' + q.options[q.answer] + '.' })),
     withCites('p', q.explain, q.cite));
   const next = $('quiz-next');
-  next.hidden = false; next.textContent = qi + 1 < data.quiz.length ? 'Next question' : 'See your score';
+  next.hidden = false; next.textContent = qi + 1 < Q.length ? 'Next question' : 'See your score';
   next.focus();
 }
 $('quiz-next').addEventListener('click', () => { qi++; renderQuiz(); $('quiz-q').focus(); });
@@ -1361,6 +1447,7 @@ const tabs = setupTabs({
     if (prev && prev.view === 'training' && s.view !== 'training' && tr.running) { setRunning(false); setStatus('Paused at step ' + nf.format(tr.steps) + '.'); }
     if (prev && prev.view === 'network' && s.view !== 'network') finishNetAnim();
     if (s.view === 'network') fitNet();
+    if (s.view === 'quiz') refreshReview();
   }
 });
 
