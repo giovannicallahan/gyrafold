@@ -211,6 +211,16 @@ details.learn-clinical-details summary:hover{color:#ffa657}
 .learn-expert-toggle{font-size:10px;color:#58a6ff;cursor:pointer;margin-left:6px}
 .learn-expert-toggle:hover{text-decoration:underline}
 .learn-no-content{color:#57606a;font-style:italic;font-size:12px;margin-top:6px}
+/* Tier 10: lesson pointer, clinical predict-then-reveal, tour arrow note */
+.lesson-pointer-btn,.clin-predict-opt{min-height:44px;padding:8px 12px;margin-top:8px;font-size:12px;background:#1a2433;border:1px solid #388bfd;border-radius:6px;color:#58a6ff;cursor:pointer;text-align:left}
+.lesson-pointer-btn:hover,.clin-predict-opt:hover{background:#1f3048}
+.lesson-pointer-btn:focus-visible,.clin-predict-opt:focus-visible,.clin-predict-skip:focus-visible,.clin-reveal:focus-visible{outline:2px solid #58a6ff;outline-offset:2px}
+.clin-predict-q{font-size:12px;color:#e6edf3;margin:4px 0 2px;line-height:1.5}
+.clin-predict-opts{display:flex;flex-wrap:wrap;gap:0 8px}
+.clin-predict-opt{margin-top:6px}
+.clin-predict-skip{min-height:44px;padding:8px 2px;background:none;border:none;color:#8b949e;text-decoration:underline;font-size:12px;cursor:pointer}
+.clin-predict-echo{font-size:11px;color:#8b949e;margin:4px 0}
+#tour-hud-arrow-note{font-size:10px;color:#8b949e;margin-bottom:6px}
 /* glossary term inline */
 .gloss-term{border-bottom:1px dotted #8b949e;cursor:help;position:relative}
 .atlas-ids{margin-top:6px}
@@ -1202,6 +1212,7 @@ body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.tou
 <!-- Tour HUD -->
 <div id="tour-hud">
   <div id="tour-hud-progress"></div>
+  <div id="tour-hud-arrow-note" hidden>&#8594; From the previous stop to this one</div>
   <div id="tour-hud-predict"></div>
   <div id="tour-hud-text"></div>
   <div id="tour-hud-nav">
@@ -3192,6 +3203,129 @@ function applyProfileToQuizScope() {
   }
 }
 
+// ── Tier 10: own lesson vs. a pointer to a related lesson ────────────────────
+// getTopicForModel() also returns an ancestor group's topic. Lesson views use
+// getOwnTopicForModel() so an ancestor's facts are never shown as the child's;
+// findLessonPointer() names where a lesson does exist instead.
+function getOwnTopicForModel(mod) {
+  const t = getTopicForModel(mod);
+  if (!t) return null;
+  const ids  = (mod.structures || []).map(s => s.atlas_id);
+  const tIds = (t.applies_to || {}).atlas_ids || [];
+  return ids.some(id => tIds.includes(id)) ? t : null;
+}
+
+function findLessonPointer(mod) {
+  if (!mod || !learningData) return null;
+  // 1. The same structure on the other side (left/right twin)
+  const m = /\b(left|right)\b/.exec(mod.name || '');
+  if (m) {
+    const twinName = mod.name.replace(/\b(left|right)\b/, m[1] === 'left' ? 'right' : 'left');
+    for (const [mid, entry] of meshMap) {
+      if (entry.modelDef.name === twinName && getOwnTopicForModel(entry.modelDef)) {
+        return { kind: 'model', id: mid, name: twinName };
+      }
+    }
+  }
+  // 2. Nearest ancestor group that has a topic
+  const topics = learningData.topics || [];
+  const seen = new Set();
+  for (const pg of ((mod.structures || [])[0] || {}).parent_groups || []) {
+    const path = buildAncestorPath(pg.id);
+    for (let i = path.length - 1; i >= 0; i--) {
+      const gid = path[i];
+      if (seen.has(gid)) continue;
+      seen.add(gid);
+      if (topics.some(t => ((t.applies_to || {}).groups || []).includes(gid))) {
+        const g = groupIndex.get(gid);
+        return { kind: 'group', id: gid, name: (g && g.name) || gid };
+      }
+    }
+  }
+  return null;
+}
+
+function renderLessonPointer(container, ptr) {
+  const wrap = document.createElement('div');
+  wrap.className = 'lesson-pointer';
+  const msg = document.createElement('div');
+  msg.className = 'learn-no-content';
+  msg.textContent = ptr.kind === 'model'
+    ? 'No lesson for this exact structure yet. The same structure on the other side has one:'
+    : 'No lesson for this exact structure yet. It is part of ' + ptr.name + ':';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'lesson-pointer-btn';
+  btn.textContent = 'Read about ' + ptr.name;
+  btn.addEventListener('click', () => {
+    if (ptr.kind === 'model') selectModel(ptr.id);
+    else selectGroup(ptr.id);
+  });
+  wrap.appendChild(msg);
+  wrap.appendChild(btn);
+  container.appendChild(wrap);
+}
+
+// ── Tier 10: clinical notes as predict-then-reveal ───────────────────────────
+// No answer key exists, so a choice is never marked right or wrong; any
+// choice (or "Just show me") reveals the existing sourced note unchanged.
+const CLIN_PREDICT_CHOICES = ['Movement', 'Memory', 'Senses', 'Speech and language', 'Not sure'];
+function wrapClinicalPredict(container) {
+  const notes = [...container.children].filter(el => el.classList.contains('learn-clinical-note'));
+  if (!notes.length) return;
+  const disc = [...container.children].find(el => el.classList.contains('learn-clinical-disclaimer')) || null;
+
+  const box = document.createElement('div');
+  box.className = 'clin-predict';
+  const q = document.createElement('p');
+  q.className = 'clin-predict-q';
+  q.id = 'clin-q-' + Math.random().toString(36).slice(2, 8);
+  q.textContent = 'Before you read: if this area were damaged, what do you think might change?';
+  const opts = document.createElement('div');
+  opts.className = 'clin-predict-opts';
+  opts.setAttribute('role', 'group');
+  opts.setAttribute('aria-labelledby', q.id);
+  const skip = document.createElement('button');
+  skip.type = 'button';
+  skip.className = 'clin-predict-skip';
+  skip.textContent = 'Just show me';
+  const echo = document.createElement('p');
+  echo.className = 'clin-predict-echo';
+  echo.hidden = true;
+
+  const reveal = document.createElement('div');
+  reveal.className = 'clin-reveal';
+  reveal.hidden = true;
+  reveal.tabIndex = -1;
+  notes.forEach(n => reveal.appendChild(n));
+
+  function doReveal(choice) {
+    q.hidden = true; opts.hidden = true; skip.hidden = true;
+    if (choice) {
+      echo.textContent = 'Your guess: ' + choice + '. Compare it with what the source says:';
+      echo.hidden = false;
+    }
+    reveal.hidden = false;
+    reveal.focus({ preventScroll: true });
+  }
+  CLIN_PREDICT_CHOICES.forEach(label => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'clin-predict-opt';
+    b.textContent = label;
+    b.addEventListener('click', () => doReveal(label));
+    opts.appendChild(b);
+  });
+  skip.addEventListener('click', () => doReveal(null));
+
+  box.appendChild(q);
+  box.appendChild(opts);
+  box.appendChild(skip);
+  box.appendChild(echo);
+  container.insertBefore(box, disc);
+  container.insertBefore(reveal, disc);
+}
+
 // ── Helpers: topic lookup ────────────────────────────────────────────────────
 function getTopicForModel(mod) {
   if (!mod || !learningData) return null;
@@ -3259,7 +3393,7 @@ function getTopicsForGroup(groupId) {
 function renderLearnPanel(mod) {
   const body   = document.getElementById('learn-panel-body');
   const badge  = document.getElementById('learn-panel-level-badge');
-  const topic  = getTopicForModel(mod);
+  const topic  = getOwnTopicForModel(mod);
   const level  = learnerProfile.level;
 
   const levelLabels = { beginner: 'New to it', some: 'Some background', expert: 'Expert' };
@@ -3268,6 +3402,8 @@ function renderLearnPanel(mod) {
   body.innerHTML = '';
 
   if (!topic) {
+    const ptr = findLessonPointer(mod);
+    if (ptr) { renderLessonPointer(body, ptr); return; }
     const el = document.createElement('div');
     el.className   = 'learn-no-content';
     el.textContent = 'No reviewed content yet.';
@@ -3426,6 +3562,7 @@ function renderLearnPanel(mod) {
     disc.className   = 'learn-clinical-disclaimer';
     disc.textContent = 'Educational use only — not medical advice.';
     clinDet.appendChild(disc);
+    wrapClinicalPredict(clinDet);
     body.appendChild(clinDet);
   }
 
@@ -3676,7 +3813,10 @@ function showTourStep() {
   const sources = learningData.sources || {};
 
   document.getElementById('tour-hud-progress').textContent =
-    'Step ' + (stepIdx + 1) + ' / ' + steps.length + ' — ' + (tour.title || '');
+    'Step ' + (stepIdx + 1) + ' of ' + steps.length + ' — ' + (tour.title || '');
+
+  // Tier 10: arrow from the previous stop to this one
+  updateTourArrow(stepIdx > 0 ? steps[stepIdx - 1] : null, step, stepIdx);
 
   // Select structures
   (step.atlas_ids || []).forEach(aid => {
@@ -3748,7 +3888,84 @@ document.getElementById('tour-btn-back').addEventListener('click', () => {
   showTourStep();
 });
 
+// ── Tier 10: tour direction arrow ────────────────────────────────────────────
+// A plain pointer between stops; it does not claim a nerve pathway.
+let tourArrow = null, tourArrowStep = -1, tourArrowAnim = null;
+const TOUR_ROOT_GROUPS = new Set(['Brain']);
+
+function _tourStepBox(step) {
+  if (!step) return null;
+  const ids = new Set();
+  (step.atlas_ids || []).forEach(aid => {
+    const mid = atlasIdToModelId.get(aid);
+    if (mid) ids.add(mid);
+  });
+  (step.groups || []).forEach(gid => {
+    if (TOUR_ROOT_GROUPS.has(gid) || !groupIndex.has(gid)) return;
+    getModelIdsForGroup(gid).forEach(mid => ids.add(mid));
+  });
+  const box = new THREE.Box3();
+  ids.forEach(mid => { const e = meshMap.get(mid); if (e) box.expandByObject(e.mesh); });
+  return box.isEmpty() ? null : box;
+}
+
+function removeTourArrow() {
+  if (tourArrowAnim) { cancelAnimationFrame(tourArrowAnim); tourArrowAnim = null; }
+  if (tourArrow) {
+    scene.remove(tourArrow);
+    tourArrow.line.geometry.dispose();
+    tourArrow.line.material.dispose();
+    tourArrow.cone.geometry.dispose();
+    tourArrow.cone.material.dispose();
+    tourArrow = null;
+  }
+  tourArrowStep = -1;
+  const note = document.getElementById('tour-hud-arrow-note');
+  if (note) note.hidden = true;
+}
+
+function updateTourArrow(prevStep, step, stepIdx) {
+  const sameStep = tourArrow && tourArrowStep === stepIdx;
+  removeTourArrow();
+  const a = _tourStepBox(prevStep), b = _tourStepBox(step);
+  if (!a || !b) return;
+  const from = a.getCenter(new THREE.Vector3());
+  const to   = b.getCenter(new THREE.Vector3());
+  const dir  = to.clone().sub(from);
+  const len  = dir.length();
+  if (len < 1e-3) return;
+  dir.normalize();
+  const head = len * 0.15;
+  tourArrow = new THREE.ArrowHelper(dir, from, len, 0xf0c040, head, head * 0.45);
+  tourArrow.name = 'tour-arrow';
+  tourArrow.userData.label = 'From the previous stop to this one';
+  [tourArrow.line, tourArrow.cone].forEach(o => {
+    o.material.depthTest = false;
+    o.material.transparent = true;
+    o.renderOrder = 999;
+  });
+  scene.add(tourArrow);
+  tourArrowStep = stepIdx;
+  const note = document.getElementById('tour-hud-arrow-note');
+  if (note) note.hidden = false;
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || sameStep) return;
+  // Grow from the previous stop over 400 ms
+  const arrow = tourArrow, t0 = performance.now();
+  arrow.setLength(len * 0.01, head * 0.01, head * 0.45 * 0.01);
+  const grow = now => {
+    if (arrow !== tourArrow) return;
+    const t = Math.min(1, (now - t0) / 400);
+    const k = Math.max(0.01, 1 - Math.pow(1 - t, 3));
+    arrow.setLength(len * k, head * k, head * 0.45 * k);
+    tourArrowAnim = t < 1 ? requestAnimationFrame(grow) : null;
+  };
+  tourArrowAnim = requestAnimationFrame(grow);
+}
+
 function endTour() {
+  removeTourArrow();
   activeTour = null;
   tourHudEl.classList.remove('visible');
   btnCloseTourEl.classList.remove('visible');
@@ -3768,7 +3985,7 @@ const confLabel         = document.getElementById('conf-label');
 function showLearnCard(modelId, onDone) {
   const entry = meshMap.get(modelId);
   if (!entry) { onDone(); return; }
-  const topic   = getTopicForModel(entry.modelDef);
+  const topic   = getOwnTopicForModel(entry.modelDef);
   const summary = topic ? (topic.levels?.beginner?.summary || '') : '';
 
   learnCardName.textContent   = entry.modelDef.name;
@@ -4139,7 +4356,7 @@ onNameItAnswer = function(chosenId, targetId, opts) {
       quizConfidentWrong++;
       const entry2 = meshMap.get(targetId);
       if (entry2) {
-        const topic2 = getTopicForModel(entry2.modelDef);
+        const topic2 = getOwnTopicForModel(entry2.modelDef);
         if (topic2) {
           const summ2 = (topic2.levels?.beginner?.summary || topic2.levels?.expert?.summary || '');
           if (summ2) {
@@ -4194,7 +4411,7 @@ onFindItClick = function(clickedModelId) {
       quizConfidentWrong++;
       const entry2 = meshMap.get(targetId);
       if (entry2) {
-        const topic2 = getTopicForModel(entry2.modelDef);
+        const topic2 = getOwnTopicForModel(entry2.modelDef);
         if (topic2) {
           const summ2 = (topic2.levels?.beginner?.summary || topic2.levels?.expert?.summary || '');
           if (summ2) {
@@ -4484,7 +4701,7 @@ function hideFocusPage() {
 // ── Render focus page for a STRUCTURE ────────────────────────────────────────
 function renderFocusModel(mod) {
   const s0      = (mod.structures || [])[0] || {};
-  const topic   = getTopicForModel(mod);
+  const topic   = getOwnTopicForModel(mod);
   const level   = learnerProfile.level;
 
   // Fix 2: clear every sub-pane before rendering to avoid stale content
@@ -4537,10 +4754,14 @@ function renderFocusModel(mod) {
       overviewEl.appendChild(summEl);
     }
   } else {
-    const noContent = document.createElement('div');
-    noContent.className = 'learn-no-content';
-    noContent.textContent = 'No reviewed content yet.';
-    overviewEl.appendChild(noContent);
+    const ptr = findLessonPointer(mod);
+    if (ptr) renderLessonPointer(overviewEl, ptr);
+    else {
+      const noContent = document.createElement('div');
+      noContent.className = 'learn-no-content';
+      noContent.textContent = 'No reviewed content yet.';
+      overviewEl.appendChild(noContent);
+    }
   }
 
   // Fix 1: anatomy points in Overview (after summary, before metadata)
@@ -4650,7 +4871,7 @@ function renderFocusModel(mod) {
         const nameSpan = document.createElement('span');
         nameSpan.className = 'parts-row-name';
         nameSpan.textContent = sibEntry.modelDef.name;
-        const sibTopic = getTopicForModel(sibEntry.modelDef);
+        const sibTopic = getOwnTopicForModel(sibEntry.modelDef);
         const shortSpan = document.createElement('span');
         shortSpan.className = 'parts-row-short';
         shortSpan.textContent = (sibTopic && sibTopic.short) ? sibTopic.short : 'No lesson yet';
@@ -4708,6 +4929,7 @@ function renderFocusModel(mod) {
       disc.className   = 'learn-clinical-disclaimer';
       disc.textContent = 'Educational use only — not medical advice.';
       clinEl.appendChild(disc);
+      wrapClinicalPredict(clinEl);
     }
   }
 
@@ -4782,7 +5004,7 @@ function renderFocusGroup(g, groupId) {
   memberIds.forEach(mid => {
     const e = meshMap.get(mid);
     if (e) {
-      const t = getTopicForModel(e.modelDef);
+      const t = getOwnTopicForModel(e.modelDef);
       if (t && !childTopics.find(ct => ct.id === t.id)) childTopics.push(t);
     }
   });
@@ -4859,7 +5081,7 @@ function renderFocusGroup(g, groupId) {
         subMemberIds.forEach(mid => {
           const e = meshMap.get(mid);
           if (!e) return;
-          const t = getTopicForModel(e.modelDef);
+          const t = getOwnTopicForModel(e.modelDef);
           if (t && t.short && !seenTopics.has(t.id)) {
             seenTopics.add(t.id);
             shortItems.push({ name: groupIndex.get(childId)?.name || childId, short: t.short, type: 'group', id: childId });
@@ -4870,7 +5092,7 @@ function renderFocusGroup(g, groupId) {
         if (!mid) return;
         const e = meshMap.get(mid);
         if (!e) return;
-        const t = getTopicForModel(e.modelDef);
+        const t = getOwnTopicForModel(e.modelDef);
         if (t && t.short) shortItems.push({ name: e.modelDef.name, short: t.short, type: 'model', id: mid });
       }
     });
@@ -4924,7 +5146,7 @@ function renderFocusGroup(g, groupId) {
         if (!mid) return;
         const childEntry = meshMap.get(mid);
         if (!childEntry) return;
-        const childTopic = getTopicForModel(childEntry.modelDef);
+        const childTopic = getOwnTopicForModel(childEntry.modelDef);
         const row = document.createElement('div');
         row.className = 'parts-row';
         const nameSpan = document.createElement('span');
@@ -4950,7 +5172,7 @@ function renderFocusGroup(g, groupId) {
     memberIds.forEach(mid => {
       const childEntry = meshMap.get(mid);
       if (!childEntry) return;
-      const childTopic = getTopicForModel(childEntry.modelDef);
+      const childTopic = getOwnTopicForModel(childEntry.modelDef);
       const row = document.createElement('div');
       row.className = 'parts-row';
       const nameSpan = document.createElement('span');
@@ -5018,6 +5240,7 @@ function renderFocusGroup(g, groupId) {
     disc.className   = 'learn-clinical-disclaimer';
     disc.textContent = 'Educational use only — not medical advice.';
     clinEl.appendChild(disc);
+    wrapClinicalPredict(clinEl);
   }
 
   // ── Enable tabs based on actual rendered content ──────────────────────────
@@ -5480,7 +5703,8 @@ window.__atlas = {
       x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
     }
     return { left: x0, top: y0, right: x1, bottom: y1 };
-  }
+  },
+  tourArrowCount() { return scene.children.filter(o => o.name === 'tour-arrow').length; }
 };
 
 // ══════════════════════════════════════════════════════════════════════════════
