@@ -201,6 +201,9 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
 #q-feedback{margin-top:10px;font-size:13.5px;min-height:24px}
 #q-feedback .ok{color:var(--green);font-weight:600}
 #q-feedback .no{color:var(--red);font-weight:600}
+.review-line{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:0 0 10px}
+.review-line[hidden]{display:none}
+.review-line .btn2{min-height:44px}
 
 /* overlays */
 .modal-bg{position:fixed;inset:0;background:rgba(3,5,10,.7);z-index:70;display:none;align-items:center;justify-content:center;padding:16px}
@@ -1275,6 +1278,7 @@ function switchTab(name, focus = false) {
   if (name !== 'how') { closeProcessScene(); }
   if (name !== 'quiz') { quizState.findTarget = null; }
   if (name === 'quiz' && !quizState.started) startQuiz();
+  else if (name === 'quiz') refreshReview();
   if (name === 'compare') renderCompare();
 }
 TABS.forEach((t, i) => {
@@ -2060,9 +2064,88 @@ function renderCompare() {
 // ══════════════════════════════════════════════════════════════════════════
 // Quiz tab
 // ══════════════════════════════════════════════════════════════════════════
-const quizState = { started: false, items: [], i: 0, score: 0, streak: 0, answered: false, findTarget: null, tries: 0 };
+// ── Spaced review of missed questions ──
+// The same Leitner boxes and intervals as the brain page (atlas-viewer.html, neuroapp.srs.v1):
+// box 1 = same day, 2 = 1 day, 3 = 3 days, 4 = 7 days, 5 = 21 days. A missed question goes to
+// box 1; a right answer moves it up one box. Box 1 comes back after a short pause, not at once.
+// Only questions missed at least once are stored. Ids come from the question text in the content
+// file, so reordering the file does not move anyone's progress.
+const REVIEW_KEY = 'neuroapp.review.neuron.v1';
+const REVIEW_DAYS = [0, 0, 1, 3, 7, 21];
+const REVIEW_SOON_MS = 10 * 60 * 1000;
+function reviewLoad() {
+  let o = null;
+  try { o = JSON.parse(localStorage.getItem(REVIEW_KEY) || '{}'); } catch (e) { o = null; }
+  const out = {};
+  if (o && typeof o === 'object' && !Array.isArray(o)) {
+    for (const [id, r] of Object.entries(o)) {
+      if (r && Number.isInteger(r.box) && r.box >= 1 && r.box <= 5 && Number.isFinite(r.due)) out[id] = { box: r.box, due: r.due };
+    }
+  }
+  return out;
+}
+const reviewData = reviewLoad();
+function reviewSave() {
+  try { localStorage.setItem(REVIEW_KEY, JSON.stringify(reviewData)); } catch (e) { /* storage unavailable: kept for this visit only */ }
+}
+function reviewRecord(id, ok) {
+  const r = reviewData[id];
+  if (ok && !r) return;
+  const box = ok ? Math.min(r.box + 1, 5) : 1;
+  let due;
+  if (box === 1) due = Date.now() + REVIEW_SOON_MS;
+  else { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + REVIEW_DAYS[box]); due = d.getTime(); }
+  reviewData[id] = { box, due };
+  reviewSave();
+}
+function reviewIsDue(id) { const r = reviewData[id]; return !!r && r.due <= Date.now(); }
+function reviewCountText(n) { return n === 1 ? '1 question to review' : n + ' questions to review'; }
+const REVIEW_LATER = 'We will bring these back later.';
+function questionId(text) {
+  let h = 0x811c9dc5;
+  for (const ch of String(text)) { h ^= ch.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
+  return 'q-' + h.toString(36);
+}
+
+const quizState = { started: false, items: [], i: 0, score: 0, streak: 0, answered: false, findTarget: null, tries: 0, reviewing: false, missed: 0, recorded: false };
+function quizItemId(item) { return item.kind === 'mc' ? questionId(item.q.q) : 'find-' + item.part; }
+function allQuizItems() { return [...C.quiz.map(q => ({ kind: 'mc', q })), ...PARTS.map(p => ({ kind: 'find', part: p.id }))]; }
+function dueQuizItems() { return allQuizItems().filter(it => reviewIsDue(quizItemId(it))); }
+function quizRecord(ok) {
+  const st = quizState;
+  if (st.recorded) return;
+  st.recorded = true;
+  if (!ok) st.missed++;
+  reviewRecord(quizItemId(st.items[st.i]), ok);
+}
+function refreshReview() {
+  const line = $('review-line');
+  if (!line) return;
+  const n = quizState.reviewing ? 0 : dueQuizItems().length;
+  line.hidden = !n;
+  $('review-n').textContent = reviewCountText(n);
+}
+function reviewLineEl() {
+  const line = el('p', 'review-line'); line.id = 'review-line'; line.hidden = true;
+  const n = el('span'); n.id = 'review-n';
+  const b = el('button', 'btn2', 'Review now'); b.type = 'button'; b.id = 'review-go';
+  b.addEventListener('click', startReview);
+  line.append(n, b);
+  return line;
+}
+function startReview() {
+  const items = dueQuizItems();
+  if (!items.length) return;
+  const st = quizState;
+  st.started = true; st.reviewing = true; st.items = items;
+  st.i = 0; st.score = 0; st.streak = 0; st.missed = 0;
+  selected = null; applyHighlight();
+  renderQuiz();
+  const t = document.querySelector('#pane-quiz .qtext'); if (t) { t.tabIndex = -1; t.focus(); }
+}
 function startQuiz() {
   quizState.started = true;
+  quizState.reviewing = false; quizState.missed = 0;
   const fn = C.quiz.map(q => ({ kind: 'mc', q }));
   const finds = PARTS.map(p => ({ kind: 'find', part: p.id }));
   // interleave: two multiple-choice, then one find-the-part
@@ -2081,20 +2164,24 @@ function startQuiz() {
 }
 function renderQuiz() {
   const pane = $('pane-quiz');
-  pane.replaceChildren();
+  pane.replaceChildren(reviewLineEl());
   const st = quizState;
   if (st.i >= st.items.length) {
     pane.appendChild(el('h2', null, 'Quiz complete'));
     pane.appendChild(el('p', 'summary', `You scored ${st.score} out of ${st.items.length}.`));
+    if (st.missed) pane.appendChild(el('p', 'summary', REVIEW_LATER));
     const b = el('button', 'btn', 'Start again'); b.type = 'button';
     b.addEventListener('click', startQuiz);
     pane.appendChild(b);
+    st.reviewing = false;
+    refreshReview();
     return;
   }
+  refreshReview();
   const item = st.items[st.i];
-  st.answered = false; st.tries = 0; st.findTarget = null;
+  st.answered = false; st.tries = 0; st.findTarget = null; st.recorded = false;
   const meta = el('div', 'qmeta');
-  meta.appendChild(el('span', null, `Question ${st.i + 1} of ${st.items.length}`));
+  meta.appendChild(el('span', null, `${st.reviewing ? 'Review · question' : 'Question'} ${st.i + 1} of ${st.items.length}`));
   meta.appendChild(el('span', null, `Score ${st.score}`));
   meta.appendChild(el('span', null, `Streak ${st.streak}`));
   pane.appendChild(meta);
@@ -2138,6 +2225,7 @@ function renderQuiz() {
   showMe.addEventListener('click', () => {
     const id = st.items[st.i].part;
     selected = id; applyHighlight(); framePart(id);
+    quizRecord(false);
     st.findTarget = null; st.answered = true;
     $('q-next').hidden = false;
   });
@@ -2154,6 +2242,7 @@ function answerMC(k, btn, opts, q, fb) {
   [...opts.children].forEach((b, j) => { b.disabled = true; if (j === q.answer) b.classList.add('right'); });
   if (!right) btn.classList.add('wrong');
   if (right) { st.score++; st.streak++; } else st.streak = 0;
+  quizRecord(right);
   fb.replaceChildren();
   fb.appendChild(el('span', right ? 'ok' : 'no', right ? 'Correct! ' : 'Not quite. '));
   fb.appendChild(document.createTextNode(q.explain));
@@ -2186,6 +2275,7 @@ function quizFindPick(id) {
     clearTimeout(flashTimer);
     st.answered = true; st.findTarget = null;
     if (st.tries === 0) { st.score++; st.streak++; } else st.streak = 0;
+    quizRecord(st.tries === 0);
     selected = id; applyHighlight();
     fb.appendChild(el('span', 'ok', st.tries === 0 ? 'Correct! ' : 'Found it. '));
     fb.appendChild(document.createTextNode(PART[id].name + ': ' + PART[id].short));
@@ -2194,6 +2284,7 @@ function quizFindPick(id) {
   } else {
     st.tries++;
     st.streak = 0;
+    quizRecord(false);
     flashPart(id);
     fb.appendChild(el('span', 'no', 'That is the ' + PART[id].name + '. Try again.'));
     if (st.tries >= 2) fb.appendChild(document.createTextNode(' Press Show me if needed.'));
