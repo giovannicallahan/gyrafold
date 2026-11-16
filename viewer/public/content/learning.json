@@ -302,6 +302,21 @@
    "citation": "Insausti, R., Córcoles-Parada, M., Ubero, M. M., Rodado, A., Insausti, A. M., & Muñoz-López, M. (2019). Cytoarchitectonic areas of the gyrus ambiens in the human brain. Frontiers in Neuroanatomy, 13, Article 21. https://doi.org/10.3389/fnana.2019.00021",
    "url": "https://www.frontiersin.org/journals/neuroanatomy/articles/10.3389/fnana.2019.00021/full",
    "license": "Not stated on fetched page (cite only; do not adapt)"
+  },
+  "pmc_lumsden2020": {
+   "citation": "Lumsden, S. C., Clarkson, A. N., & Cakmak, Y. O. (2020). Neuromodulation of the pineal gland via electrical stimulation of its sympathetic innervation pathway. Frontiers in Neuroscience, 14, Article 264.",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7145358",
+   "license": "CC BY 4.0"
+  },
+  "pmc_ismail2022": {
+   "citation": "Ismail, M., Elamin, O., Al-Ageely, T. A., Algburi, H. A., Sharma, M., Aljuboori, Z., Hoz, S. S., & Andaluz, N. (2022). Rectus gyrus hematoma: An overview. Surgical Neurology International, 13, Article 558.",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9805629/",
+   "license": "CC BY-NC-SA 4.0"
+  },
+  "pmc_karaca2025": {
+   "citation": "Karaca, O., Kibar, A. A., Aslantekin, B., & Tepe, N. (2025). Abnormal gyrus rectus asymmetry in Alzheimer's disease: An MRI-based parcellation method. Brain Sciences, 15(5), Article 452.",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12110486/",
+   "license": "CC BY 4.0"
   }
  },
  "glossary": [
@@ -9536,6 +9551,263 @@
     }
    ],
    "short": "Entorhinal bump"
+  },
+  {
+   "id": "pineal-body",
+   "title": "Pineal body",
+   "applies_to": {
+    "atlas_ids": [
+     "pineal_body"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The pineal body is a single gland deep in the middle of the brain that makes melatonin.",
+     "points": [
+      {
+       "text": "It sits in the midline of the brain, just behind the third ventricle.",
+       "cite": [
+        "pmc_lumsden2020"
+       ]
+      },
+      {
+       "text": "Its main cells, pinealocytes, make and release melatonin as the surrounding light changes.",
+       "cite": [
+        "pmc_lumsden2020"
+       ]
+      },
+      {
+       "text": "Darkness switches melatonin release on, and daytime light switches it off. Melatonin is linked to the sleep-wake cycle.",
+       "cite": [
+        "pmc_lumsden2020"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "Light information reaches the pineal through a multi-step sympathetic pathway that controls melatonin synthesis.",
+     "points": [
+      {
+       "text": "In humans it lies between the habenular and posterior commissures, directly behind the third ventricle.",
+       "cite": [
+        "pmc_lumsden2020"
+       ]
+      },
+      {
+       "text": "Retina to retinohypothalamic tract to suprachiasmatic nucleus, then the paraventricular nucleus, spinal cord and superior cervical ganglia; sympathetic fibres then reach the gland.",
+       "cite": [
+        "pmc_lumsden2020"
+       ]
+      },
+      {
+       "text": "At night, norepinephrine released onto pinealocytes drives melatonin synthesis from tryptophan, via serotonin and N-acetylserotonin.",
+       "cite": [
+        "pmc_lumsden2020"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "Which substance does the pineal body make?",
+     "options": [
+      "Melatonin",
+      "Insulin",
+      "Adrenaline"
+     ],
+     "answer": 0,
+     "explain": "Pinealocytes make and release melatonin in response to changes in environmental light.",
+     "cite": [
+      "pmc_lumsden2020"
+     ]
+    }
+   ],
+   "short": "Melatonin gland"
+  },
+  {
+   "id": "straight-gyrus",
+   "title": "Straight gyrus (gyrus rectus)",
+   "applies_to": {
+    "atlas_ids": [
+     "left_straight_gyrus",
+     "right_straight_gyrus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The straight gyrus, also called gyrus rectus, is a fold on the underside of the frontal lobe next to the midline.",
+     "points": [
+      {
+       "text": "It lies on the lower, inner part of the frontal lobe, next to the gap between the two hemispheres.",
+       "cite": [
+        "pmc_ismail2022"
+       ]
+      },
+      {
+       "text": "The olfactory sulcus separates it from the medial orbital gyrus beside it.",
+       "cite": [
+        "pmc_ismail2022"
+       ]
+      },
+      {
+       "text": "It is one of three parts of the orbitofrontal cortex, though its exact function is still unclear.",
+       "cite": [
+        "pmc_karaca2025",
+        "pmc_ismail2022"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The gyrus rectus is an orbitofrontal region linked to limbic areas, with evidence pointing to a role in memory.",
+     "points": [
+      {
+       "text": "It is accepted as the frontal extension of the anterior cingulate gyrus (Brodmann area 14), connected with limbic and olfactory regions.",
+       "cite": [
+        "pmc_karaca2025"
+       ]
+      },
+      {
+       "text": "It continues forward into the inferior frontopolar gyrus, which forms the frontal pole.",
+       "cite": [
+        "pmc_ismail2022"
+       ]
+      },
+      {
+       "text": "Reported memory findings include short-term recall and verbal fluency dips after resection, which later recovered.",
+       "cite": [
+        "pmc_karaca2025"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage here can be linked to memory problems; damage to the right side has been tied to more severe memory impairment.",
+     "cite": [
+      "pmc_karaca2025"
+     ]
+    },
+    {
+     "text": "Some studies link damage to both sides with disinhibited behaviour; the authors say more research is needed.",
+     "cite": [
+      "pmc_ismail2022"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What separates the straight gyrus from the medial orbital gyrus?",
+     "options": [
+      "The olfactory sulcus",
+      "The central sulcus",
+      "The calcarine sulcus"
+     ],
+     "answer": 0,
+     "explain": "The olfactory sulcus lies between the straight gyrus and the medial orbital gyrus.",
+     "cite": [
+      "pmc_ismail2022"
+     ]
+    }
+   ],
+   "short": "Gyrus rectus"
+  },
+  {
+   "id": "lateral-occipital-gyri",
+   "title": "Lateral occipital gyri",
+   "applies_to": {
+    "atlas_ids": [
+     "left_lateral_occipital_gyrus",
+     "right_lateral_occipital_gyrus"
+    ],
+    "groups": []
+   },
+   "core": false,
+   "levels": {
+    "beginner": {
+     "summary": "The lateral occipital gyri are the folds on the side surface of the occipital lobe, at the back of the brain.",
+     "points": [
+      {
+       "text": "The occipital lobe is the brain's visual processing area.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "A horizontal groove, the lateral occipital sulcus, divides the side surface of this lobe into gyri.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "Usually there are two, a superior and an inferior gyrus, and they meet at the occipital pole.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    },
+    "expert": {
+     "summary": "The lateral occipital surface is organised by three sulci, and the number of gyri can vary.",
+     "points": [
+      {
+       "text": "The lateral surface has three occipital sulci: intra-occipital, transverse occipital and lateral occipital.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "Occasionally a third, middle gyrus appears, giving superior, middle and inferior occipital gyri.",
+       "cite": [
+        "sp_occipital"
+       ]
+      },
+      {
+       "text": "The transverse occipital sulcus is described as the most consistently present sulcus on this surface.",
+       "cite": [
+        "sp_occipital"
+       ]
+      }
+     ]
+    }
+   },
+   "connections": [],
+   "clinical": [
+    {
+     "text": "Damage to one side of the occipital lobe can cause loss of vision on the opposite side of the visual field.",
+     "cite": [
+      "sp_occipital"
+     ]
+    }
+   ],
+   "checks": [
+    {
+     "level": "beginner",
+     "q": "What divides the side surface of the occipital lobe into gyri?",
+     "options": [
+      "The lateral occipital sulcus",
+      "The central sulcus",
+      "The corpus callosum"
+     ],
+     "answer": 0,
+     "explain": "The lateral occipital sulcus is a horizontal groove that divides the lateral occipital surface into gyri.",
+     "cite": [
+      "sp_occipital"
+     ]
+    }
+   ],
+   "short": "Occipital side folds"
   }
  ],
  "tours": [

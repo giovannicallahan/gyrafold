@@ -62,8 +62,13 @@ def atlas_done(pg, secs=240):
     return None
 
 def models_cached(pg):
+    """How many of the 328 models are saved offline: all of them once both packs are
+    cached (models/packs.json lists them), otherwise the count of single .glb files."""
     return pg.evaluate("""(async()=>{ if(!(await caches.has('gyrafold-models-v1'))) return 0;
-        const c=await caches.open('gyrafold-models-v1'); return (await c.keys()).length; })()""")
+        const c=await caches.open('gyrafold-models-v1'); const urls=(await c.keys()).map(r=>r.url);
+        let packs=[]; try { packs=(await (await fetch('models/packs.json')).json()).packs.map(p=>new URL(p.url, location.href).href); } catch(e) {}
+        if (packs.length && packs.every(u=>urls.includes(u))) return 328;
+        return urls.filter(u=>u.endsWith('.glb')).length; })()""")
 
 try:
     # ── 1. Manifest and files ──────────────────────────────────────────────
@@ -193,7 +198,7 @@ try:
             n = models_cached(pg)
             if n >= 328: break
             pg.wait_for_timeout(1000)
-        chk('all 328 models in gyrafold-models-v1 after one online load', n >= 328, n)
+        chk('all 328 models (both packs) in gyrafold-models-v1 after one online load', n >= 328, n)
         chk('atlas online: no CSP violations', not pg.evaluate('window.__csp'), pg.evaluate('window.__csp'))
         chk('atlas online: no console errors / page errors', not errs and not perrs, (errs[:3], perrs[:3]))
         chk('storage.persist available (called after load)', pg.evaluate("!!(navigator.storage&&navigator.storage.persist)"))

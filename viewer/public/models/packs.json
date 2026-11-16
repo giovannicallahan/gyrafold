@@ -1,0 +1,17 @@
+{
+ "version": 1,
+ "packs": [
+  {
+   "name": "brain",
+   "url": "./models/brain.13506869ff.gfpk",
+   "bytes": 10488454,
+   "models": 252
+  },
+  {
+   "name": "extras",
+   "url": "./models/extras.af518429d7.gfpk",
+   "bytes": 4526535,
+   "models": 76
+  }
+ ]
+}
