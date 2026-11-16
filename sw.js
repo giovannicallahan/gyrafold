@@ -5,11 +5,12 @@
  * makes browsers fetch a fresh copy of the shell and delete the old shell
  * caches. The 3D models live in MODELS_CACHE, which is NOT tied to VERSION,
  * so returning visitors never download the ~54 MB of models twice. Change
- * MODELS_CACHE only if the .glb files themselves change.
+ * MODELS_CACHE only if the .glb files themselves change. The two model packs
+ * (models/*.gfpk) have a content hash in their names, so a new pack is a new URL.
  *
  * Same-origin GET requests only. Nothing here talks to any other host.
  */
-const VERSION = "2026-11-15.6";
+const VERSION = "2026-11-16.1";
 const SHELL_CACHE = "gyrafold-shell-" + VERSION;
 const RUNTIME_CACHE = "gyrafold-runtime-" + VERSION;
 const MODELS_CACHE = "gyrafold-models-v1"; // also named in atlas-viewer.html
@@ -40,7 +41,8 @@ const SHELL = [
   "./content/neuron.json",
   "./content/ann.json",
   "./content/imaging.json",
-  "./atlas-manifest.json"
+  "./atlas-manifest.json",
+  "./models/packs.json"   // lists the two model packs; needed to find them offline
 ];
 
 // A redirected response cannot answer a navigation, so store a clean copy.
@@ -105,7 +107,7 @@ self.addEventListener("fetch", event => {
 
   if (req.mode === "navigate") {
     event.respondWith(networkFirst(event));
-  } else if (url.pathname.endsWith(".glb")) {
+  } else if (url.pathname.endsWith(".glb") || url.pathname.endsWith(".gfpk")) {
     event.respondWith(cacheFirst(event, MODELS_CACHE));
   } else if (url.pathname.endsWith(".json") || url.pathname.endsWith(".webmanifest")) {
     event.respondWith(networkFirst(event, true));

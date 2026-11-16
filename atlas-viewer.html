@@ -1597,6 +1597,166 @@ function identifyHiddenModels(m) {
 let skinVisible = false;
 let hnmVisible  = false;
 
+// Turn one loaded model into the scene objects the rest of the page uses.
+// `root` holds the model's mesh(es): a glTF scene, or a group built from a pack.
+function addModel(mod, root) {
+  const s0    = (mod.structures || [])[0];
+  const color = s0 ? s0.color : 'rgb(136,136,136)';
+  const mat   = new THREE.MeshPhongMaterial({
+    color:       new THREE.Color(color.startsWith('rgba') ? rgbaToRgb(color) : color),
+    shininess:   35,
+    specular:    0x1a1a1a,
+    side:        THREE.DoubleSide,
+    transparent: false,
+    opacity:     1,
+    clippingPlanes: [],
+    clipIntersection: false,
+  });
+  if (color.startsWith('rgba')) {
+    const parts = color.match(/[\d.]+/g);
+    if (parts && parts.length >= 4) {
+      const a = parseFloat(parts[3]);
+      if (!isNaN(a) && a < 1) { mat.transparent = true; mat.opacity = a; }
+    }
+  }
+
+  const meshes = [];
+  root.traverse(child => {
+    if (child.isMesh) {
+      child.material = mat;
+      child.geometry.computeVertexNormals();
+      child.userData.modelId = mod.id;
+      meshes.push(child);
+    }
+  });
+  group.add(root);
+
+  const baseOpacity     = mat.opacity;
+  const baseTransparent = mat.transparent;
+  meshMap.set(mod.id, {
+    mesh: root, modelDef: mod, mat, meshes,
+    _baseOpacity: baseOpacity, _baseTransparent: baseTransparent,
+  });
+  (mod.structures || []).forEach(s => atlasIdToModelId.set(s.atlas_id, mod.id));
+
+  if (defaultHiddenIds.has(mod.id)) root.visible = false;
+}
+
+// ── Model packs ────────────────────────────────────────────────────────────
+// All 328 meshes ship in two compressed files (scripts/pack_models.py documents
+// the format). One fetch per pack replaces 328 fetches and ~54 MB becomes ~15 MB.
+// The separate .glb files remain the fallback.
+let packListPromise = null;
+function getPackList() {
+  if (!packListPromise) {
+    packListPromise = (async () => {
+      if (typeof DecompressionStream === 'undefined') return null;
+      const res = await fetch('./models/packs.json');
+      if (!res.ok) return null;
+      const j = await res.json();
+      return Array.isArray(j.packs) && j.packs.length ? j.packs : null;
+    })().catch(() => null);
+  }
+  return packListPromise;
+}
+
+// Download a pack with progress, then unzip it. If the server already unzipped it
+// (Content-Encoding), the bytes are used as they are.
+async function fetchPack(pack, onBytes) {
+  const res = await fetch(pack.url);
+  if (!res.ok || !res.body) throw new Error('pack ' + res.status);
+  const reader = res.body.getReader();
+  const chunks = [];
+  let got = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    got += value.byteLength;
+    onBytes(got);
+  }
+  const blob = new Blob(chunks);
+  chunks.length = 0;   // let the downloaded pieces be freed; the Blob holds the bytes
+  const head = new Uint8Array(await blob.slice(0, 2).arrayBuffer());
+  if (head[0] === 0x1f && head[1] === 0x8b) {
+    return new Response(blob.stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+  }
+  return blob.arrayBuffer();
+}
+
+// Decode one pack into { id, geometry } pairs.
+function parsePack(buf) {
+  const dv = new DataView(buf);
+  const magic = String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3));
+  if (magic !== 'GFPK' || dv.getUint32(4, true) !== 1) throw new Error('not a model pack');
+  const jsonLen = dv.getUint32(8, true);
+  const header = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 12, jsonLen)));
+  const bytes = new Uint8Array(buf);
+  let off = 12 + jsonLen;
+  const out = [];
+  for (const m of header.models) {
+    const v = m.v, n = 3 * v;
+    const lo = off, hi = off + n;
+    const pos = new Float32Array(n);
+    for (let c = 0; c < 3; c++) {
+      const mn = m.mn[c], sc = m.sc[c];
+      let q = 0;
+      for (let k = 0; k < v; k++) {
+        const p = c * v + k;
+        const z = bytes[lo + p] | (bytes[hi + p] << 8);
+        q = (q + ((z >>> 1) ^ -(z & 1))) & 0xffff;
+        pos[3 * k + c] = mn + q * sc;
+      }
+    }
+    off += 2 * n;
+    const cnt = m.i;
+    const idx = v < 65536 ? new Uint16Array(cnt) : new Uint32Array(cnt);
+    const b0 = off, b1 = off + cnt, b2 = off + 2 * cnt, b3 = off + 3 * cnt;
+    let prev = 0;
+    for (let k = 0; k < cnt; k++) {
+      const z = (bytes[b0 + k] | (bytes[b1 + k] << 8) | (bytes[b2 + k] << 16) | (bytes[b3 + k] << 24)) >>> 0;
+      prev += (z >>> 1) ^ -(z & 1);
+      idx[k] = prev;
+    }
+    off += 4 * cnt;
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setIndex(new THREE.BufferAttribute(idx, 1));
+    out.push({ id: m.id, geometry: geo });
+  }
+  if (off !== buf.byteLength) throw new Error('pack size mismatch');
+  return out;
+}
+
+// Load every pack; returns true if they all loaded. Models a pack could not supply
+// are left for the .glb fallback.
+async function loadPacks(models, report) {
+  const packs = await getPackList();
+  if (!packs) return false;
+  const byId = new Map(models.map(m => [m.id, m]));
+  const totalBytes = packs.reduce((a, p) => a + (p.bytes || 0), 0) || 1;
+  let doneBytes = 0;
+  let ok = true;
+  for (const pack of packs) {
+    try {
+      const buf = await fetchPack(pack, got => report((doneBytes + Math.min(got, pack.bytes || got)) / totalBytes));
+      for (const { id, geometry } of parsePack(buf)) {
+        const mod = byId.get(id);
+        if (!mod || meshMap.has(id)) continue;
+        const root = new THREE.Group();
+        root.add(new THREE.Mesh(geometry));
+        addModel(mod, root);
+      }
+    } catch (e) {
+      ok = false;
+      console.warn('Model pack failed, using single files instead:', pack.url, e);
+    }
+    doneBytes += pack.bytes || 0;
+  }
+  return ok;
+}
+
+let usedPacks = false;   // true when the meshes came from the packs
 async function startLoading(models) {
   const loader   = new GLTFLoader();
   const total    = models.length;
@@ -1607,50 +1767,15 @@ async function startLoading(models) {
   const CONCURRENCY = 8;
   let nextIdx = 0;
 
+  // Fast path: two packs. The progress bar counts models as a share of the bytes.
+  usedPacks = await loadPacks(models, frac => setStatus(`Loading ${Math.min(total - 1, Math.floor(frac * total))} / ${total}`, true));
+  const todo = models.filter(m => !meshMap.has(m.id));   // anything the packs did not supply
+  loaded = total - todo.length;
+
   async function loadOne(mod) {
     return new Promise(resolve => {
       loader.load(mod.glb, gltf => {
-        const s0    = (mod.structures || [])[0];
-        const color = s0 ? s0.color : 'rgb(136,136,136)';
-        const mat   = new THREE.MeshPhongMaterial({
-          color:       new THREE.Color(color.startsWith('rgba') ? rgbaToRgb(color) : color),
-          shininess:   35,
-          specular:    0x1a1a1a,
-          side:        THREE.DoubleSide,
-          transparent: false,
-          opacity:     1,
-          clippingPlanes: [],
-          clipIntersection: false,
-        });
-        if (color.startsWith('rgba')) {
-          const parts = color.match(/[\d.]+/g);
-          if (parts && parts.length >= 4) {
-            const a = parseFloat(parts[3]);
-            if (!isNaN(a) && a < 1) { mat.transparent = true; mat.opacity = a; }
-          }
-        }
-
-        const meshes = [];
-        gltf.scene.traverse(child => {
-          if (child.isMesh) {
-            child.material = mat;
-            child.geometry.computeVertexNormals();
-            child.userData.modelId = mod.id;
-            meshes.push(child);
-          }
-        });
-        group.add(gltf.scene);
-
-        const baseOpacity     = mat.opacity;
-        const baseTransparent = mat.transparent;
-        meshMap.set(mod.id, {
-          mesh: gltf.scene, modelDef: mod, mat, meshes,
-          _baseOpacity: baseOpacity, _baseTransparent: baseTransparent,
-        });
-        (mod.structures || []).forEach(s => atlasIdToModelId.set(s.atlas_id, mod.id));
-
-        if (defaultHiddenIds.has(mod.id)) gltf.scene.visible = false;
-
+        addModel(mod, gltf.scene);
         loaded++;
         setStatus(`Loaded ${loaded} / ${total}`, true);
         resolve(null);
@@ -1664,7 +1789,7 @@ async function startLoading(models) {
   }
 
   async function worker() {
-    while (nextIdx < models.length) { const idx = nextIdx++; await loadOne(models[idx]); }
+    while (nextIdx < todo.length) { const idx = nextIdx++; await loadOne(todo[idx]); }
   }
 
   await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
@@ -5961,6 +6086,16 @@ onLayoutChange();
 
 // tiny read-only hook for automated tests: the screen box of the shown brain
 window.__atlas = {
+  // per model: vertex and triangle counts and bounding box, to check decoded meshes against the manifest
+  meshStats() {
+    const out = {};
+    meshMap.forEach((e, id) => {
+      let v = 0, t = 0; const box = new THREE.Box3();
+      e.meshes.forEach(m => { v += m.geometry.attributes.position.count; t += (m.geometry.index ? m.geometry.index.count : 0) / 3; m.geometry.computeBoundingBox(); box.union(m.geometry.boundingBox); });
+      out[id] = { v, t, min: box.min.toArray(), max: box.max.toArray() };
+    });
+    return { packs: usedPacks, models: out };
+  },
   cam() { return [camera.position.x, camera.position.y, camera.position.z, controls.target.x, controls.target.y, controls.target.z].map(v => Math.round(v * 10) / 10); },
   // cutting planes: scene object count, cap helpers, and where a model's centre lands on screen
   section(modelId) {
@@ -6023,11 +6158,15 @@ window.__atlas = {
   const OFFLINE_MSG  = "You're offline. Open the atlas once while online and it will work offline after that.";
   const modelUrl = mod => new URL(mod.glb, location.href).href;
 
+  const packUrls = async () => ((await getPackList()) || []).map(p => new URL(p.url, location.href).href);
+
   async function countCachedModels(models) {
     try {
       if (!('caches' in window) || !(await caches.has(MODELS_CACHE))) return 0;
       const c = await caches.open(MODELS_CACHE);
       const keys = new Set((await c.keys()).map(r => r.url));
+      const pu = await packUrls();
+      if (pu.length && pu.every(u => keys.has(u))) return models.length;   // both packs saved
       return models.filter(m => keys.has(modelUrl(m))).length;
     } catch (e) { return 0; }
   }
@@ -6063,10 +6202,20 @@ window.__atlas = {
     try {
       if (!('caches' in window) || !('serviceWorker' in navigator) || navigator.onLine === false) return;
       if (!(await navigator.serviceWorker.getRegistration())) return;
-      if (cachedBefore >= models.length) return;   // already saved on an earlier visit
+      if (cachedBefore >= models.length && !usedPacks) return;   // already saved on an earlier visit
       const c = await caches.open(MODELS_CACHE);
-      const have = new Set((await c.keys()).map(r => r.url));
-      const missing = models.map(modelUrl).filter(u => !have.has(u));
+      const reqs = await c.keys();
+      const have = new Set(reqs.map(r => r.url));
+      let missing;
+      if (usedPacks) {
+        // Packs in use: keep them, and drop single .glb copies and older packs to free space.
+        const pu = await packUrls();
+        await Promise.all(reqs.filter(r => !pu.includes(r.url) && /\.(glb|gfpk)$/.test(new URL(r.url).pathname)).map(r => c.delete(r)));
+        missing = pu.filter(u => !have.has(u));
+        if (!missing.length) return;
+      } else {
+        missing = models.map(modelUrl).filter(u => !have.has(u));
+      }
       let next = 0, failed = 0;
       async function lane() {
         while (next < missing.length) {
@@ -6084,6 +6233,7 @@ window.__atlas = {
   }
 
   // Patch startLoading to drive the bar and dismiss loader when done
+  let lastLoadProgress = Date.now();   // updated whenever the progress bar moves
   const _origStartLoading = startLoading;
   startLoading = async function(models) {
     const total = models.length;
@@ -6096,6 +6246,7 @@ window.__atlas = {
         // parse "Loaded N / T" or "Loading N / T"
         const m = msg.match(/(\d+)\s*\/\s*(\d+)/);
         if (m) {
+          lastLoadProgress = Date.now();
           const loaded = parseInt(m[1], 10);
           const t2     = parseInt(m[2], 10) || total;
           const pct    = Math.round((loaded / t2) * 100);
@@ -6140,14 +6291,17 @@ window.__atlas = {
 
   // If loading fails (manifest fetch error), keep existing failure UI and remove loader
   const _origManifestFetch = fetch;  // already called above; watch for status error
-  // Fallback: if loader still exists after 60s, remove it to avoid blocking the UI
-  setTimeout(() => {
-    if (document.getElementById('loader')) {
-      const l = document.getElementById('loader');
-      if (l.dataset.offline) return;   // keep the plain offline message up
-      if (l) { l.classList.add('fade-out'); setTimeout(() => l.remove(), 420); }
+  // Fallback: if loading stalls (no progress for 45 s), remove the loader so the page
+  // is not blocked. A slow connection that is still downloading keeps the loader up.
+  const stallTimer = setInterval(() => {
+    const l = document.getElementById('loader');
+    if (!l) { clearInterval(stallTimer); return; }
+    if (l.dataset.offline) return;   // keep the plain offline message up
+    if (Date.now() - lastLoadProgress > 45000) {
+      clearInterval(stallTimer);
+      l.classList.add('fade-out'); setTimeout(() => l.remove(), 420);
     }
-  }, 60000);
+  }, 5000);
 })();
 
 // ══════════════════════════════════════════════════════════════════════════════
