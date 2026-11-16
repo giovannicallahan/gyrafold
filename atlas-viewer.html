@@ -213,6 +213,9 @@ details.learn-clinical-details summary:hover{color:#ffa657}
 .learn-no-content{color:#57606a;font-style:italic;font-size:12px;margin-top:6px}
 /* glossary term inline */
 .gloss-term{border-bottom:1px dotted #8b949e;cursor:help;position:relative}
+.atlas-ids{margin-top:6px}
+.atlas-ids summary{font-size:11px;color:#8b949e;cursor:pointer;min-height:32px;display:flex;align-items:center}
+.gloss-term:focus-visible{outline:2px solid #58a6ff;outline-offset:2px;border-radius:2px}
 
 /* ── glossary list panel ── */
 #glossary-panel{border-bottom:1px solid #21262d;display:none}
@@ -827,6 +830,7 @@ body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.tou
           <button class="foc-btn" id="foc-isolate">Isolate</button>
           <button class="foc-btn" id="foc-show-all">Show All</button>
           <button class="foc-btn danger" id="foc-deselect">Deselect</button>
+          <button class="foc-btn" id="foc-share" title="Copy a link that opens this structure from this angle">Copy link</button>
         </div>
       </div>
       <!-- sub-tab bar -->
@@ -1178,9 +1182,9 @@ body.quizzing #nav-back,body.quizzing #nav-reset,body.touring #nav-back,body.tou
   <button class="onboard-level-btn" data-level="expert">🔵 Expert — I have neuroscience training</button>
   <div id="onboard-orientation" style="display:none">
     <p><strong>Quick start:</strong></p>
-    <p>🖱 <strong>Rotate</strong> — drag the canvas</p>
-    <p>🔍 <strong>Zoom</strong> — scroll wheel</p>
-    <p>👆 <strong>Select</strong> — click any structure</p>
+    <p>🖱 <strong>Rotate</strong> — <span data-touch-text="drag the brain with one finger">drag the canvas</span></p>
+    <p>🔍 <strong>Zoom</strong> — <span data-touch-text="pinch with two fingers">scroll wheel</span></p>
+    <p>👆 <strong>Select</strong> — <span data-touch-text="tap any structure">click any structure</span></p>
     <p>🔎 <strong>Search</strong> — use the search box above</p>
     <button id="btn-start-brain101">Start the Brain 101 tour →</button>
   </div>
@@ -2328,6 +2332,23 @@ document.getElementById('btn-deselect').addEventListener('click', () => {
 // ══════════════════════════════════════════════════════════════════════════════
 // FEATURE 9 — Deep links via location.hash
 // ══════════════════════════════════════════════════════════════════════════════
+// "Copy link": this structure, seen from this angle. Only the structure id and camera numbers go in the link.
+document.getElementById('foc-share').addEventListener('click', async e => {
+  const btn = e.currentTarget;
+  const mod = selectedModelId && meshMap.get(selectedModelId) && meshMap.get(selectedModelId).modelDef;
+  const s0 = mod && (mod.structures || [])[0];
+  if (!s0) return;
+  const n = v => Math.round(v * 10) / 10;
+  const p = camera.position, t = controls.target;
+  const url = location.origin + location.pathname + '#' + s0.atlas_id + '&cam=' + [p.x, p.y, p.z, t.x, t.y, t.z].map(n).join(',');
+  let ok = false;
+  try { await navigator.clipboard.writeText(url); ok = true; } catch (err) { /* no clipboard permission */ }
+  // no clipboard access: leave the link in the address bar, where it can be copied by hand
+  if (!ok) history.replaceState(null, '', url);
+  btn.textContent = ok ? 'Link copied' : 'Link is in the address bar';
+  setTimeout(() => { btn.textContent = 'Copy link'; }, 1800);
+});
+
 function updateHash(mod) {
   const s0 = (mod.structures || [])[0];
   if (!s0) return;
@@ -2335,8 +2356,13 @@ function updateHash(mod) {
 }
 
 function checkDeepLink() {
-  const hash = window.location.hash.slice(1);  // strip '#'
-  if (!hash) return;
+  const rawHash = window.location.hash.slice(1);  // strip '#'
+  if (!rawHash) return;
+  // "#<atlas_id>" or, from "Copy link", "#<atlas_id>&cam=px,py,pz,tx,ty,tz"
+  const [hash, ...extra] = rawHash.split('&');
+  const camPart = extra.find(x => x.startsWith('cam='));
+  const cam = camPart ? camPart.slice(4).split(',').map(Number) : null;
+  const camOk = cam && cam.length === 6 && cam.every(Number.isFinite);
   const modelId = atlasIdToModelId.get(hash);
   if (modelId) {
     // Small delay to let fitAll settle first
@@ -2344,6 +2370,15 @@ function checkDeepLink() {
       selectModel(modelId);
       // a link to one structure opens with its explanation in view, even if "Model" was the last size used
       if (isMobile() && sheetSize() === 'model') setSheet('split', { remember: false });
+      if (camOk) {
+        // after the automatic zoom has settled, restore the shared viewing angle
+        setTimeout(() => {
+          camera.position.set(cam[0], cam[1], cam[2]);
+          controls.target.set(cam[3], cam[4], cam[5]);
+          controls.update();
+          history.replaceState(null, '', '#' + hash);
+        }, 1200);
+      }
     }, 200);
   }
 }
@@ -3522,6 +3557,12 @@ function applyGlossaryMarkup(container, text) {
     span.textContent = matchedTerm;
     span.addEventListener('mouseenter', showGlossTooltip);
     span.addEventListener('mouseleave', hideGlossTooltip);
+    // phones and keyboards: a tap or Enter shows the definition, a second one hides it
+    span.tabIndex = 0;
+    span.setAttribute('role', 'button');
+    span.addEventListener('click', toggleGlossTooltip);
+    span.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleGlossTooltip(e); } else if (e.key === 'Escape') hideGlossTooltip(); });
+    span.addEventListener('blur', hideGlossTooltip);
     frag.appendChild(span);
     last = re.lastIndex;
   }
@@ -3531,6 +3572,10 @@ function applyGlossaryMarkup(container, text) {
   container.appendChild(frag);
 }
 
+// touch screens: say "tap" and "pinch", not "click" and "scroll wheel"
+if (window.matchMedia('(pointer: coarse)').matches) {
+  document.querySelectorAll('[data-touch-text]').forEach(el => { el.textContent = el.dataset.touchText; });
+}
 const glossTooltipEl = document.getElementById('gloss-tooltip');
 function showGlossTooltip(e) {
   const def = getGlossaryDef(e.currentTarget.textContent);
@@ -3545,9 +3590,28 @@ function positionGlossTooltip(e) {
 }
 function hideGlossTooltip() {
   glossTooltipEl.style.display = 'none';
+  glossOpenFor = null;
 }
+let glossOpenFor = null;
+function toggleGlossTooltip(e) {
+  const term = e.currentTarget;
+  e.stopPropagation();
+  if (glossOpenFor === term) { hideGlossTooltip(); return; }
+  const def = getGlossaryDef(term.textContent);
+  if (!def) return;
+  glossTooltipEl.textContent = def;
+  glossTooltipEl.style.display = 'block';
+  // place it under the word, kept inside the screen
+  const r = term.getBoundingClientRect(), w = Math.min(240, window.innerWidth - 16);
+  glossTooltipEl.style.left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8)) + 'px';
+  const below = r.bottom + 6, h = glossTooltipEl.offsetHeight;
+  glossTooltipEl.style.top = (below + h > window.innerHeight - 8 ? Math.max(8, r.top - h - 6) : below) + 'px';
+  glossOpenFor = term;
+}
+document.addEventListener('click', () => { if (glossOpenFor) hideGlossTooltip(); });
+document.addEventListener('scroll', () => { if (glossOpenFor) hideGlossTooltip(); }, true);
 document.addEventListener('mousemove', e => {
-  if (glossTooltipEl.style.display !== 'none') positionGlossTooltip(e);
+  if (glossTooltipEl.style.display !== 'none' && !glossOpenFor) positionGlossTooltip(e);
 });
 
 // ── Feature 4: Guided Tours ──────────────────────────────────────────────────
@@ -4511,12 +4575,28 @@ function renderFocusModel(mod) {
   addRow('Hemisphere',
     mod.hemisphere === 'left'  ? 'Left'  :
     mod.hemisphere === 'right' ? 'Right' : 'Midline / not lateralized');
-  addRow('Atlas ID(s)', (mod.structures || []).map(s => s.atlas_id).join(', ') || '—');
-  addRow('Label value', (mod.structures || []).map(s => s.label_value).filter(v => v != null).join(', ') || '—');
   const parents2 = [...new Set((mod.structures || []).flatMap(s => (s.parent_groups || []).map(p => p.name)))];
   addRow('Parent groups', parents2.join(' › ') || '—');
+  // Atlas identifiers: shown outright to experts, tucked under "Atlas details" for everyone else.
+  const idTarget = overviewEl;
+  let idBox = null;
+  if (learnerProfile.level !== 'expert') {
+    idBox = document.createElement('details');
+    idBox.className = 'atlas-ids';
+    const sum = document.createElement('summary');
+    sum.textContent = 'Atlas details';
+    idBox.appendChild(sum);
+  }
+  const addIdRow = (label, value) => {
+    if (!value) return;
+    addRow(label, value);
+    if (idBox) idBox.appendChild(idTarget.lastElementChild);
+  };
+  addIdRow('Atlas ID(s)', (mod.structures || []).map(s => s.atlas_id).join(', ') || '—');
+  addIdRow('Label value', (mod.structures || []).map(s => s.label_value).filter(v => v != null).join(', ') || '—');
   const radlex2 = (mod.structures || []).map(s => s.radlex_id).filter(Boolean).join(', ');
-  if (radlex2) addRow('RadLex ID', radlex2);
+  if (radlex2) addIdRow('RadLex ID', radlex2);
+  if (idBox) overviewEl.appendChild(idBox);
 
   // ── Functions sub-pane ────────────────────────────────────────────────────
   const funcsEl = focusSubpanes.functions;
@@ -5387,6 +5467,7 @@ onLayoutChange();
 
 // tiny read-only hook for automated tests: the screen box of the shown brain
 window.__atlas = {
+  cam() { return [camera.position.x, camera.position.y, camera.position.z, controls.target.x, controls.target.y, controls.target.z].map(v => Math.round(v * 10) / 10); },
   brainRect() {
     const box = new THREE.Box3();
     group.traverse(c => { if (c.isMesh && isShown(c)) box.expandByObject(c); });
