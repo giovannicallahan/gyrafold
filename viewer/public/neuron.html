@@ -235,8 +235,8 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
     overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;transition:height .25s ease}
   #panel-top{padding:10px 10px 4px}
   [role="tab"]{min-height:44px}
-  .hud-btn{min-height:44px;padding:8px 12px}
-  #hud{top:8px;left:8px;flex-direction:column;align-items:stretch}
+  .hud-btn{min-height:44px;height:44px;padding:0 12px;line-height:1}
+  #hud{top:6px;left:8px;flex-direction:column;align-items:stretch;gap:4px}
   .sides{top:auto;bottom:8px;right:8px}
   .sides a{padding:0 14px}
   .seg button{min-height:44px}
@@ -244,7 +244,8 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
   .dot{min-width:44px;height:44px}
   .cite-sup{padding:4px 3px;font-size:11px}
   #syn-panel{top:auto;bottom:8px;right:8px;left:8px;width:auto;max-height:calc(100% - 16px);overflow-y:auto}
-  #stage-note{bottom:8px;left:8px;font-size:10.5px}
+  /* top right on phones: the button column owns the left edge, the page switch the bottom right */
+  #stage-note{top:6px;right:8px;bottom:auto;left:auto;font-size:10.5px}
   .p-label{font-size:11px;padding:2px 6px}
   #scale-note{bottom:60px}
   #arrive-chip{bottom:60px;right:8px}
@@ -257,7 +258,7 @@ ul.points li::before{content:"";position:absolute;left:3px;top:8px;width:6px;hei
    level switch and search included, scrolls as one column, footer last. */
 .sheet-bar{display:none}
 @media (max-width:760px){
-  body{--sheet-h:min(calc(56dvh + 92px + env(safe-area-inset-bottom)), calc(100dvh - var(--head-h) - 140px))}
+  body{--sheet-h:min(calc(56dvh + 92px + env(safe-area-inset-bottom)), calc(100dvh - var(--head-h) - 156px))}
   body[data-sheet="read"]{--sheet-h:calc(100dvh - var(--head-h))}
   body[data-sheet="model"]{--sheet-h:calc(91px + env(safe-area-inset-bottom))}
   body[data-sheet="read"] #stage{visibility:hidden}
@@ -1201,12 +1202,13 @@ function freeRect(w, h) {
   const st = stage.getBoundingClientRect();
   const rel = e => { const r = e.getBoundingClientRect(); return r.height > 0 ? { l: r.left - st.left, r: r.right - st.left, t: r.top - st.top, b: r.bottom - st.top } : null; };
   const hud = rel($('hud')), sides = rel(document.querySelector('#stage .sides')), note = rel($('stage-note'));
-  const lowTop = Math.min(sides ? sides.t : h, note ? note.t : h) - 6;
+  const lowTop = (sides ? sides.t : h) - 6;
+  const noteB = note ? note.b + 2 : 0;   // the note sits in the top right corner on phones
   const cands = [];
   if (hud) {
     cands.push({ x: 0, y: hud.b + 6, w, h: lowTop - hud.b - 6 });                         // full width, below the column
-    cands.push({ x: hud.r + 6, y: 0, w: w - hud.r - 6, h: (sides ? sides.t : h) - 6 });    // right of the column
-  } else cands.push({ x: 0, y: 0, w, h: lowTop });
+    cands.push({ x: hud.r + 6, y: noteB, w: w - hud.r - 6, h: (sides ? sides.t : h) - 6 - noteB });    // right of the column
+  } else cands.push({ x: 0, y: noteB, w, h: lowTop - noteB });
   const fit = c => Math.min(c.w / MODEL_ASPECT, c.h);   // model height that fits in the rect
   const best = cands.filter(c => c.w >= 80 && c.h >= 50).sort((a, b) => fit(b) - fit(a))[0];
   return best || null;
